@@ -2,8 +2,8 @@ import { Album } from '@types/album';
 
 const Albums: Album[] = [
   {
-    id: '354',
-    name: 'De Zwijgende zwollem',
+    id: '1',
+    name: 'Het eiland Amoras',
     characters: ['1', '2'],
   },
 ];

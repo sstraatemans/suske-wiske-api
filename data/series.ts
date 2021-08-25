@@ -6,7 +6,7 @@ const Series: Serie[] = [
     name: 'Vlaamse ongekleurde reeks',
     startYear: 1946,
     endYear: 1959,
-    albums: [],
+    albums: ['1'],
   },
   {
     id: '2',
