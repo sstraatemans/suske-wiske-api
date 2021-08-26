@@ -1,9 +1,8 @@
 import { Album } from '@types/album';
 import { Serie } from '@types/serie';
-import Series from '@data/series';
+import { getAll } from './data/getAll';
 
-export const enrichSeries = (results: Serie[]): Serie[] => {
-  console.log(process.env.APIURL);
+export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
   return results.map((result) => {
     return {
       ...result,
@@ -12,16 +11,18 @@ export const enrichSeries = (results: Serie[]): Serie[] => {
   });
 };
 
-export const enrichAlbums = (results: Album[]): Album[] => {
+export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
+  const series = await getAll<Serie>('series');
+
   return results.map((result) => {
-    const inSeries: string[] = Series.filter(
-      (serie: Serie) => serie.albums.indexOf(result.id) > -1
-    ).map((serie: Serie) => `${process.env.APIURL}/series/${serie.id}`);
+    const inSeries: string[] = series
+      .filter((serie: Serie) => serie.albums.indexOf(result.id) > -1)
+      .map((serie: Serie) => `${process.env.APIURL}/series/${serie.id}`);
 
     return {
       ...result,
       characters: result.characters.map(
-        (character) => `${process.env.APIURL}/nl/characters/${character}`
+        (character) => `${process.env.APIURL}/characters/${character}`
       ),
       series: inSeries,
     };

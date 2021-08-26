@@ -1,5 +1,3 @@
-import { Serie } from '@types/serie';
-
 export const limitResults = <T extends { name: string }>(
   results: T[],
   limit: string,

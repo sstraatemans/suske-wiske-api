@@ -4,7 +4,6 @@ import Characters from '@data/characters';
 
 const handler = baseHandler().get((req, res) => {
   const { id } = req.query;
-  console.log(id);
   const album = Albums.find((album) => id === album.id);
 
   if (!album) {

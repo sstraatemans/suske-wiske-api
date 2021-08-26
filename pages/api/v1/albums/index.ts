@@ -1,18 +1,17 @@
 import { baseHandler } from '@server/baseHandler';
-import Albums from '@data/albums';
 import { Album } from '@types/album';
 import { enrichAlbums } from '@server/enrichResults';
 import { limitResults } from '@server/limitResults';
+import { getAll } from '@server/data/getAll';
 
-const handler = baseHandler().get((req, res) => {
+const handler = baseHandler().get(async (req, res) => {
   const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };
 
-  const limitedResults = limitResults<Album>(Albums, limit, offset, q);
-  const enrichedResults = enrichAlbums(limitedResults);
+  const albums = await getAll<Album>('albums');
+  const limitedResults = limitResults<Album>(albums, limit, offset, q);
+  const enrichedResults = await enrichAlbums(limitedResults);
 
   res.json(enrichedResults);
 });
-
-console.log(handler);
 
 export default handler;
