@@ -20,7 +20,7 @@ const Series: Serie[] = [
     name: 'Hollandse ongekleurde reeks',
     startYear: 1953,
     endYear: 1959,
-    albums: [],
+    albums: ['1'],
   },
   {
     id: '4',
@@ -47,21 +47,21 @@ const Series: Serie[] = [
     id: '7',
     name: 'Vierkleurenreeks',
     startYear: 1967,
-    albums: [],
+    albums: ['1'],
   },
   {
     id: '8',
     name: 'Strip Klassiek reeks',
     startYear: 1981,
     endYear: 1984,
-    albums: [],
+    albums: ['1'],
   },
   {
     id: '9',
     name: 'Rode Klassiek reeks',
     startYear: 1993,
     endYear: 1999,
-    albums: [],
+    albums: ['1'],
   },
   {
     id: '10',
