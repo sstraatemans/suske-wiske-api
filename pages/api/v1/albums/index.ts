@@ -1,8 +1,8 @@
 import { baseHandler } from '@server/baseHandler';
-import { Album } from '@types/album';
 import { enrichAlbums } from '@server/enrichResults';
 import { limitResults } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
+import { Album } from '@ts/album';
 
 const handler = baseHandler().get(async (req, res) => {
   const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };

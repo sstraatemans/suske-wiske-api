@@ -3,8 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Grid, TextField, Button } from '@components/.';
 import { FormEvent } from 'react';
-import { getAll } from '@server/data/getAll';
-import { Serie } from '@types/serie';
+import { Serie } from '@ts/serie';
 import axios from 'axios';
 
 const Home: NextPage = () => {

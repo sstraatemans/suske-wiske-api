@@ -1,5 +1,5 @@
-import { Album } from '@types/album';
-import { Serie } from '@types/serie';
+import { Album } from '@ts/album';
+import { Serie } from '@ts/serie';
 import { getAll } from './data/getAll';
 
 export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {

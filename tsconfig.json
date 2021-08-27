@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -15,9 +15,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@types/*": ["types/*"],
+      "@ts/*": ["types/*"],
       "@api/*": ["pages/api/*"],
-      "@data/*": ["data/*"],
       "@server/*": ["server/*"],
       "@components/*": ["components/*"]
     }
