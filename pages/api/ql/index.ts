@@ -3,6 +3,7 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const typeDefs = gql`
   type User {
@@ -36,7 +37,7 @@ const server = new ApolloServer({
 
 const startServer = server.start();
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await startServer;
   return await server.createHandler({
     path: '/api/ql',
