@@ -18,7 +18,11 @@
       "@ts/*": ["types/*"],
       "@api/*": ["pages/api/*"],
       "@server/*": ["server/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@context/*": ["context/*"],
+      "@client/*": ["client/*"],
+      "@layouts/*": ["components/layouts/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
