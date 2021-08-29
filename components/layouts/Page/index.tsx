@@ -1,10 +1,13 @@
 import { FC } from 'react';
+import { Container } from '@components/.';
 
 const PageLayout: FC = ({ children }) => {
   return (
     <>
       <header>header</header>
-      <main>{children}</main>
+      <Container>
+        <main>{children}</main>
+      </Container>
       <footer>footer</footer>
     </>
   );

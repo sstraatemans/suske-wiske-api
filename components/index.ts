@@ -1,7 +1,12 @@
 export { Grid } from './Grid/Grid';
+export { Box } from './Box/Box';
+export { Container } from './Container/Container';
 export { Button } from './Button/Button';
 export { TextField } from './TextField/TextField';
 export { Paper } from './Paper/Paper';
 export { Typography } from './Typography/Typography';
+export { Tabs } from './Tabs/Tabs';
+export { Tab } from './Tab/Tab';
+export { TabPanel } from './TabPanel/TabPanel';
 export { RestInput } from './RestInput/RestInput';
 export { Result } from './Result/Result';
