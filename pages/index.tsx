@@ -1,19 +1,36 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, FormEvent } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Grid, TextField, Button } from '@components/.';
-import { FormEvent } from 'react';
-import { Serie } from '@ts/serie';
-import axios from 'axios';
+import Container from '@material-ui/core/Container';
+import { Grid, RestInput, Paper, Result } from '@components/.';
+
+type errorProps = {
+  error: string;
+  message: string;
+};
 
 const Home: NextPage = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const [result, setResult] = useState();
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState<errorProps | null>(null);
+
   const onSearch = async (e: FormEvent) => {
     e.preventDefault();
 
-    const data = await axios.get('http://localhost:3000/api/v1/series');
-    console.log(data);
+    const call = searchRef?.current?.value;
+    if (!call) {
+      setResult(null);
+      setError({
+        error: 'empty call',
+        message: 'You need to fill in a request',
+      });
+      return;
+    }
+
+    const response = await fetch(`http://localhost:3000/api/v1/${call}`);
+    const data = await response.json();
+    setError(null);
+    setResult(data);
   };
 
   return (
@@ -25,20 +42,23 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            sdfsfds
+        <Container maxWidth='md'>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <form onSubmit={onSearch}>
+                <RestInput inputRef={searchRef} />
+              </form>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper>
+                <Result>
+                  {error && JSON.stringify(error, null, 2)}
+                  {result && JSON.stringify(result, null, 2)}
+                </Result>
+              </Paper>
+            </Grid>
           </Grid>
-          <Grid item xs={3}>
-            side
-          </Grid>
-          <Grid item xs={9}>
-            <form onSubmit={onSearch}>
-              <TextField inputRef={searchRef} />
-              <Button type='submit'>Request</Button>
-            </form>
-          </Grid>
-        </Grid>
+        </Container>
       </main>
     </div>
   );
