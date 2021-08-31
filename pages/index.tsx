@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       return;
     }
 
-    const response = await fetch(`http://localhost:3000/api/v1/${call}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/${call}`);
     const data = await response.json();
     setError(null);
     setResult(data);
