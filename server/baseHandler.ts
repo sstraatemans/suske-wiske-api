@@ -1,6 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import cors from 'cors';
+import cors, { CorsOptions, CorsRequest } from 'cors';
+
+const corsOptionsDelegate = (
+  req: CorsRequest,
+  callback: (error: Error | null, options: CorsOptions) => any
+) => {
+  callback(null, { origin: true }); // callback expects two parameters: error and options
+};
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({
@@ -16,4 +23,4 @@ export const baseHandler = () =>
         message: `Unexpected error.`,
         error: err.toString(),
       }),
-  }).use(cors());
+  }).use(cors(corsOptionsDelegate));
