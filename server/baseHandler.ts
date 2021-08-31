@@ -1,13 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
-import cors, { CorsOptions, CorsRequest } from 'cors';
+import Cors from 'cors';
+import next from 'next';
 
-const corsOptionsDelegate = (
-  req: CorsRequest,
-  callback: (error: Error | null, options: CorsOptions) => any
-) => {
-  callback(null, { origin: true }); // callback expects two parameters: error and options
-};
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+export default function initMiddleware(middleware) {
+  return (req, res) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+}
+
+// Initialize the cors middleware
+export const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ['GET', 'POST', 'OPTIONS'],
+  })
+);
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({
@@ -23,4 +42,4 @@ export const baseHandler = () =>
         message: `Unexpected error.`,
         error: err.toString(),
       }),
-  }).use(cors(corsOptionsDelegate));
+  });

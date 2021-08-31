@@ -1,10 +1,12 @@
-import { baseHandler } from '@server/baseHandler';
+import { baseHandler, cors } from '@server/baseHandler';
 import { limitResults } from '@server/limitResults';
 import { enrichSeries } from '@server/enrichResults';
 import { Serie } from '@ts/serie';
 import { getAll } from '@server/data/getAll';
 
 const handler = baseHandler().get(async (req, res) => {
+  await cors(req, res);
+
   const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };
 
   const data = await getAll<Serie>('series');
@@ -13,7 +15,5 @@ const handler = baseHandler().get(async (req, res) => {
 
   res.json(enrichedResults);
 });
-
-console.log(handler);
 
 export default handler;
