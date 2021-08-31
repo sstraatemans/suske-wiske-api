@@ -16,4 +16,4 @@ export const baseHandler = () =>
         message: `Unexpected error.`,
         error: err.toString(),
       }),
-  }).use(cors);
+  }).use(cors());
