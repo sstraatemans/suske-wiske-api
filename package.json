@@ -11,7 +11,9 @@
   "dependencies": {
     "@apollo/client": "^3.4.10",
     "@material-ui/core": "^4.12.3",
+    "@types/cors": "^2.8.12",
     "apollo-server-micro": "^3.3.0",
+    "cors": "^2.8.5",
     "firebase": "^9.0.0",
     "firebase-admin": "^9.11.1",
     "graphql": "^15.5.1",
