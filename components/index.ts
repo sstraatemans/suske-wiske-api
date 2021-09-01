@@ -1,5 +1,10 @@
 export { Grid } from './Grid/Grid';
 export { Box } from './Box/Box';
+export { AppBar } from './AppBar/AppBar';
+export { Toolbar } from './Toolbar/Toolbar';
+export { IconButton } from './IconButton/IconButton';
+export { Menu } from './Menu/Menu';
+export { MenuItem } from './MenuItem/MenuItem';
 export { Container } from './Container/Container';
 export { Button } from './Button/Button';
 export { TextField } from './TextField/TextField';

@@ -1,13 +1,22 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { makeStyles } from '@material-ui/core/styles';
 import { useAuthUser } from '@context/.';
+import { AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Container } from '@components/.';
+import { AccountCircle } from '@icons/.';
 
 type Props = {};
 
+const useStyles = makeStyles({
+  spacer: { flexGrow: 1 },
+});
+
 const AdminLayout: FC<Props> = ({ children }) => {
   const { signOut, isLoggedIn, isLoading, user } = useAuthUser();
+  const [isMenuOpen, setisMenuOpen] = useState(false);
   const router = useRouter();
+  const classes = useStyles();
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -15,36 +24,65 @@ const AdminLayout: FC<Props> = ({ children }) => {
     }
   }, [isLoading, isLoggedIn, router]);
 
+  const handleSignOff = () => {
+    setisMenuOpen(false);
+    signOut();
+  };
+
   if (isLoading || !isLoggedIn) return <div>...loading</div>;
 
   return (
     <>
       <header>
-        <button onClick={signOut}>logout {user?.displayName}</button>
-        <nav>
-          <ul>
-            <li>
-              <Link href='/admin'>
-                <a>series</a>
+        <AppBar position='static'>
+          <Container>
+            <Toolbar>
+              <Link href='/admin' passHref={true}>
+                <Button color='inherit'>Series</Button>
               </Link>
-            </li>
-            <li>
-              <Link href='/admin/albums'>
-                <a>albums</a>
+              <Link href='/admin/albums' passHref={true}>
+                <Button color='inherit'>Albums</Button>
               </Link>
-            </li>
-            <li>
-              <Link href='/admin/characters'>
-                <a>characters</a>
+              <Link href='/admin/characters' passHref={true}>
+                <Button color='inherit'>Characters</Button>
               </Link>
-            </li>
-            <li>
-              <Link href='/admin/tools'>
-                <a>tools</a>
+              <Link href='/admin/inventions' passHref={true}>
+                <Button color='inherit'>Inventions</Button>
               </Link>
-            </li>
-          </ul>
-        </nav>
+              <div className={classes.spacer}></div>
+
+              {user && (
+                <div>
+                  <IconButton
+                    aria-label='account of current user'
+                    aria-controls='menu-appbar'
+                    aria-haspopup='true'
+                    onClick={() => setisMenuOpen(true)}
+                    color='inherit'
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id='menu-appbar'
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={isMenuOpen}
+                    onClose={() => setisMenuOpen(false)}
+                  >
+                    <MenuItem onClick={handleSignOff}>Signoff</MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </Toolbar>
+          </Container>
+        </AppBar>
       </header>
       <main>{children}</main>
       <footer></footer>
