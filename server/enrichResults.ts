@@ -6,7 +6,7 @@ export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
   return results.map((result) => {
     return {
       ...result,
-      albums: result.albums.map((album) => `${process.env.APIURL}/albums/${album}`),
+      albums: result.albums.map((album) => `${process.env.APIURL}/v1/albums/${album}`),
     };
   });
 };
@@ -17,12 +17,12 @@ export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
   return results.map((result) => {
     const inSeries: string[] = series
       .filter((serie: Serie) => serie.albums.indexOf(result.id) > -1)
-      .map((serie: Serie) => `${process.env.APIURL}/series/${serie.id}`);
+      .map((serie: Serie) => `${process.env.APIURL}/v1/series/${serie.id}`);
 
     return {
       ...result,
       characters: result.characters.map(
-        (character) => `${process.env.APIURL}/characters/${character}`
+        (character) => `${process.env.APIURL}/v1/characters/${character}`
       ),
       series: inSeries,
     };

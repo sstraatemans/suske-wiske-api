@@ -28,7 +28,7 @@ const Home: NextPage = () => {
       return;
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/${call}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1/${call}`);
     const data = await response.json();
     setError(null);
     setResult(data);

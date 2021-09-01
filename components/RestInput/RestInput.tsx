@@ -36,7 +36,7 @@ export const RestInput: FC<Props> = ({ inputRef }) => {
   return (
     <Paper className={classes.rootPaper}>
       <Paper elevation={0} square className={classes.label}>
-        <Typography>{process.env.NEXT_PUBLIC_APIURL}/</Typography>
+        <Typography>{process.env.NEXT_PUBLIC_APIURL}/v1/</Typography>
       </Paper>
       <InputBase className={classes.rootInput} inputRef={inputRef} />
       <Button variant='contained' color='primary' type='submit' className={classes.button}>
