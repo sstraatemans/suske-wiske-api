@@ -5,7 +5,6 @@ import {
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { RequestHandler } from 'next-connect';
 
 const typeDefs = gql`
   type User {
@@ -39,7 +38,7 @@ const server = new ApolloServer({
 
 const startServer = server.start();
 
-const cors = microCors();
+const cors = microCors({ allowMethods: ['GET', 'PUT', 'POST'] });
 const handler: any = async (req: NextApiRequest, res: NextApiResponse) => {
   await startServer;
   const handle = await server.createHandler({
