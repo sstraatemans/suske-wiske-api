@@ -1,9 +1,13 @@
-import { useSeries } from '@hooks/useSeries';
+import { useGetAlbums } from '@hooks/useGetAlbums';
 import { AdminLayout } from '@layouts/.';
 import { NextPage } from 'next';
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useSeries();
+  const { loading, error, data } = useGetAlbums();
+
+  if (loading || error) return null;
+
+  console.log(data);
 
   return (
     <AdminLayout>

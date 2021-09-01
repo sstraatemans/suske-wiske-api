@@ -2,12 +2,13 @@ import { useQuery, gql } from '@apollo/client';
 
 const QUERY = gql`
   query {
-    getUser {
+    series {
       id
+      name
     }
   }
 `;
 
-export const useSeries = () => {
+export const useGetSeries = () => {
   return useQuery(QUERY);
 };

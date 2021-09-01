@@ -5,23 +5,24 @@ import {
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Album } from '@ts/album';
+import { getAll } from '@server/data/getAll';
 
 const typeDefs = gql`
-  type User {
+  type Album {
     id: ID
+    name: String
   }
 
   type Query {
-    getUser: User
+    albums: [Album]
   }
 `;
 
 const resolvers = {
   Query: {
-    getUser: () => {
-      return {
-        id: 'Foso',
-      };
+    albums: async () => {
+      return await getAll<Album>('albums');
     },
   },
 };

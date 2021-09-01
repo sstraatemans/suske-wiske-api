@@ -1,9 +1,9 @@
-import { useSeries } from '@hooks/useSeries';
+import { useGetSeries } from '@hooks/useGetSeries';
 import { AdminLayout } from '@layouts/.';
 import { NextPage } from 'next';
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useSeries();
+  const { loading, error, data } = useGetSeries();
 
   return (
     <AdminLayout>
