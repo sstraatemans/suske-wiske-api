@@ -1,4 +1,5 @@
 import { gql, ApolloServer } from 'apollo-server-micro';
+import microCors from 'micro-cors';
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
@@ -37,12 +38,15 @@ const server = new ApolloServer({
 
 const startServer = server.start();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const cors = microCors();
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await startServer;
   return await server.createHandler({
     path: '/api/ql',
   })(req, res);
-}
+};
+
+export default cors(handler);
 
 export const config = {
   api: {
