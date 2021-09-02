@@ -1,31 +1,11 @@
-import { gql, ApolloServer } from 'apollo-server-micro';
+import { ApolloServer } from 'apollo-server-micro';
 import microCors from 'micro-cors';
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Album } from '@ts/album';
-import { getAll } from '@server/data/getAll';
-
-const typeDefs = gql`
-  type Album {
-    id: ID
-    name: String
-  }
-
-  type Query {
-    albums: [Album]
-  }
-`;
-
-const resolvers = {
-  Query: {
-    albums: async () => {
-      return await getAll<Album>('albums');
-    },
-  },
-};
+import { typeDefs, resolvers } from '@server/ql/.';
 
 const server = new ApolloServer({
   typeDefs,

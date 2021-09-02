@@ -1,0 +1,27 @@
+schema {
+  query: Query
+}
+
+type Album {
+  id: String!
+  name: String!
+}
+
+type Query {
+  albums: [Album]
+  album(id: String!): Album
+}
+
+query getAlbums {
+  albums {
+    id
+    name
+  }
+}
+
+query getAlbum($id: String!) {
+  album(id: $id) {
+    id
+    name
+  }
+}

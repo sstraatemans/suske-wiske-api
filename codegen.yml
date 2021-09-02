@@ -1,0 +1,11 @@
+overwrite: true
+schema: 'http://localhost:3000/api/ql'
+documents: 'pages/api/ql/*.graphql'
+generates:
+  hooks/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
