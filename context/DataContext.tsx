@@ -26,7 +26,7 @@ const dataContext = createContext<DataContextProps>({
 
 export const useDataContext = () => useContext(dataContext);
 
-export const DataProvider: FC<DataContextProps> = ({ children }) => {
+export const DataProvider: FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<ApolloError>();
 
