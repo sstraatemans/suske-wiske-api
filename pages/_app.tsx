@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { UserProvider } from '@context/.';
+import { DataProvider } from '@context/.';
 import { ApolloProvider } from '@apollo/client';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -24,12 +25,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
       </Head>
       <UserProvider>
-        <ApolloProvider client={client}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </ApolloProvider>
+        <DataProvider>
+          <ApolloProvider client={client}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ApolloProvider>
+        </DataProvider>
       </UserProvider>
     </>
   );

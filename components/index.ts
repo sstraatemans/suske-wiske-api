@@ -15,3 +15,6 @@ export { Tab } from './Tab/Tab';
 export { TabPanel } from './TabPanel/TabPanel';
 export { RestInput } from './RestInput/RestInput';
 export { Result } from './Result/Result';
+export { Loader } from './Loader/Loader';
+export { FullpageLoader } from './Loader/FullpageLoader';
+export { Fab } from './Fab/Fab';

@@ -2,8 +2,19 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAuthUser } from '@context/.';
-import { AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Container } from '@components/.';
+import { useAuthUser, useDataContext } from '@context/.';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Container,
+  Loader,
+  Box,
+  FullpageLoader,
+} from '@components/.';
 import { AccountCircle } from '@icons/.';
 
 type Props = {};
@@ -13,13 +24,14 @@ const useStyles = makeStyles({
 });
 
 const AdminLayout: FC<Props> = ({ children }) => {
-  const { signOut, isLoggedIn, isLoading, user } = useAuthUser();
+  const { signOut, isLoggedIn, isLoading: isUserLoading, user } = useAuthUser();
   const [isMenuOpen, setisMenuOpen] = useState(false);
   const router = useRouter();
   const classes = useStyles();
+  const { isLoading, error } = useDataContext();
 
   useEffect(() => {
-    if (!isLoading && !isLoggedIn) {
+    if (!isUserLoading && !isLoggedIn) {
       router.push('/login');
     }
   }, [isLoading, isLoggedIn, router]);
@@ -29,7 +41,7 @@ const AdminLayout: FC<Props> = ({ children }) => {
     signOut();
   };
 
-  if (isLoading || !isLoggedIn) return <div>...loading</div>;
+  if (isUserLoading || !isLoggedIn) return <FullpageLoader />;
 
   return (
     <>
@@ -84,7 +96,14 @@ const AdminLayout: FC<Props> = ({ children }) => {
           </Container>
         </AppBar>
       </header>
-      <main>{children}</main>
+      <main>
+        {isLoading && (
+          <Box p={2} display='flex' justifyContent='center'>
+            <Loader />
+          </Box>
+        )}
+        {children}
+      </main>
       <footer></footer>
     </>
   );
