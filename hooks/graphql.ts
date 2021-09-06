@@ -20,6 +20,16 @@ export type Album = {
   name: Scalars['String'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  updateAlbum?: Maybe<Album>;
+};
+
+
+export type MutationUpdateAlbumArgs = {
+  input?: Maybe<UpdateAlbumInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
   albums?: Maybe<Array<Maybe<Album>>>;
@@ -29,6 +39,11 @@ export type Query = {
 
 export type QueryAlbumArgs = {
   id: Scalars['String'];
+};
+
+export type UpdateAlbumInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type GetAlbumsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -42,6 +57,13 @@ export type GetAlbumQueryVariables = Exact<{
 
 
 export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string }> };
+
+export type UpdateAlbumMutationVariables = Exact<{
+  input?: Maybe<UpdateAlbumInput>;
+}>;
+
+
+export type UpdateAlbumMutation = { __typename?: 'Mutation', updateAlbum?: Maybe<{ __typename?: 'Album', id: string, name: string }> };
 
 
 export const GetAlbumsDocument = gql`
@@ -79,6 +101,9 @@ export function useGetAlbumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetAlbumsQueryHookResult = ReturnType<typeof useGetAlbumsQuery>;
 export type GetAlbumsLazyQueryHookResult = ReturnType<typeof useGetAlbumsLazyQuery>;
 export type GetAlbumsQueryResult = Apollo.QueryResult<GetAlbumsQuery, GetAlbumsQueryVariables>;
+export function refetchGetAlbumsQuery(variables?: GetAlbumsQueryVariables) {
+      return { query: GetAlbumsDocument, variables: variables }
+    }
 export const GetAlbumDocument = gql`
     query getAlbum($id: String!) {
   album(id: $id) {
@@ -115,3 +140,40 @@ export function useGetAlbumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetAlbumQueryHookResult = ReturnType<typeof useGetAlbumQuery>;
 export type GetAlbumLazyQueryHookResult = ReturnType<typeof useGetAlbumLazyQuery>;
 export type GetAlbumQueryResult = Apollo.QueryResult<GetAlbumQuery, GetAlbumQueryVariables>;
+export function refetchGetAlbumQuery(variables?: GetAlbumQueryVariables) {
+      return { query: GetAlbumDocument, variables: variables }
+    }
+export const UpdateAlbumDocument = gql`
+    mutation updateAlbum($input: UpdateAlbumInput) {
+  updateAlbum(input: $input) {
+    id
+    name
+  }
+}
+    `;
+export type UpdateAlbumMutationFn = Apollo.MutationFunction<UpdateAlbumMutation, UpdateAlbumMutationVariables>;
+
+/**
+ * __useUpdateAlbumMutation__
+ *
+ * To run a mutation, you first call `useUpdateAlbumMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateAlbumMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateAlbumMutation, { data, loading, error }] = useUpdateAlbumMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateAlbumMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAlbumMutation, UpdateAlbumMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateAlbumMutation, UpdateAlbumMutationVariables>(UpdateAlbumDocument, options);
+      }
+export type UpdateAlbumMutationHookResult = ReturnType<typeof useUpdateAlbumMutation>;
+export type UpdateAlbumMutationResult = Apollo.MutationResult<UpdateAlbumMutation>;
+export type UpdateAlbumMutationOptions = Apollo.BaseMutationOptions<UpdateAlbumMutation, UpdateAlbumMutationVariables>;

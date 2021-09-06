@@ -9,6 +9,10 @@ type CacheType = {
 
 let cache: CacheType = {};
 
+export const clearCache = (label: string) => {
+  delete cache[label];
+};
+
 export const getCache = (label: string) => {
   const now = Date.now();
   const { timestamp, collection } = cache[label] || {};

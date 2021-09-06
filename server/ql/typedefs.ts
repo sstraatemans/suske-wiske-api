@@ -10,4 +10,12 @@ export const typeDefs = gql`
     albums: [Album]
     album(id: String!): Album
   }
+
+  input UpdateAlbumInput {
+    id: String
+    name: String
+  }
+  type Mutation {
+    updateAlbum(input: UpdateAlbumInput): Album
+  }
 `;

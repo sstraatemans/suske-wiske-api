@@ -7,7 +7,6 @@ export const getById = async <T extends { id: string }>(
 ): Promise<T | undefined> => {
   const cachedData: T[] = getCache(label);
   if (cachedData) {
-    console.log(cachedData);
     console.log(`use Cache ${label}`, id);
     return cachedData.find((item) => item?.id === id) as T;
   }

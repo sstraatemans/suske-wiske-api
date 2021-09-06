@@ -1,5 +1,6 @@
 schema {
   query: Query
+  mutation: Mutation
 }
 
 type Album {
@@ -21,6 +22,22 @@ query getAlbums {
 
 query getAlbum($id: String!) {
   album(id: $id) {
+    id
+    name
+  }
+}
+
+input UpdateAlbumInput {
+  id: String
+  name: String
+}
+
+type Mutation {
+  updateAlbum(input: UpdateAlbumInput): Album
+}
+
+mutation updateAlbum($input: UpdateAlbumInput) {
+  updateAlbum(input: $input) {
     id
     name
   }

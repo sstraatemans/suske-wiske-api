@@ -1,6 +1,6 @@
 overwrite: true
 schema: 'http://localhost:3000/api/ql'
-documents: 'pages/api/ql/*.graphql'
+documents: 'hooks/*.graphql'
 generates:
   hooks/graphql.ts:
     plugins:
@@ -9,3 +9,6 @@ generates:
       - 'typescript-react-apollo'
     config:
       withHooks: true
+      withMutationFn: true
+      withRefetchFn: true
+      withMutationOptionsType: true
