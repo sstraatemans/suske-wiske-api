@@ -96,14 +96,16 @@ const AdminLayout: FC<Props> = ({ children }) => {
           </Container>
         </AppBar>
       </header>
-      <main>
-        {isLoading && (
-          <Box p={2} display='flex' justifyContent='center'>
-            <Loader />
-          </Box>
-        )}
-        {children}
-      </main>
+      <Container>
+        <main>
+          {isLoading && (
+            <Box p={2} display='flex' justifyContent='center'>
+              <Loader />
+            </Box>
+          )}
+          {children}
+        </main>
+      </Container>
       <footer></footer>
     </>
   );

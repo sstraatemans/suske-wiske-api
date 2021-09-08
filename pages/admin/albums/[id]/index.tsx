@@ -1,17 +1,36 @@
-import { useGetAlbumQuery } from '@hooks/.';
-import { AdminLayout } from '@layouts/.';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { TextField } from '@components/Form';
+import { useGetAlbumQuery } from '@hooks/.';
+import { uploadFile } from '@client/storage';
+import { AdminLayout } from '@layouts/.';
+import { TextField, UploadField } from '@components/Form';
 import { Button } from '@components/.';
+import { useState } from 'react';
 
 const Admin: NextPage = () => {
+  const [file, setFile] = useState<File>();
+  const [progress, setProgress] = useState<number>(0);
   const { query } = useRouter();
   const id = (query.id ?? '') as string;
   const { data } = useGetAlbumQuery(id);
 
-  const handleSubmit = () => {
+  const handleSelectImage = (image: File) => {
+    setFile(image);
+  };
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     console.log('submit');
+
+    if (file) {
+      uploadFile(
+        file,
+        (progress) => {
+          setProgress(progress);
+        },
+        () => {},
+        () => {}
+      );
+    }
   };
 
   return (
@@ -19,7 +38,8 @@ const Admin: NextPage = () => {
       <h2>{data?.album ? data.album.name : 'New album'}</h2>
 
       <form onSubmit={handleSubmit}>
-        <TextField value={data?.album?.name} />
+        <TextField defaultValue={data?.album?.name} />
+        <UploadField onChange={handleSelectImage} progress={progress} />
         <Button type='submit'>Submit</Button>
       </form>
       <pre>{JSON.stringify(data, null, 2)}</pre>
