@@ -6,9 +6,7 @@ export const useFormControls = <T>() => {
   const handleInputValue = (e: FormEvent) => {
     const { name, value } = (e.target ?? {}) as HTMLInputElement;
 
-    setFormValues((v: T) => {
-      return { ...v, [name]: value };
-    });
+    setFormValues({ ...formValues, [name]: value } as T);
   };
 
   return {
