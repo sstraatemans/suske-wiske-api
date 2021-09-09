@@ -1,35 +1,30 @@
+import { FormEvent, useEffect } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useGetAlbumQuery } from '@hooks/.';
-import { uploadFile } from '@client/storage';
+import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
+
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button } from '@components/.';
-import { useState } from 'react';
+import { Album, Maybe } from '@hooks/graphql';
 
 const Admin: NextPage = () => {
-  const [file, setFile] = useState<File>();
-  const [progress, setProgress] = useState<number>(0);
   const { query } = useRouter();
   const id = (query.id ?? '') as string;
   const { data } = useGetAlbumQuery(id);
+  const { uploadImage, progress, selectImage, imageUrl } = useImageupload();
+  const { formValues, setInitialFormValues, handleInputValue } = useFormControls<Maybe<Album>>();
 
-  const handleSelectImage = (image: File) => {
-    setFile(image);
-  };
+  useEffect(() => {
+    setInitialFormValues(data?.album);
+  }, [data]);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log('submit');
 
-    if (file) {
-      uploadFile(
-        file,
-        (progress) => {
-          setProgress(progress);
-        },
-        () => {},
-        () => {}
-      );
+    if (data?.album?.id) {
+      uploadImage(data.album.id);
     }
   };
 
@@ -38,11 +33,24 @@ const Admin: NextPage = () => {
       <h2>{data?.album ? data.album.name : 'New album'}</h2>
 
       <form onSubmit={handleSubmit}>
-        <TextField defaultValue={data?.album?.name} />
-        <UploadField onChange={handleSelectImage} progress={progress} />
+        <TextField
+          label='id'
+          name='id'
+          value={formValues?.id}
+          handleInputValue={handleInputValue}
+          disabled
+        />
+        <TextField
+          label='name'
+          name='name'
+          value={formValues?.name}
+          handleInputValue={handleInputValue}
+        />
+        <UploadField onChange={selectImage} progress={progress} />
         <Button type='submit'>Submit</Button>
       </form>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {imageUrl}
+      <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>
   );
 };

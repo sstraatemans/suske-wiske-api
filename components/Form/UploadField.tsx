@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, FC, useState } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button } from '../';
@@ -9,7 +9,12 @@ const useStyles = makeStyles({
   },
 });
 
-export const UploadField = ({ onChange, progress }) => {
+type Props = {
+  progress: number;
+  onChange: (image: File) => void;
+};
+
+export const UploadField: FC<Props> = ({ onChange, progress }) => {
   const classes = useStyles();
 
   const handleSelect = (event: ChangeEvent<HTMLInputElement>) => {

@@ -9,14 +9,20 @@ import {
 const storage = getStorage();
 
 type Props = (
+  id: string,
   file: File,
   onProgress: (progress: number) => void,
   onSuccess: (downloadUrl: string) => void,
-  onError: (error: Error) => void
+  onError?: (error: Error) => void
 ) => void;
 
-const uploadFile: Props = (file, onProgress, onSuccess, onError) => {
-  const storageRef = ref(storage, 'some-child');
+const getFileExtension = (name: string) => {
+  const arr = name.split('.');
+  return arr[arr.length - 1];
+};
+
+const uploadFile: Props = (id, file, onProgress, onSuccess, onError) => {
+  const storageRef = ref(storage, `albums/${id}.${getFileExtension(file.name)}`);
   const task = uploadBytesResumable(storageRef, file);
 
   task.on(
@@ -26,7 +32,7 @@ const uploadFile: Props = (file, onProgress, onSuccess, onError) => {
       onProgress(progress);
     },
     (error) => {
-      onError(error);
+      onError && onError(error);
     },
     () => {
       // Handle successful uploads on complete

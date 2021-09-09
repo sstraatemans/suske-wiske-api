@@ -98,12 +98,13 @@ const AdminLayout: FC<Props> = ({ children }) => {
       </header>
       <Container>
         <main>
-          {isLoading && (
+          {isLoading ? (
             <Box p={2} display='flex' justifyContent='center'>
               <Loader />
             </Box>
+          ) : (
+            children
           )}
-          {children}
         </main>
       </Container>
       <footer></footer>
