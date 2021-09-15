@@ -21,9 +21,17 @@ const Home: NextPage = () => {
     const call = searchRef?.current?.value;
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1/${call}`);
-    const data = await response.json();
-    setError(null);
-    setResult(data);
+    if (response.status > 300) {
+      setError({
+        error: `${response.status}`,
+        message: response.statusText,
+      });
+      setResult(null);
+    } else {
+      const data = await response.json();
+      setError(null);
+      setResult(data);
+    }
   };
 
   const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => {

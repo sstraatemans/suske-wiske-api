@@ -1,5 +1,6 @@
 import { Album } from '@ts/album';
 import { Serie } from '@ts/serie';
+import { Character } from '@ts/Character';
 import { getAll } from './data/getAll';
 
 export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
@@ -27,6 +28,18 @@ export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
         (character) => `${process.env.APIURL}/v1/characters/${character}`
       ),
       series: inSeries,
+    };
+  });
+};
+
+export const enrichCharacters = async (results: Character[]): Promise<Character[]> => {
+  const series = await getAll<Character>('characters');
+
+  return results.map((result) => {
+    return {
+      url: `${process.env.APIURL}/v1/characters/${result.id}`,
+      ...result,
+      albums: result.albums.map((album) => `${process.env.APIURL}/v1/albums/${album}`),
     };
   });
 };
