@@ -60,7 +60,6 @@ const Admin: NextPage = () => {
         <Button type='submit'>Submit</Button>
       </form>
 
-      {formValues?.images && <img src={formValues.images[0]} />}
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>
   );
