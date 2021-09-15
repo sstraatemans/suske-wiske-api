@@ -19,14 +19,6 @@ const Home: NextPage = () => {
     e.preventDefault();
 
     const call = searchRef?.current?.value;
-    if (!call) {
-      setResult(null);
-      setError({
-        error: 'empty call',
-        message: 'You need to fill in a request',
-      });
-      return;
-    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1/${call}`);
     const data = await response.json();
