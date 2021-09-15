@@ -3,3 +3,7 @@ export type Character = {
   name: string;
   albums: string[];
 };
+
+export type NewCharacter = {
+  name: string;
+};

@@ -5,3 +5,7 @@ export type Album = {
   characters: string[];
   series: string[];
 };
+
+export type NewAlbum = {
+  name: string;
+};
