@@ -18,6 +18,7 @@ export type Album = {
   __typename?: 'Album';
   id: Scalars['String'];
   name: Scalars['String'];
+  images: Array<Maybe<Scalars['String']>>;
 };
 
 export type Mutation = {
@@ -44,26 +45,27 @@ export type QueryAlbumArgs = {
 export type UpdateAlbumInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type GetAlbumsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAlbumsQuery = { __typename?: 'Query', albums?: Maybe<Array<Maybe<{ __typename?: 'Album', id: string, name: string }>>> };
+export type GetAlbumsQuery = { __typename?: 'Query', albums?: Maybe<Array<Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>> }>>> };
 
 export type GetAlbumQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string }> };
+export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>> }> };
 
 export type UpdateAlbumMutationVariables = Exact<{
   input?: Maybe<UpdateAlbumInput>;
 }>;
 
 
-export type UpdateAlbumMutation = { __typename?: 'Mutation', updateAlbum?: Maybe<{ __typename?: 'Album', id: string, name: string }> };
+export type UpdateAlbumMutation = { __typename?: 'Mutation', updateAlbum?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>> }> };
 
 
 export const GetAlbumsDocument = gql`
@@ -71,6 +73,7 @@ export const GetAlbumsDocument = gql`
   albums {
     id
     name
+    images
   }
 }
     `;
@@ -109,6 +112,7 @@ export const GetAlbumDocument = gql`
   album(id: $id) {
     id
     name
+    images
   }
 }
     `;
@@ -148,6 +152,7 @@ export const UpdateAlbumDocument = gql`
   updateAlbum(input: $input) {
     id
     name
+    images
   }
 }
     `;

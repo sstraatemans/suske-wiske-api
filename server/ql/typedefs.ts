@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Album {
     id: String!
     name: String!
+    images: [String]!
   }
 
   type Query {
@@ -14,6 +15,7 @@ export const typeDefs = gql`
   input UpdateAlbumInput {
     id: String
     name: String
+    images: [String]
   }
   type Mutation {
     updateAlbum(input: UpdateAlbumInput): Album

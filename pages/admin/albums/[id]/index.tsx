@@ -7,17 +7,24 @@ import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button } from '@components/.';
 import { Album, Maybe } from '@hooks/graphql';
+import { useUpdateAlbumMutation } from '@hooks/.';
 
 const Admin: NextPage = () => {
   const { query } = useRouter();
   const id = (query.id ?? '') as string;
   const { data } = useGetAlbumQuery(id);
   const { uploadImage, progress, selectImage, imageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputValue } = useFormControls<Maybe<Album>>();
+  const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
+    useFormControls<Maybe<Album>>();
+  const { updateAlbum } = useUpdateAlbumMutation();
 
   useEffect(() => {
     setInitialFormValues(data?.album);
-  }, [data]);
+  }, [data, setInitialFormValues]);
+
+  useEffect(() => {
+    handleAddImage(imageUrl);
+  }, [imageUrl, handleAddImage]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -26,11 +33,14 @@ const Admin: NextPage = () => {
     if (data?.album?.id) {
       uploadImage(data.album.id);
     }
+
+    console.log({ formValues });
+    updateAlbum({ variables: { input: formValues } });
   };
 
   return (
     <AdminLayout>
-      <h2>{data?.album ? data.album.name : 'New album'}</h2>
+      <h2>{formValues?.name ? formValues?.name : 'New album'}</h2>
 
       <form onSubmit={handleSubmit}>
         <TextField
@@ -49,7 +59,8 @@ const Admin: NextPage = () => {
         <UploadField onChange={selectImage} progress={progress} />
         <Button type='submit'>Submit</Button>
       </form>
-      {imageUrl}
+
+      {formValues?.images && <img src={formValues.images[0]} />}
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>
   );

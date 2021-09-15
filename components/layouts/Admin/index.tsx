@@ -34,7 +34,7 @@ const AdminLayout: FC<Props> = ({ children }) => {
     if (!isUserLoading && !isLoggedIn) {
       router.push('/login');
     }
-  }, [isLoading, isLoggedIn, router]);
+  }, [isUserLoading, isLoggedIn, router]);
 
   const handleSignOff = () => {
     setisMenuOpen(false);

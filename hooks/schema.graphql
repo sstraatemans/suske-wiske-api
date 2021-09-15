@@ -6,6 +6,7 @@ schema {
 type Album {
   id: String!
   name: String!
+  images: [String]!
 }
 
 type Query {
@@ -17,6 +18,7 @@ query getAlbums {
   albums {
     id
     name
+    images
   }
 }
 
@@ -24,12 +26,14 @@ query getAlbum($id: String!) {
   album(id: $id) {
     id
     name
+    images
   }
 }
 
 input UpdateAlbumInput {
   id: String
   name: String
+  images: [String]
 }
 
 type Mutation {
@@ -40,5 +44,6 @@ mutation updateAlbum($input: UpdateAlbumInput) {
   updateAlbum(input: $input) {
     id
     name
+    images
   }
 }

@@ -1,10 +1,14 @@
 import { clearCache } from '@server/cache';
-import { NewAlbumInput } from '@server/ql/resolvers';
 import { getStore } from '.';
 import { getById } from './getById';
 
-export const updateById = async <T>(label: string, { input }: NewAlbumInput) => {
+export const updateById = async <T extends { input: { id: string } }>(
+  label: string,
+  { input }: T
+) => {
   const store = getStore();
+
+  console.log(input);
   return store
     .collection(label)
     .doc(input.id)

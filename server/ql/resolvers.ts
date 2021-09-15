@@ -7,10 +7,11 @@ type AlbumInput = {
   id: string;
 };
 
-export type NewAlbumInput = {
+export type UpdateAlbumInput = {
   input: {
     id: string;
     name: string;
+    images: string[];
   };
 };
 
@@ -24,8 +25,8 @@ export const resolvers = {
     },
   },
   Mutation: {
-    updateAlbum: async (_: any, args: NewAlbumInput) => {
-      return await updateById<Album>('albums', args);
+    updateAlbum: async (_: any, args: UpdateAlbumInput) => {
+      return await updateById<UpdateAlbumInput>('albums', args);
     },
   },
 };
