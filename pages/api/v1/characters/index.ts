@@ -10,7 +10,6 @@ import {
 import { getAll } from '@server/data/getAll';
 import { Character, NewCharacter } from '@ts/character';
 import { createNode } from '@server/data/createNode';
-import { NewAlbum } from '@ts/album';
 
 const handler = baseHandler()
   .get(async (req, res) => {

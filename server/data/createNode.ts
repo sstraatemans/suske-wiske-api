@@ -1,5 +1,5 @@
 import { clearCache } from '@server/cache';
-import { Character } from '@ts/Character';
+import { Character } from '@ts/character';
 import { getStore } from '.';
 import { getAll } from './getAll';
 import { getById } from './getById';
