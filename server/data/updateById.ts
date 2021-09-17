@@ -2,10 +2,7 @@ import { clearCache } from '@server/cache';
 import { getStore } from '.';
 import { getById } from './getById';
 
-export const updateById = async <T extends { input: { id: string } }>(
-  label: string,
-  { input }: T
-) => {
+export const updateById = async <T extends { id: string }>(label: string, input: T) => {
   const store = getStore();
 
   console.log(input);
