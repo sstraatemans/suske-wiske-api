@@ -3,6 +3,7 @@ import { enrichCharacters } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
 import { Character } from '@ts/character';
 import { updateById } from '@server/data/updateById';
+import { deleteById } from '@server/data/deleteById';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -22,6 +23,14 @@ const handler = baseHandler()
 
     const data = await updateById<Character>('characters', body);
     return res.json(data);
+  })
+  .delete(async (req, res) => {
+    const {
+      query: { id },
+    } = req;
+
+    const data = await deleteById('characters', id);
+    return res.status(204).send({});
   });
 
 export default handler;
