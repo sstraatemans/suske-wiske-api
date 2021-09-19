@@ -4,6 +4,10 @@ import { getStore } from '.';
 import { getAll } from './getAll';
 import { getById } from './getById';
 
+const addDefaultCreateData = <T>(label: string, data: T): T => {
+  return { albums: [], ...data, createDate: new Date(), lastUpdateDate: new Date() };
+};
+
 export const createNode = async <T>(label: string, input: T) => {
   const store = getStore();
 
@@ -18,7 +22,7 @@ export const createNode = async <T>(label: string, input: T) => {
 
   return store
     .doc(`${label}/${newId}`)
-    .set({ albums: [], ...input })
+    .set(addDefaultCreateData<T>(label, input))
     .then((result) => {
       clearCache(label);
       return getById<Character>(label, newId);
