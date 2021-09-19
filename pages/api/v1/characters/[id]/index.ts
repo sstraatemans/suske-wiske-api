@@ -4,6 +4,7 @@ import { getById } from '@server/data/getById';
 import { Character } from '@ts/character';
 import { updateById } from '@server/data/updateById';
 import { deleteById } from '@server/data/deleteById';
+import { deleteImages } from '@server/data/deleteImages';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -29,7 +30,9 @@ const handler = baseHandler()
       query: { id },
     } = req;
 
-    const data = await deleteById('characters', id);
+    await deleteImages('characters', id);
+    await deleteById('characters', id);
+
     return res.status(204).send({});
   });
 

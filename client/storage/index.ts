@@ -1,10 +1,4 @@
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  UploadTask,
-  getDownloadURL,
-} from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const storage = getStorage();
 
@@ -44,4 +38,11 @@ const uploadFile: Props = (id, file, onProgress, onSuccess, onError) => {
   );
 };
 
-export { storage, uploadFile };
+const deleteFile = (url: string) => {
+  const storageRef = ref(storage, url);
+
+  //TODO: implement delete image
+  console.log(storageRef);
+};
+
+export { storage, uploadFile, deleteFile };
