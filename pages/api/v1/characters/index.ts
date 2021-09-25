@@ -39,7 +39,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await createNode<NewCharacter>('characters', body);
+    const data = await createNode<Character>('characters', body);
     return res.status(201).json(data);
   });
 
