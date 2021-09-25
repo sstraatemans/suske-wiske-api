@@ -30,7 +30,7 @@ const handler = baseHandler()
       query: { id },
     } = req;
 
-    await deleteImages('characters', id);
+    // await deleteImages('characters', id);
     await deleteById('characters', id);
 
     return res.status(204).send({});

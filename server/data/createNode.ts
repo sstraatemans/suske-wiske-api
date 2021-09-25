@@ -8,11 +8,11 @@ const addDefaultCreateData = <T>(label: string, data: T): T => {
   return { albums: [], ...data, createDate: new Date(), lastUpdateDate: new Date() };
 };
 
-export const createNode = async <T>(label: string, input: T) => {
+export const createNode = async <T extends { id: string }>(label: string, input: T) => {
   const store = getStore();
 
   // get last Id and add 1
-  const allData = await getAll<Character>('characters');
+  const allData = await getAll<T>(label);
   let id: number = -1;
   allData.forEach((data) => {
     const dataId = parseInt(data.id, 10);
@@ -25,6 +25,6 @@ export const createNode = async <T>(label: string, input: T) => {
     .set(addDefaultCreateData<T>(label, input))
     .then((result) => {
       clearCache(label);
-      return getById<Character>(label, newId);
+      return getById<T>(label, newId);
     });
 };

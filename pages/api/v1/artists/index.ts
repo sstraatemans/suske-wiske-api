@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichCharacters } from '@server/enrichResults';
+import { enrichArtist } from '@server/enrichResults';
 import {
   limitResults,
   cleanLimit,
@@ -8,30 +8,30 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { Character, NewCharacter } from '@ts/character';
+import { Artist, NewArtist } from '@ts/artist';
 import { createNode } from '@server/data/createNode';
 
 const handler = baseHandler()
   .get(async (req, res) => {
     const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };
 
-    const characters = await getAll<Character>('characters');
-    const limitedResults = limitResults<Character>(characters, limit, offset, q);
-    const enrichedResults = await enrichCharacters(limitedResults);
+    const artists = await getAll<Artist>('artists');
+    const limitedResults = limitResults<Artist>(artists, limit, offset, q);
+    const enrichedResults = await enrichArtist(limitedResults);
 
     const cleanedLimit = cleanLimit(limit);
     const cleanedOffset = cleanOffset(offset);
-    const characterCount = characters.length;
+    const artistCount = artists.length;
 
     res.json({
-      count: characterCount,
+      count: artistCount,
       next:
-        nextOffset(cleanedLimit, cleanedOffset, characterCount) > characterCount
-          ? `${process.env.APIURL}/v1/characters?limit=${cleanedLimit}&offset=${cleanedOffset}`
+        nextOffset(cleanedLimit, cleanedOffset, artistCount) > artistCount
+          ? `${process.env.APIURL}/v1/artists?limit=${cleanedLimit}&offset=${cleanedOffset}`
           : null,
       previous:
         previousOffset(cleanedLimit, cleanedOffset) < 0
-          ? `${process.env.APIURL}/v1/characters?limit=${cleanedLimit}&offset=${cleanedOffset}`
+          ? `${process.env.APIURL}/v1/artists?limit=${cleanedLimit}&offset=${cleanedOffset}`
           : null,
       results: enrichedResults,
     });
@@ -39,7 +39,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await createNode<NewCharacter>('characters', body);
+    const data = await createNode<Artist>('artists', body);
     return res.status(201).json(data);
   });
 
