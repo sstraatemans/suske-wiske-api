@@ -1,10 +1,9 @@
 import { clearCache } from '@server/cache';
-import { Character } from '@ts/character';
 import { getStore } from '.';
 import { getAll } from './getAll';
 import { getById } from './getById';
 
-const addDefaultCreateData = <T>(label: string, data: T): T => {
+const addDefaultCreateData = <T>(data: T): T => {
   return { albums: [], ...data, createDate: new Date(), lastUpdateDate: new Date() };
 };
 
@@ -22,8 +21,8 @@ export const createNode = async <T extends { id: string }>(label: string, input:
 
   return store
     .doc(`${label}/${newId}`)
-    .set(addDefaultCreateData<T>(label, input))
-    .then((result) => {
+    .set(addDefaultCreateData<T>(input))
+    .then((_) => {
       clearCache(label);
       return getById<T>(label, newId);
     });
