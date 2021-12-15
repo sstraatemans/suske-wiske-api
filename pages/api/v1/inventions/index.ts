@@ -8,7 +8,6 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { Invention } from '@ts/invention';
 import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()

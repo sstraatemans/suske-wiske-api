@@ -1,7 +1,6 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichSeries } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { Serie } from '@ts/serie';
 
 const handler = baseHandler().get(async (req, res) => {
   const { id } = req.query as { id: string };

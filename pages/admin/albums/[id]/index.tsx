@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
-
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';

@@ -19,6 +19,7 @@ export type Album = {
   id: Scalars['String'];
   name: Scalars['String'];
   images: Array<Maybe<Scalars['String']>>;
+  characters: Array<Maybe<Scalars['String']>>;
 };
 
 export type Artist = {
@@ -26,6 +27,7 @@ export type Artist = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums: Array<Maybe<Scalars['String']>>;
 };
 
 export type Character = {
@@ -33,6 +35,7 @@ export type Character = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums: Array<Maybe<Scalars['String']>>;
 };
 
 export type Invention = {
@@ -40,6 +43,7 @@ export type Invention = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums: Array<Maybe<Scalars['String']>>;
 };
 
 export type Mutation = {
@@ -119,6 +123,7 @@ export type Serie = {
   __typename?: 'Serie';
   id: Scalars['String'];
   name: Scalars['String'];
+  albums: Array<Maybe<Scalars['String']>>;
 };
 
 export type UpdateAlbumInput = {
@@ -160,7 +165,7 @@ export type GetAlbumQueryVariables = Exact<{
 }>;
 
 
-export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>> }> };
+export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>>, characters: Array<Maybe<string>> }> };
 
 export type GetCharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -172,7 +177,7 @@ export type GetCharacterQueryVariables = Exact<{
 }>;
 
 
-export type GetCharacterQuery = { __typename?: 'Query', character?: Maybe<{ __typename?: 'Character', id: string, name: string, images?: Maybe<Array<Maybe<string>>> }> };
+export type GetCharacterQuery = { __typename?: 'Query', character?: Maybe<{ __typename?: 'Character', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
 
 export type GetInventionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -184,7 +189,7 @@ export type GetInventionQueryVariables = Exact<{
 }>;
 
 
-export type GetInventionQuery = { __typename?: 'Query', invention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>> }> };
+export type GetInventionQuery = { __typename?: 'Query', invention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
 
 export type GetSeriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -196,7 +201,7 @@ export type GetSerieQueryVariables = Exact<{
 }>;
 
 
-export type GetSerieQuery = { __typename?: 'Query', serie?: Maybe<{ __typename?: 'Serie', id: string, name: string }> };
+export type GetSerieQuery = { __typename?: 'Query', serie?: Maybe<{ __typename?: 'Serie', id: string, name: string, albums: Array<Maybe<string>> }> };
 
 export type GetArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -208,7 +213,7 @@ export type GetArtistQueryVariables = Exact<{
 }>;
 
 
-export type GetArtistQuery = { __typename?: 'Query', artist?: Maybe<{ __typename?: 'Artist', id: string, name: string, images?: Maybe<Array<Maybe<string>>> }> };
+export type GetArtistQuery = { __typename?: 'Query', artist?: Maybe<{ __typename?: 'Artist', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
 
 export type UpdateAlbumMutationVariables = Exact<{
   input?: Maybe<UpdateAlbumInput>;
@@ -291,6 +296,7 @@ export const GetAlbumDocument = gql`
     id
     name
     images
+    characters
   }
 }
     `;
@@ -369,6 +375,7 @@ export const GetCharacterDocument = gql`
     id
     name
     images
+    albums
   }
 }
     `;
@@ -447,6 +454,7 @@ export const GetInventionDocument = gql`
     id
     name
     images
+    albums
   }
 }
     `;
@@ -524,6 +532,7 @@ export const GetSerieDocument = gql`
   serie(id: $id) {
     id
     name
+    albums
   }
 }
     `;
@@ -602,6 +611,7 @@ export const GetArtistDocument = gql`
     id
     name
     images
+    albums
   }
 }
     `;

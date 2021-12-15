@@ -1,7 +1,6 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichArtist } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { Artist } from '@ts/artist';
 import { updateById } from '@server/data/updateById';
 import { deleteById } from '@server/data/deleteById';
 

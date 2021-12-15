@@ -15,7 +15,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@ts/*": ["types/*"],
       "@api/*": ["pages/api/*"],
       "@server/*": ["server/*"],
       "@components/*": ["components/*"],

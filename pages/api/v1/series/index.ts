@@ -1,7 +1,6 @@
 import { baseHandler } from '@server/baseHandler';
 import { limitResults } from '@server/limitResults';
 import { enrichSeries } from '@server/enrichResults';
-import { Serie } from '@ts/serie';
 import { getAll } from '@server/data/getAll';
 
 const handler = baseHandler().get(async (req, res) => {

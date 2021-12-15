@@ -56,6 +56,7 @@ query getAlbum($id: String!) {
     id
     name
     images
+    characters
   }
 }
 
@@ -71,6 +72,7 @@ query getCharacter($id: String!) {
     id
     name
     images
+    albums
   }
 }
 
@@ -86,6 +88,7 @@ query getInvention($id: String!) {
     id
     name
     images
+    albums
   }
 }
 
@@ -100,6 +103,7 @@ query getSerie($id: String!) {
   serie(id: $id) {
     id
     name
+    albums
   }
 }
 
@@ -115,6 +119,7 @@ query getArtist($id: String!) {
     id
     name
     images
+    albums
   }
 }
 

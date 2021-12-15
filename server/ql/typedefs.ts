@@ -26,6 +26,7 @@ export const typeDefs = gql`
     id: String!
     name: String!
     images: [String]!
+    characters: [String]!
   }
 
   input UpdateAlbumInput {
@@ -61,22 +62,26 @@ export const typeDefs = gql`
     id: String!
     name: String!
     images: [String]
+    albums: [String]!
   }
 
   type Invention {
     id: String!
     name: String!
     images: [String]
+    albums: [String]!
   }
 
   type Artist {
     id: String!
     name: String!
     images: [String]
+    albums: [String]!
   }
 
   type Serie {
     id: String!
     name: String!
+    albums: [String]!
   }
 `;

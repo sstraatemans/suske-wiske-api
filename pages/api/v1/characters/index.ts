@@ -8,7 +8,6 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { Character } from '@ts/character';
 import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()

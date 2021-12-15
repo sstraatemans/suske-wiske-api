@@ -1,7 +1,6 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichInvention } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { Invention } from '@ts/invention';
 import { updateById } from '@server/data/updateById';
 import { deleteById } from '@server/data/deleteById';
 

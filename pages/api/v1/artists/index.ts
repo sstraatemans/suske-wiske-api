@@ -8,7 +8,6 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { Artist } from '@ts/artist';
 import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()

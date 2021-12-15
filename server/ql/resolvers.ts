@@ -1,8 +1,3 @@
-import { Album } from '@ts/album';
-import { Character } from '@ts/character';
-import { Invention } from '@ts/invention';
-import { Artist } from '@ts/artist';
-import { Serie } from '@ts/serie';
 import { getAll } from '@server/data/getAll';
 import { getById } from '@server/data/getById';
 import { updateById } from '@server/data/updateById';

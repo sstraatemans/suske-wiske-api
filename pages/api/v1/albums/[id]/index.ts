@@ -1,7 +1,6 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichAlbums } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { Album } from '@ts/album';
 
 const handler = baseHandler().get(async (req, res) => {
   const { id } = req.query as { id: string };
