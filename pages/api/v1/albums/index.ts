@@ -9,7 +9,7 @@ import {
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
 import { Album } from '@ts/album';
-import { createNode } from '@server/data/createNode';
+import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -39,7 +39,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await createNode<Album>('albums', body);
+    const data = await updateById<Album>('albums', body);
     return res.status(201).json(data);
   });
 

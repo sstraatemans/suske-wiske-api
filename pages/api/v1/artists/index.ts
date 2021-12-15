@@ -8,8 +8,8 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { Artist, NewArtist } from '@ts/artist';
-import { createNode } from '@server/data/createNode';
+import { Artist } from '@ts/artist';
+import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -39,7 +39,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await createNode<Artist>('artists', body);
+    const data = await updateById<Artist>('artists', body);
     return res.status(201).json(data);
   });
 

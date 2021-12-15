@@ -9,7 +9,7 @@ import {
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
 import { Invention } from '@ts/invention';
-import { createNode } from '@server/data/createNode';
+import { updateById } from '@server/data/updateById';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -39,7 +39,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await createNode<Invention>('inventions', body);
+    const data = await updateById<Invention>('inventions', body);
     return res.status(201).json(data);
   });
 
