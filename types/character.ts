@@ -2,6 +2,7 @@ export type Character = {
   id: string;
   name: string;
   albums: string[];
+  images: string[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;

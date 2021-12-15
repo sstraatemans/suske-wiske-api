@@ -2,6 +2,7 @@ export type Artist = {
   id: string;
   name: string;
   albums: string[];
+  images: [];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;

@@ -14,6 +14,35 @@ type Query {
   album(id: String!): Album
 }
 
+input UpdateAlbumInput {
+  id: String
+  name: String
+  images: [String]
+}
+
+input UpdateSerieInput {
+  id: String
+  name: String
+}
+
+input UpdateArtistInput {
+  id: String
+  name: String
+  images: [String]
+}
+
+input UpdateInventionInput {
+  id: String
+  name: String
+  images: [String]
+}
+
+input UpdateCharacterInput {
+  id: String
+  name: String
+  images: [String]
+}
+
 query getAlbums {
   albums {
     id
@@ -30,28 +59,18 @@ query getAlbum($id: String!) {
   }
 }
 
-input UpdateAlbumInput {
-  id: String
-  name: String
-  images: [String]
-}
-
-type Mutation {
-  updateAlbum(input: UpdateAlbumInput): Album
-}
-
-mutation updateAlbum($input: UpdateAlbumInput) {
-  updateAlbum(input: $input) {
-    id
-    name
-    images
-  }
-}
-
 query getCharacters {
   characters {
     id
     name
+  }
+}
+
+query getCharacter($id: String!) {
+  character(id: $id) {
+    id
+    name
+    images
   }
 }
 
@@ -62,8 +81,23 @@ query getInventions {
   }
 }
 
+query getInvention($id: String!) {
+  invention(id: $id) {
+    id
+    name
+    images
+  }
+}
+
 query getSeries {
   series {
+    id
+    name
+  }
+}
+
+query getSerie($id: String!) {
+  serie(id: $id) {
     id
     name
   }
@@ -73,5 +107,60 @@ query getArtists {
   artists {
     id
     name
+  }
+}
+
+query getArtist($id: String!) {
+  artist(id: $id) {
+    id
+    name
+    images
+  }
+}
+
+type Mutation {
+  updateAlbum(input: UpdateAlbumInput): Album
+  updateSerie(input: UpdateSerieInput): Serie
+  updateArtist(input: UpdateArtistInput): Artist
+  updateInvention(input: UpdateInventionInput): Invention
+  updateCharacter(input: UpdateCharacterInput): Character
+}
+
+mutation updateAlbum($input: UpdateAlbumInput) {
+  updateAlbum(input: $input) {
+    id
+    name
+    images
+  }
+}
+
+mutation updateSerie($input: UpdateSerieInput) {
+  updateSerie(input: $input) {
+    id
+    name
+  }
+}
+
+mutation updateArtist($input: UpdateArtistInput) {
+  updateArtist(input: $input) {
+    id
+    name
+    images
+  }
+}
+
+mutation updateInvention($input: UpdateInventionInput) {
+  updateInvention(input: $input) {
+    id
+    name
+    images
+  }
+}
+
+mutation updateCharacter($input: UpdateCharacterInput) {
+  updateCharacter(input: $input) {
+    id
+    name
+    images
   }
 }
