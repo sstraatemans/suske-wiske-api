@@ -6,7 +6,7 @@ import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
 
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
-import { Button } from '@components/.';
+import { Button, ImageContainer } from '@components/.';
 import { Album, Maybe } from '@hooks/graphql';
 import { useUpdateAlbumMutation } from '@hooks/.';
 
@@ -41,8 +41,6 @@ const Admin: NextPage = () => {
     updateAlbum({ variables: { input: formValues } });
   };
 
-  console.log(data);
-
   return (
     <AdminLayout>
       <h2>{formValues?.name ? formValues?.name : 'New album'}</h2>
@@ -66,7 +64,11 @@ const Admin: NextPage = () => {
       </form>
 
       <h3>Image</h3>
-      {data?.album?.images.length > 0 && <Image src={data.album.images[0]} layout='fill' />}
+      {data?.album?.images?.length && data.album.images[0] && (
+        <ImageContainer width={300} height={300}>
+          <Image src={data.album.images[0]} layout='fill' alt='album cover' />
+        </ImageContainer>
+      )}
 
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>

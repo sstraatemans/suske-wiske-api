@@ -1,7 +1,6 @@
 module.exports = {
   images: {
     domains: ['firebasestorage.googleapis.com'],
-    formats: ['image/png', 'image/jpg'],
   },
 
   async headers() {
