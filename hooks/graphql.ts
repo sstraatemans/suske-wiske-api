@@ -27,7 +27,7 @@ export type Artist = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
-  albums: Array<Maybe<Scalars['String']>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Character = {
@@ -35,7 +35,7 @@ export type Character = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
-  albums: Array<Maybe<Scalars['String']>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Invention = {
@@ -43,7 +43,7 @@ export type Invention = {
   id: Scalars['String'];
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
-  albums: Array<Maybe<Scalars['String']>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type Mutation = {
@@ -123,7 +123,7 @@ export type Serie = {
   __typename?: 'Serie';
   id: Scalars['String'];
   name: Scalars['String'];
-  albums: Array<Maybe<Scalars['String']>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UpdateAlbumInput = {
@@ -136,18 +136,21 @@ export type UpdateArtistInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UpdateCharacterInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UpdateInventionInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  albums?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type UpdateSerieInput = {
@@ -177,7 +180,7 @@ export type GetCharacterQueryVariables = Exact<{
 }>;
 
 
-export type GetCharacterQuery = { __typename?: 'Query', character?: Maybe<{ __typename?: 'Character', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
+export type GetCharacterQuery = { __typename?: 'Query', character?: Maybe<{ __typename?: 'Character', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums?: Maybe<Array<Maybe<string>>> }> };
 
 export type GetInventionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -189,7 +192,7 @@ export type GetInventionQueryVariables = Exact<{
 }>;
 
 
-export type GetInventionQuery = { __typename?: 'Query', invention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
+export type GetInventionQuery = { __typename?: 'Query', invention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums?: Maybe<Array<Maybe<string>>> }> };
 
 export type GetSeriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -201,7 +204,7 @@ export type GetSerieQueryVariables = Exact<{
 }>;
 
 
-export type GetSerieQuery = { __typename?: 'Query', serie?: Maybe<{ __typename?: 'Serie', id: string, name: string, albums: Array<Maybe<string>> }> };
+export type GetSerieQuery = { __typename?: 'Query', serie?: Maybe<{ __typename?: 'Serie', id: string, name: string, albums?: Maybe<Array<Maybe<string>>> }> };
 
 export type GetArtistsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -213,7 +216,7 @@ export type GetArtistQueryVariables = Exact<{
 }>;
 
 
-export type GetArtistQuery = { __typename?: 'Query', artist?: Maybe<{ __typename?: 'Artist', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums: Array<Maybe<string>> }> };
+export type GetArtistQuery = { __typename?: 'Query', artist?: Maybe<{ __typename?: 'Artist', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums?: Maybe<Array<Maybe<string>>> }> };
 
 export type UpdateAlbumMutationVariables = Exact<{
   input?: Maybe<UpdateAlbumInput>;
@@ -241,7 +244,7 @@ export type UpdateInventionMutationVariables = Exact<{
 }>;
 
 
-export type UpdateInventionMutation = { __typename?: 'Mutation', updateInvention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>> }> };
+export type UpdateInventionMutation = { __typename?: 'Mutation', updateInvention?: Maybe<{ __typename?: 'Invention', id: string, name: string, images?: Maybe<Array<Maybe<string>>>, albums?: Maybe<Array<Maybe<string>>> }> };
 
 export type UpdateCharacterMutationVariables = Exact<{
   input?: Maybe<UpdateCharacterInput>;
@@ -756,6 +759,7 @@ export const UpdateInventionDocument = gql`
     id
     name
     images
+    albums
   }
 }
     `;

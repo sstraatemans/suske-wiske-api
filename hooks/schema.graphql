@@ -23,24 +23,28 @@ input UpdateAlbumInput {
 input UpdateSerieInput {
   id: String
   name: String
+  albums: [String]
 }
 
 input UpdateArtistInput {
   id: String
   name: String
   images: [String]
+  albums: [String]
 }
 
 input UpdateInventionInput {
   id: String
   name: String
   images: [String]
+  albums: [String]
 }
 
 input UpdateCharacterInput {
   id: String
   name: String
   images: [String]
+  albums: [String]
 }
 
 query getAlbums {
@@ -159,6 +163,7 @@ mutation updateInvention($input: UpdateInventionInput) {
     id
     name
     images
+    albums
   }
 }
 

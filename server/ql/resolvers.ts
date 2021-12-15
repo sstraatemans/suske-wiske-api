@@ -43,6 +43,7 @@ export type UpdateInventionInput = {
   id: string;
   name: string;
   images: string[];
+  albums: string[];
 };
 
 export type UpdateCharacterInput = {

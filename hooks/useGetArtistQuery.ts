@@ -6,6 +6,7 @@ export const useGetArtistQuery = (id: string) => {
   const { data, loading, error } = useGetArtistQueryFnc({ variables: { id } });
   const { setIsLoading, setError } = useDataContext();
 
+  console.log({ data, loading, error });
   useEffect(() => {
     setIsLoading(loading);
     setError(error);

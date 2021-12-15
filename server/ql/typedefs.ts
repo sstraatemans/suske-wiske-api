@@ -44,44 +44,47 @@ export const typeDefs = gql`
     id: String
     name: String
     images: [String]
+    albums: [String]
   }
 
   input UpdateInventionInput {
     id: String
     name: String
     images: [String]
+    albums: [String]
   }
 
   input UpdateCharacterInput {
     id: String
     name: String
     images: [String]
+    albums: [String]
   }
 
   type Character {
     id: String!
     name: String!
     images: [String]
-    albums: [String]!
+    albums: [String]
   }
 
   type Invention {
     id: String!
     name: String!
     images: [String]
-    albums: [String]!
+    albums: [String]
   }
 
   type Artist {
     id: String!
     name: String!
     images: [String]
-    albums: [String]!
+    albums: [String]
   }
 
   type Serie {
     id: String!
     name: String!
-    albums: [String]!
+    albums: [String]
   }
 `;
