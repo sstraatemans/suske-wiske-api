@@ -1,5 +1,6 @@
 import { FormEvent, useEffect } from 'react';
 import { NextPage } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
 
@@ -13,7 +14,7 @@ const Admin: NextPage = () => {
   const { query } = useRouter();
   const id = (query.id ?? '') as string;
   const { data } = useGetAlbumQuery(id);
-  const { uploadImage, progress, selectImage, imageUrl } = useImageupload();
+  const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
     useFormControls<Maybe<Album>>();
   const { updateAlbum } = useUpdateAlbumMutation();
@@ -23,20 +24,24 @@ const Admin: NextPage = () => {
   }, [data, setInitialFormValues]);
 
   useEffect(() => {
-    handleAddImage(imageUrl);
-  }, [imageUrl, handleAddImage]);
+    if (imageUrl) {
+      handleAddImage(imageUrl);
+      updateAlbum({ variables: { input: formValues } });
+      setImageUrl(null);
+    }
+  }, [imageUrl, handleAddImage, setImageUrl, updateAlbum, formValues]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('submit');
 
     if (data?.album?.id) {
       uploadImage(data.album.id);
     }
 
-    console.log({ formValues });
     updateAlbum({ variables: { input: formValues } });
   };
+
+  console.log(data);
 
   return (
     <AdminLayout>
@@ -59,6 +64,9 @@ const Admin: NextPage = () => {
         <UploadField onChange={selectImage} progress={progress} />
         <Button type='submit'>Submit</Button>
       </form>
+
+      <h3>Image</h3>
+      {data?.album?.images.length > 0 && <Image src={data.album.images[0]} layout='fill' />}
 
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>
