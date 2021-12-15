@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useDataContext } from '@context/DataContext';
-import { useGetAlbumQuery as useGetAlbumQueryFnc } from './graphql';
+import { useGetInventionsQuery as useGetInventionsQueryFnc } from './graphql';
 
-export const useGetAlbumQuery = (id: string) => {
-  const { data, loading, error } = useGetAlbumQueryFnc({ variables: { id } });
+export const useGetInventionsQuery = () => {
+  const { data, loading, error } = useGetInventionsQueryFnc();
   const { setIsLoading, setError } = useDataContext();
 
-  console.log({ data, loading, error });
   useEffect(() => {
     setIsLoading(loading);
     setError(error);

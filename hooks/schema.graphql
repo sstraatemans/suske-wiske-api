@@ -47,3 +47,31 @@ mutation updateAlbum($input: UpdateAlbumInput) {
     images
   }
 }
+
+query getCharacters {
+  characters {
+    id
+    name
+  }
+}
+
+query getInventions {
+  inventions {
+    id
+    name
+  }
+}
+
+query getSeries {
+  series {
+    id
+    name
+  }
+}
+
+query getArtists {
+  artists {
+    id
+    name
+  }
+}

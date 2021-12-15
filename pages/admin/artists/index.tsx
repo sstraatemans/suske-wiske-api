@@ -1,4 +1,4 @@
-import { useGetSeriesQuery } from '@hooks/.';
+import { useGetArtistsQuery } from '@hooks/.';
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import { AdminLayout } from '@layouts/.';
@@ -13,18 +13,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useGetSeriesQuery();
+  const { loading, error, data } = useGetArtistsQuery();
   const classes = useStyles();
 
   return (
     <AdminLayout>
-      <h2>Series</h2>
+      <h2>Artists</h2>
 
       <ul>
-        {data?.series?.map((serie) => (
-          <li key={serie?.id}>
-            <Link href={`/admin/series/${serie?.id}`}>
-              <a>{serie?.name}</a>
+        {data?.artists?.map((artist) => (
+          <li key={artist?.id}>
+            <Link href={`/admin/artists/${artist?.id}`}>
+              <a>{artist?.name}</a>
             </Link>
           </li>
         ))}

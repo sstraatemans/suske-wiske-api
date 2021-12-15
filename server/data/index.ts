@@ -1,26 +1,35 @@
-import * as admin from 'firebase-admin';
+// Initialize Cloud Firestore through Firebase
+import { initializeApp } from 'firebase/app';
+import {
+  updateDoc,
+  addDoc,
+  DocumentReference,
+  CollectionReference,
+  WithFieldValue,
+  UpdateData,
+  doc as docFnc,
+  DocumentData,
+} from 'firebase/firestore';
+import { Firestore, getFirestore } from 'firebase/firestore';
 
-let db: FirebaseFirestore.Firestore;
+let db: Firestore;
 
-export const initializeApp = () => {
+export const init = () => {
   const privatekey: string = process.env.FIREBASE_PRIVATEKEY || '';
 
   try {
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        privateKey: privatekey.replace(/\\n/g, '\n'),
-        projectId: process.env.FIREBASE_PROJECTID,
-        clientEmail: process.env.FIREBASE_EMAIL,
-      }),
-      databaseURL: `https://${process.env.FIREBASE_PROJECTID}.firebaseio.com`,
+    const firebaseApp = initializeApp({
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
     });
   } catch (e) {}
 
-  db = admin.firestore();
+  db = getFirestore();
 };
 
-export const getStore = (): FirebaseFirestore.Firestore => {
-  if (!db) initializeApp();
+export const getStore = (): Firestore => {
+  if (!db) init();
 
   return db;
 };

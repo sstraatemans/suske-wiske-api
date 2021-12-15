@@ -1,5 +1,5 @@
 import { FormEvent, useEffect } from 'react';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
@@ -11,7 +11,8 @@ import { Album, Maybe } from '@hooks/graphql';
 import { useUpdateAlbumMutation } from '@hooks/.';
 
 const Admin: NextPage = () => {
-  const { query } = useRouter();
+  const router = useRouter();
+  const { query } = router;
   const id = (query.id ?? '') as string;
   const { data } = useGetAlbumQuery(id);
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
@@ -38,7 +39,8 @@ const Admin: NextPage = () => {
       uploadImage(data.album.id);
     }
 
-    updateAlbum({ variables: { input: formValues } });
+    updateAlbum({ variables: { input: { ...formValues, images: [] } } });
+    router.push(`/admin/albums/${formValues?.id}`);
   };
 
   return (
@@ -51,15 +53,16 @@ const Admin: NextPage = () => {
           name='id'
           value={formValues?.id}
           handleInputValue={handleInputValue}
-          disabled
+          required
         />
         <TextField
           label='name'
           name='name'
           value={formValues?.name}
           handleInputValue={handleInputValue}
+          required
         />
-        <UploadField onChange={selectImage} progress={progress} />
+        {data?.album?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
 
@@ -73,6 +76,12 @@ const Admin: NextPage = () => {
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </AdminLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 };
 
 export default Admin;

@@ -1,5 +1,6 @@
-import { getCache, setCache } from '@server/cache';
+import { getCache, setCacheById } from '@server/cache';
 import { getStore } from '.';
+import { getDoc, doc } from 'firebase/firestore';
 
 export const getById = async <T extends { id: string }>(
   label: string,
@@ -13,15 +14,16 @@ export const getById = async <T extends { id: string }>(
 
   const store = getStore();
 
-  const snapshot = await store.collection(label).get();
-  const data = snapshot.docs.map((doc): T => {
-    return {
-      id: doc.id,
-      ...doc.data(),
-    } as any as T;
-  });
+  const ref = doc(store, label, id);
+  const snapshot = await getDoc(ref);
+  console.log(snapshot.data());
 
-  setCache(label, data);
+  const data = {
+    id,
+    ...snapshot.data(),
+  } as any as T;
+
+  setCacheById(label, data);
 
   return getById<T>(label, id);
 };

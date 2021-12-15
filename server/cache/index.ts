@@ -25,12 +25,24 @@ export const getCache = (label: string) => {
   }
 };
 
-export const setCache = <T>(label: string, Collection: T) => {
+export const setCache = <T>(label: string, collection: T) => {
   cache = {
     ...cache,
     [label]: {
       timestamp: Date.now(),
-      collection: Collection,
+      collection,
+    },
+  };
+};
+
+export const setCacheById = <T extends { id: string }>(label: string, data: T) => {
+  const oldCollection = cache[label]?.collection.filter((item: T) => item.id === data.id) ?? [];
+
+  cache = {
+    ...cache,
+    [label]: {
+      timestamp: Date.now(),
+      collection: [...oldCollection, data],
     },
   };
 };
