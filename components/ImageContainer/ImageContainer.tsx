@@ -1,18 +1,18 @@
 import { FC } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  wrapper: {
-    position: 'relative',
-    width: (props) => props.width,
-    height: (props) => props.height,
-  },
-}));
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 type Props = {
   width: number;
   height: number;
 };
+
+const useStyles = makeStyles<Theme, Props>(() => ({
+  wrapper: {
+    position: 'relative',
+    width: ({ width }) => width,
+    height: ({ height }) => height,
+  },
+}));
 
 export const ImageContainer: FC<Props> = ({ children, ...props }) => {
   const classes = useStyles(props);
