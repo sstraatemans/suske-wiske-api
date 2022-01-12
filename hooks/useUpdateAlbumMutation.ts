@@ -1,12 +1,5 @@
-import { useDataContext } from '@context/DataContext';
+import { useMutateData } from './utils/useMutateData';
+import { DATAURLS } from './utils/constants';
 
-export const useUpdateAlbumMutation = () => {
-  // const [updateAlbum, { called, loading }] = useUpdateAlbumMutationFnc();
-  // const { setError } = useDataContext();
-  // return {
-  //   updateAlbum,
-  //   called,
-  //   isLoading: loading,
-  //   setError,
-  // };
-};
+export const useUpdateAlbumMutation = (id: string) =>
+  useMutateData<Album>(`${DATAURLS.ALBUMS}/${id}`);

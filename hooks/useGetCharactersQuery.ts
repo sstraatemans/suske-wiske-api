@@ -1,16 +1,5 @@
-import { useEffect } from 'react';
-import { useDataContext } from '@context/DataContext';
+import { DATAURLS } from './utils/constants';
+import { useLoadData } from './utils/useLoadData';
 
-export const useGetCharactersQuery = () => {
-  // const { data, loading, error } = useGetCharactersQueryFnc();
-  // const { setIsLoading, setError } = useDataContext();
-  // useEffect(() => {
-  //   setIsLoading(loading);
-  //   setError(error);
-  // }, [loading, error, setIsLoading, setError]);
-  // return {
-  //   data,
-  //   loading,
-  //   error,
-  // };
-};
+export const useGetCharactersQuery = () =>
+  useLoadData<ArrayResults<Character>>(DATAURLS.CHARACTERS);

@@ -1,7 +1,7 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichCharacters } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { updateById } from '@server/data/updateById';
+import { updateById } from '@server/data/update';
 import { deleteById } from '@server/data/deleteById';
 
 const handler = baseHandler()
@@ -9,6 +9,7 @@ const handler = baseHandler()
     const { id } = req.query as { id: string };
 
     const data = await getById<Character>('characters', id);
+    console.log(data);
     if (!data) return res.status(404).json({ detail: 'Not found' });
     const enrichedResult = await enrichCharacters([data]);
 

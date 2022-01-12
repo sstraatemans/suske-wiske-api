@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useGetAlbumsQuery();
+  const { data } = useGetAlbumsQuery();
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const Admin: NextPage = () => {
       <h2>Albums</h2>
 
       <ul>
-        {data?.albums?.map((album) => (
+        {data?.results?.map((album) => (
           <li key={album?.id}>
             <Link href={`/admin/albums/${album?.id}`}>
               <a>{album?.name}</a>

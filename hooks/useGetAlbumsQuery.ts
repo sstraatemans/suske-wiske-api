@@ -1,16 +1,4 @@
-import { useEffect } from 'react';
-import { useDataContext } from '@context/DataContext';
+import { DATAURLS } from './utils/constants';
+import { useLoadData } from './utils/useLoadData';
 
-export const useGetAlbumsQuery = () => {
-  // const { data, loading, error } = useGetAlbumsQueryFnc();
-  // const { setIsLoading, setError } = useDataContext();
-  // useEffect(() => {
-  //   setIsLoading(loading);
-  //   setError(error);
-  // }, [loading, error, setIsLoading, setError]);
-  // return {
-  //   data,
-  //   loading,
-  //   error,
-  // };
-};
+export const useGetAlbumsQuery = () => useLoadData<ArrayResults<Album>>(DATAURLS.ALBUMS);

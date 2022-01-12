@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useGetCharactersQuery();
+  const { data } = useGetCharactersQuery();
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const Admin: NextPage = () => {
       <h2>Characters</h2>
 
       <ul>
-        {data?.characters?.map((character) => (
+        {data?.results?.map((character) => (
           <li key={character?.id}>
             <Link href={`/admin/characters/${character?.id}`}>
               <a>{character?.name}</a>

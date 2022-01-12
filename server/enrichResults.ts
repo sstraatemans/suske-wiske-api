@@ -21,9 +21,6 @@ export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
     return {
       url: `${process.env.APIURL}/v1/albums/${result.id}`,
       ...result,
-      characters: result.characters.map(
-        (character) => `${process.env.APIURL}/v1/characters/${character}`
-      ),
       series: inSeries,
     };
   });
@@ -36,7 +33,7 @@ export const enrichCharacters = async (results: Character[]): Promise<Character[
     return {
       url: `${process.env.APIURL}/v1/characters/${result.id}`,
       ...result,
-      albums: result.albums.map((album) => `${process.env.APIURL}/v1/albums/${album}`),
+      albums: result.albums?.map((album) => `${process.env.APIURL}/v1/albums/${album}`) ?? [],
     };
   });
 };

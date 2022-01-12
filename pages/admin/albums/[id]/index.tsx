@@ -6,7 +6,6 @@ import { useFormControls, useGetAlbumQuery, useImageupload } from '@hooks/.';
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';
-import { Album, Maybe } from '@hooks/graphql';
 import { useUpdateAlbumMutation } from '@hooks/.';
 
 const Admin: NextPage = () => {
@@ -16,35 +15,37 @@ const Admin: NextPage = () => {
   const { data } = useGetAlbumQuery(id);
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
-    useFormControls<Maybe<Album>>();
-  const { updateAlbum } = useUpdateAlbumMutation();
+    useFormControls<Album>();
+  const { mutateData } = useUpdateAlbumMutation(id);
 
   useEffect(() => {
-    setInitialFormValues(data?.album);
+    setInitialFormValues(data);
   }, [data, setInitialFormValues]);
 
   useEffect(() => {
     if (imageUrl) {
       handleAddImage(imageUrl);
-      updateAlbum({ variables: { input: formValues } });
       setImageUrl(null);
     }
-  }, [imageUrl, handleAddImage, setImageUrl, updateAlbum, formValues]);
+  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!formValues) return;
 
-    if (data?.album?.id) {
-      uploadImage(data.album.id);
+    if (formValues?.id) {
+      await uploadImage(formValues?.id);
+      await mutateData({ ...formValues });
+      return;
     }
 
-    updateAlbum({ variables: { input: { ...formValues, images: [] } } });
-    router.push(`/admin/albums/${formValues?.id}`);
+    await mutateData({ ...formValues, images: [] });
   };
 
+  if (!formValues) return null;
   return (
     <AdminLayout>
-      <h2>{formValues?.name ? formValues?.name : 'New album'}</h2>
+      <h2>{formValues?.name ? formValues?.name : 'New Album'}</h2>
 
       <form onSubmit={handleSubmit}>
         <TextField
@@ -61,15 +62,14 @@ const Admin: NextPage = () => {
           handleInputValue={handleInputValue}
           required
         />
-
-        {data?.album?.id && <UploadField onChange={selectImage} progress={progress} />}
+        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
 
       <h3>Image</h3>
-      {data?.album?.images?.length && data.album.images[0] && (
+      {formValues?.images?.length && (
         <ImageContainer width={300} height={300}>
-          <Image src={data.album.images[0]} layout='fill' alt='album cover' />
+          <Image src={formValues.images[0]} layout='fill' alt='album portrait' />
         </ImageContainer>
       )}
 

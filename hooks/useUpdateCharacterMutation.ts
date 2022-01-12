@@ -1,12 +1,5 @@
-import { useDataContext } from '@context/DataContext';
+import { useMutateData } from './utils/useMutateData';
+import { DATAURLS } from './utils/constants';
 
-export const useUpdateCharacterMutation = () => {
-  // const [updateCharacter, { called, loading }] = useUpdateCharacterMutationFnc();
-  // const { setError } = useDataContext();
-  // return {
-  //   updateCharacter,
-  //   called,
-  //   isLoading: loading,
-  //   setError,
-  // };
-};
+export const useUpdateCharacterMutation = (id: string) =>
+  useMutateData<Character>(`${DATAURLS.CHARACTERS}/${id}`);

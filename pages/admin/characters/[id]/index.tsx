@@ -3,11 +3,9 @@ import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useFormControls, useGetCharacterQuery, useImageupload } from '@hooks/.';
-
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';
-import { Character, Maybe } from '@hooks/graphql';
 import { useUpdateCharacterMutation } from '@hooks/.';
 
 const Admin: NextPage = () => {
@@ -17,34 +15,34 @@ const Admin: NextPage = () => {
   const { data } = useGetCharacterQuery(id);
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
-    useFormControls<Maybe<Character>>();
-  const { updateCharacter } = useUpdateCharacterMutation();
-
-  console.log(formValues);
+    useFormControls<Character>();
+  const { mutateData } = useUpdateCharacterMutation(id);
 
   useEffect(() => {
-    setInitialFormValues(data?.character);
+    setInitialFormValues(data);
   }, [data, setInitialFormValues]);
 
   useEffect(() => {
     if (imageUrl) {
       handleAddImage(imageUrl);
-      updateCharacter({ variables: { input: formValues } });
       setImageUrl(null);
     }
-  }, [imageUrl, handleAddImage, setImageUrl, updateCharacter, formValues]);
+  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!formValues) return;
 
-    if (data?.character?.id) {
-      uploadImage(data.character.id);
+    if (formValues?.id) {
+      await uploadImage(formValues?.id);
+      await mutateData({ ...formValues });
+      return;
     }
 
-    updateCharacter({ variables: { input: { ...formValues, images: [] } } });
-    router.push(`/admin/characters/${formValues?.id}`);
+    await mutateData({ ...formValues, images: [] });
   };
 
+  if (!formValues) return null;
   return (
     <AdminLayout>
       <h2>{formValues?.name ? formValues?.name : 'New Character'}</h2>
@@ -57,15 +55,14 @@ const Admin: NextPage = () => {
           handleInputValue={handleInputValue}
           required
         />
-
-        {data?.character?.id && <UploadField onChange={selectImage} progress={progress} />}
+        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
 
       <h3>Image</h3>
-      {data?.character?.images?.length && data.character.images[0] && (
+      {formValues?.images?.length && (
         <ImageContainer width={300} height={300}>
-          <Image src={data.character.images[0]} layout='fill' alt='invention photo' />
+          <Image src={formValues.images[0]} layout='fill' alt='character portrait' />
         </ImageContainer>
       )}
 
