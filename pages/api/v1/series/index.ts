@@ -1,16 +1,37 @@
 import { baseHandler } from '@server/baseHandler';
-import { limitResults } from '@server/limitResults';
 import { enrichSeries } from '@server/enrichResults';
 import { getAll } from '@server/data/getAll';
+import {
+  limitResults,
+  cleanLimit,
+  cleanOffset,
+  nextOffset,
+  previousOffset,
+} from '@server/limitResults';
 
 const handler = baseHandler().get(async (req, res) => {
   const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };
 
-  const data = await getAll<Serie>('series');
-  const limitedResults = limitResults<Serie>(data, limit, offset, q);
+  const series = await getAll<Serie>('series');
+  const limitedResults = limitResults<Serie>(series, limit, offset, q);
   const enrichedResults = await enrichSeries(limitedResults);
 
-  res.json(enrichedResults);
+  const cleanedLimit = cleanLimit(limit);
+  const cleanedOffset = cleanOffset(offset);
+  const artistCount = series.length;
+
+  res.json({
+    count: artistCount,
+    next:
+      nextOffset(cleanedLimit, cleanedOffset, artistCount) > artistCount
+        ? `${process.env.APIURL}/v1/series?limit=${cleanedLimit}&offset=${cleanedOffset}`
+        : null,
+    previous:
+      previousOffset(cleanedLimit, cleanedOffset) < 0
+        ? `${process.env.APIURL}/v1/series?limit=${cleanedLimit}&offset=${cleanedOffset}`
+        : null,
+    results: enrichedResults,
+  });
 });
 
 export default handler;

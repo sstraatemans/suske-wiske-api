@@ -13,7 +13,7 @@ type Artist = {
   id: string;
   name: string;
   albums: EntityAlbumLink[];
-  images: [];
+  images: string[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;
@@ -43,6 +43,7 @@ type Invention = {
   id: string;
   name: string;
   albums: EntityAlbumLink[];
+  images: string[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;
@@ -89,4 +90,13 @@ type UpdateCharacterInput = {
   id: string;
   name: string;
   images: string[];
+};
+
+type ValueOf<T> = T[keyof T];
+
+type ArrayResults<T> = {
+  count: number;
+  next: string;
+  previous: string;
+  results: T[];
 };

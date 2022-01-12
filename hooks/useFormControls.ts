@@ -10,7 +10,7 @@ export const useFormControls = <T>() => {
   };
 
   const handleAddImage = (url?: string) => {
-    if (url && formValues && 'images' in formValues) {
+    if (url && formValues) {
       setFormValues({ ...formValues, images: [url] });
     }
   };

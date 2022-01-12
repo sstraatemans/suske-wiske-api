@@ -6,8 +6,8 @@ export const useImageupload = () => {
   const [progress, setProgress] = useState<number>(0);
   const [imageUrl, setImageUrl] = useState<string | null>();
 
-  const uploadImage = async (id: string): Promise<string> => {
-    if (file) {
+  const uploadImage = async (id?: string): Promise<string> => {
+    if (file && id) {
       let url: string = '';
       await uploadFile(
         id,

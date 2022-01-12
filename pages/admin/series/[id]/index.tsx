@@ -6,27 +6,27 @@ import { useFormControls, useGetSerieQuery, useUpdateSerieMutation } from '@hook
 import { AdminLayout } from '@layouts/.';
 import { TextField } from '@components/Form';
 import { Button } from '@components/.';
-import { Serie, Maybe } from '@hooks/graphql';
 
 const Admin: NextPage = () => {
   const router = useRouter();
   const { query } = router;
   const id = (query.id ?? '') as string;
-  const { data } = useGetSerieQuery(id);
-  const { formValues, setInitialFormValues, handleInputValue } = useFormControls<Maybe<Serie>>();
-  const { updateSerie } = useUpdateSerieMutation();
+  const { data, reload } = useGetSerieQuery(id);
+  const { formValues, setInitialFormValues, handleInputValue } = useFormControls<Serie>();
+  const { mutateData } = useUpdateSerieMutation(id);
 
   useEffect(() => {
-    setInitialFormValues(data?.serie);
+    setInitialFormValues(data);
   }, [data, setInitialFormValues]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    updateSerie({ variables: { input: { ...formValues } } });
+    mutateData(formValues);
     router.push(`/admin/series/${formValues?.id}`);
   };
 
+  if (!formValues) return null;
   return (
     <AdminLayout>
       <h2>{formValues?.name ? formValues?.name : 'New album'}</h2>

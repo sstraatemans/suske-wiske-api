@@ -13,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useGetSeriesQuery();
+  const { data } = useGetSeriesQuery();
+  console.log(data);
   const classes = useStyles();
 
   return (
     <AdminLayout>
       <h2>Series</h2>
-
       <ul>
-        {data?.series?.map((serie) => (
+        {data?.results?.map((serie) => (
           <li key={serie?.id}>
             <Link href={`/admin/series/${serie?.id}`}>
               <a>{serie?.name}</a>

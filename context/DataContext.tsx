@@ -9,29 +9,28 @@ import {
 } from 'react';
 import 'firebase/auth';
 import '@client/auth';
-import { ApolloError } from '@apollo/client';
 
 type DataContextProps = {
-  error?: ApolloError;
+  error?: Error;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
-  setError: (value?: ApolloError) => void;
+  setError: (value?: Error) => void;
 };
 
 const dataContext = createContext<DataContextProps>({
   isLoading: false,
   setIsLoading: (value: boolean) => {},
-  setError: (value?: ApolloError) => {},
+  setError: (value?: Error) => {},
 });
 
 export const useDataContext = () => useContext(dataContext);
 
 export const DataProvider: FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<ApolloError>();
+  const [error, setError] = useState<Error>();
 
   const handleSetIsLoading = (value: boolean) => setIsLoading(value);
-  const handleSetError = (value?: ApolloError) => setError(value);
+  const handleSetError = (value?: Error) => setError(value);
 
   return (
     <dataContext.Provider

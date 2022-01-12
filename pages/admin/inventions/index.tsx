@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { loading, error, data } = useGetInventionsQuery();
+  const { data } = useGetInventionsQuery();
   const classes = useStyles();
 
   return (
@@ -23,7 +23,7 @@ const Admin: NextPage = () => {
       <h2>Inventions</h2>
 
       <ul>
-        {data?.inventions?.map((invention) => (
+        {data?.results?.map((invention) => (
           <li key={invention?.id}>
             <Link href={`/admin/inventions/${invention?.id}`}>
               <a>{invention?.name}</a>

@@ -1,14 +1,5 @@
-import { useDataContext } from '@context/DataContext';
-import { useUpdateInventionMutation as useUpdateInventionMutationFnc } from './graphql';
+import { useMutateData } from './utils/useMutateData';
+import { DATAURLS } from './utils/constants';
 
-export const useUpdateInventionMutation = () => {
-  const [updateInvention, { called, loading }] = useUpdateInventionMutationFnc();
-  const { setError } = useDataContext();
-
-  return {
-    updateInvention,
-    called,
-    isLoading: loading,
-    setError,
-  };
-};
+export const useUpdateInventionMutation = (id: string) =>
+  useMutateData<Invention>(`${DATAURLS.INVENTIONS}/${id}`);

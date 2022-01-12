@@ -1,19 +1,4 @@
-import { useEffect } from 'react';
-import { useDataContext } from '@context/DataContext';
-import { useGetArtistsQuery as useGetArtistsQueryFnc } from './graphql';
+import { DATAURLS } from './utils/constants';
+import { useLoadData } from './utils/useLoadData';
 
-export const useGetArtistsQuery = () => {
-  const { data, loading, error } = useGetArtistsQueryFnc();
-  const { setIsLoading, setError } = useDataContext();
-
-  useEffect(() => {
-    setIsLoading(loading);
-    setError(error);
-  }, [loading, error, setIsLoading, setError]);
-
-  return {
-    data,
-    loading,
-    error,
-  };
-};
+export const useGetArtistsQuery = () => useLoadData<ArrayResults<Artist>>(DATAURLS.ARTISTS);

@@ -5,7 +5,7 @@ export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
     return {
       url: `${process.env.APIURL}/v1/series/${result.id}`,
       ...result,
-      albums: result.albums.map((album) => `${process.env.APIURL}/v1/albums/${album}`),
+      albums: result.albums?.map((album) => `${process.env.APIURL}/v1/albums/${album}`) ?? [],
     };
   });
 };

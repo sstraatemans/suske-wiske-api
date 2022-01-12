@@ -1,14 +1,5 @@
-import { useDataContext } from '@context/DataContext';
-import { useUpdateSerieMutation as useUpdateSerieMutationFnc } from './graphql';
+import { useMutateData } from './utils/useMutateData';
+import { DATAURLS } from './utils/constants';
 
-export const useUpdateSerieMutation = () => {
-  const [updateSerie, { called, loading }] = useUpdateSerieMutationFnc();
-  const { setError } = useDataContext();
-
-  return {
-    updateSerie,
-    called,
-    isLoading: loading,
-    setError,
-  };
-};
+export const useUpdateSerieMutation = (id: string) =>
+  useMutateData<Serie>(`${DATAURLS.SERIES}/${id}`);

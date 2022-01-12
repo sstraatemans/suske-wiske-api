@@ -3,11 +3,9 @@ import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useFormControls, useGetArtistQuery, useImageupload } from '@hooks/.';
-
 import { AdminLayout } from '@layouts/.';
 import { TextField, UploadField } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';
-import { Artist, Maybe } from '@hooks/graphql';
 import { useUpdateArtistMutation } from '@hooks/.';
 
 const Admin: NextPage = () => {
@@ -17,32 +15,34 @@ const Admin: NextPage = () => {
   const { data } = useGetArtistQuery(id);
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
-    useFormControls<Maybe<Artist>>();
-  const { updateArtist } = useUpdateArtistMutation();
+    useFormControls<Artist>();
+  const { mutateData } = useUpdateArtistMutation(id);
 
   useEffect(() => {
-    setInitialFormValues(data?.artist);
+    setInitialFormValues(data);
   }, [data, setInitialFormValues]);
 
   useEffect(() => {
     if (imageUrl) {
       handleAddImage(imageUrl);
-      updateArtist({ variables: { input: formValues } });
       setImageUrl(null);
     }
-  }, [imageUrl, handleAddImage, setImageUrl, updateArtist, formValues]);
+  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!formValues) return;
 
-    if (data?.artist?.id) {
-      uploadImage(data.artist.id);
+    if (formValues?.id) {
+      await uploadImage(formValues?.id);
+      await mutateData({ ...formValues });
+      return;
     }
 
-    updateArtist({ variables: { input: { ...formValues, images: [] } } });
-    router.push(`/admin/artists/${formValues?.id}`);
+    await mutateData({ ...formValues, images: [] });
   };
 
+  if (!formValues) return null;
   return (
     <AdminLayout>
       <h2>{formValues?.name ? formValues?.name : 'New Artist'}</h2>
@@ -55,14 +55,14 @@ const Admin: NextPage = () => {
           handleInputValue={handleInputValue}
           required
         />
-        {data?.artist?.id && <UploadField onChange={selectImage} progress={progress} />}
+        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
 
       <h3>Image</h3>
-      {data?.artist?.images?.length && data.artist.images[0] && (
+      {formValues?.images?.length && (
         <ImageContainer width={300} height={300}>
-          <Image src={data.artist.images[0]} layout='fill' alt='artist portrait' />
+          <Image src={formValues.images[0]} layout='fill' alt='artist portrait' />
         </ImageContainer>
       )}
 

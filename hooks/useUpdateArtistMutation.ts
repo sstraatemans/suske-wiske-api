@@ -1,14 +1,5 @@
-import { useDataContext } from '@context/DataContext';
-import { useUpdateArtistMutation as useUpdateArtistMutationFnc } from './graphql';
+import { useMutateData } from './utils/useMutateData';
+import { DATAURLS } from './utils/constants';
 
-export const useUpdateArtistMutation = () => {
-  const [updateArtist, { called, loading }] = useUpdateArtistMutationFnc();
-  const { setError } = useDataContext();
-
-  return {
-    updateArtist,
-    called,
-    isLoading: loading,
-    setError,
-  };
-};
+export const useUpdateArtistMutation = (id: string) =>
+  useMutateData<Artist>(`${DATAURLS.ARTISTS}/${id}`);

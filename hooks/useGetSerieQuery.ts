@@ -1,20 +1,4 @@
-import { useEffect } from 'react';
-import { useDataContext } from '@context/DataContext';
-import { useGetSerieQuery as useGetSerieQueryFnc } from './graphql';
+import { useLoadData } from './utils/useLoadData';
+import { DATAURLS } from './utils/constants';
 
-export const useGetSerieQuery = (id: string) => {
-  const { data, loading, error } = useGetSerieQueryFnc({ variables: { id } });
-  const { setIsLoading, setError } = useDataContext();
-
-  console.log({ data, loading, error });
-  useEffect(() => {
-    setIsLoading(loading);
-    setError(error);
-  }, [loading, error, setIsLoading, setError]);
-
-  return {
-    data,
-    loading,
-    error,
-  };
-};
+export const useGetSerieQuery = (id: string) => useLoadData<Serie>(`${DATAURLS.SERIES}/${id}`);
