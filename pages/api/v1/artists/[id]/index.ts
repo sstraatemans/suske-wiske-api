@@ -1,7 +1,7 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichArtist } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { updateById } from '@server/data/updateById';
+import { updateById } from '@server/data/update';
 import { deleteById } from '@server/data/deleteById';
 
 const handler = baseHandler()

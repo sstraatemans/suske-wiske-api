@@ -8,7 +8,7 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { updateById } from '@server/data/updateById';
+import { updateById } from '@server/data/update';
 
 const handler = baseHandler()
   .get(async (req, res) => {

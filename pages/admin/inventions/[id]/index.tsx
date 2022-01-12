@@ -49,13 +49,6 @@ const Admin: NextPage = () => {
 
       <form onSubmit={handleSubmit}>
         <TextField
-          label='id'
-          name='id'
-          value={formValues?.id}
-          handleInputValue={handleInputValue}
-          required
-        />
-        <TextField
           label='name'
           name='name'
           value={formValues?.name}

@@ -61,6 +61,7 @@ const Admin: NextPage = () => {
           handleInputValue={handleInputValue}
           required
         />
+
         {data?.album?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>

@@ -22,11 +22,14 @@ export const typeDefs = gql`
     updateCharacter(input: UpdateCharacterInput): Character
   }
 
+  type EntityAlbumLink {
+    id: String
+  }
+
   type Album {
     id: String!
     name: String!
     images: [String]!
-    characters: [String]!
   }
 
   input UpdateAlbumInput {

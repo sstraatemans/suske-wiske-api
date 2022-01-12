@@ -20,6 +20,8 @@ const Admin: NextPage = () => {
     useFormControls<Maybe<Character>>();
   const { updateCharacter } = useUpdateCharacterMutation();
 
+  console.log(formValues);
+
   useEffect(() => {
     setInitialFormValues(data?.character);
   }, [data, setInitialFormValues]);
@@ -49,19 +51,13 @@ const Admin: NextPage = () => {
 
       <form onSubmit={handleSubmit}>
         <TextField
-          label='id'
-          name='id'
-          value={formValues?.id}
-          handleInputValue={handleInputValue}
-          required
-        />
-        <TextField
           label='name'
           name='name'
           value={formValues?.name}
           handleInputValue={handleInputValue}
           required
         />
+
         {data?.character?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>

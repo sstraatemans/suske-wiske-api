@@ -32,7 +32,7 @@ const Admin: NextPage = () => {
         ))}
       </ul>
 
-      <Link href='/admin/albums/new' passHref={true}>
+      <Link href='/admin/characters/new' passHref={true}>
         <Fab aria-label='Add album' className={classes.fab} color='primary'>
           <AddIcon />
         </Fab>

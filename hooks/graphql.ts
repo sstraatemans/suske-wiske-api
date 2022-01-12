@@ -19,7 +19,6 @@ export type Album = {
   id: Scalars['String'];
   name: Scalars['String'];
   images: Array<Maybe<Scalars['String']>>;
-  characters: Array<Maybe<Scalars['String']>>;
 };
 
 export type Artist = {
@@ -36,6 +35,11 @@ export type Character = {
   name: Scalars['String'];
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
   albums?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type EntityAlbumLink = {
+  __typename?: 'EntityAlbumLink';
+  id?: Maybe<Scalars['String']>;
 };
 
 export type Invention = {
@@ -168,7 +172,7 @@ export type GetAlbumQueryVariables = Exact<{
 }>;
 
 
-export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>>, characters: Array<Maybe<string>> }> };
+export type GetAlbumQuery = { __typename?: 'Query', album?: Maybe<{ __typename?: 'Album', id: string, name: string, images: Array<Maybe<string>> }> };
 
 export type GetCharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -299,7 +303,6 @@ export const GetAlbumDocument = gql`
     id
     name
     images
-    characters
   }
 }
     `;

@@ -2,8 +2,7 @@ type Album = {
   id: string;
   name: string;
   firstPublicationDate: number;
-  characters: string[];
-  series: string[];
+  images: string[];
 };
 
 type NewAlbum = {
@@ -13,7 +12,7 @@ type NewAlbum = {
 type Artist = {
   id: string;
   name: string;
-  albums: string[];
+  albums: EntityAlbumLink[];
   images: [];
   createDate?: Date;
   createdBy?: string;
@@ -28,7 +27,7 @@ type NewArtist = {
 type Character = {
   id: string;
   name: string;
-  albums: string[];
+  albums: EntityAlbumLink[];
   images: string[];
   createDate?: Date;
   createdBy?: string;
@@ -43,7 +42,7 @@ type NewCharacter = {
 type Invention = {
   id: string;
   name: string;
-  albums: string[];
+  albums: EntityAlbumLink[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;
@@ -55,5 +54,39 @@ type Serie = {
   name: string;
   startYear: number;
   endYear?: number;
-  albums: string[];
+  albums: EntityAlbumLink[];
+};
+
+type EntityAlbumLink = string;
+
+type UpdateAlbumInput = {
+  id: string;
+  name: string;
+  images: string[];
+};
+
+type UpdateSerieInput = {
+  id: string;
+  name: string;
+  albums: EntityAlbumLink[];
+};
+
+type UpdateArtistInput = {
+  id: string;
+  name: string;
+  images: string[];
+  albums: EntityAlbumLink[];
+};
+
+type UpdateInventionInput = {
+  id: string;
+  name: string;
+  images: string[];
+  albums: EntityAlbumLink[];
+};
+
+type UpdateCharacterInput = {
+  id: string;
+  name: string;
+  images: string[];
 };

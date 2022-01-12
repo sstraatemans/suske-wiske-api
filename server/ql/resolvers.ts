@@ -1,6 +1,6 @@
 import { getAll } from '@server/data/getAll';
 import { getById } from '@server/data/getById';
-import { updateById } from '@server/data/updateById';
+import { update } from '@server/data/update';
 
 type AlbumInput = {
   id: string;
@@ -20,36 +20,6 @@ type InventionInput = {
 
 type CharacterInput = {
   id: string;
-};
-
-export type UpdateAlbumInput = {
-  id: string;
-  name: string;
-  images: string[];
-};
-
-export type UpdateSerieInput = {
-  id: string;
-  name: string;
-};
-
-export type UpdateArtistInput = {
-  id: string;
-  name: string;
-  images: string[];
-};
-
-export type UpdateInventionInput = {
-  id: string;
-  name: string;
-  images: string[];
-  albums: string[];
-};
-
-export type UpdateCharacterInput = {
-  id: string;
-  name: string;
-  images: string[];
 };
 
 export const resolvers = {
@@ -87,19 +57,19 @@ export const resolvers = {
   },
   Mutation: {
     updateAlbum: async (_: any, { input }: { input: UpdateAlbumInput }) => {
-      return await updateById<UpdateAlbumInput>('albums', input);
+      return await update<UpdateAlbumInput>('albums', input);
     },
     updateSerie: async (_: any, { input }: { input: UpdateSerieInput }) => {
-      return await updateById<UpdateSerieInput>('series', input);
+      return await update<UpdateSerieInput>('series', input);
     },
     updateArtist: async (_: any, { input }: { input: UpdateArtistInput }) => {
-      return await updateById<UpdateArtistInput>('artists', input);
+      return await update<UpdateArtistInput>('artists', input);
     },
     updateInvention: async (_: any, { input }: { input: UpdateInventionInput }) => {
-      return await updateById<UpdateInventionInput>('inventions', input);
+      return await update<UpdateInventionInput>('inventions', input);
     },
     updateCharacter: async (_: any, { input }: { input: UpdateCharacterInput }) => {
-      return await updateById<UpdateCharacterInput>('characters', input);
+      return await update<UpdateCharacterInput>('characters', input);
     },
   },
 };
