@@ -3,12 +3,12 @@ import { useState, FormEvent } from 'react';
 export const useFormControls = <T>() => {
   const [formValues, setFormValues] = useState<T>();
 
-  const handleInputValue = (e: FormEvent) => {
+  const handleInputEvent = (e: FormEvent) => {
     const { name, value } = (e.target ?? {}) as HTMLInputElement;
     setFormValues({ ...formValues, [name]: value } as T);
   };
 
-  const handleInputDate = (name: string, value?: number) => {
+  const handleInputValue = (name: string, value?: unknown) => {
     if (!value) return;
     setFormValues({
       ...formValues,
@@ -25,8 +25,8 @@ export const useFormControls = <T>() => {
   return {
     formValues,
     setInitialFormValues: setFormValues,
-    handleInputValue,
+    handleInputEvent,
     handleAddImage,
-    handleInputDate,
+    handleInputValue,
   };
 };

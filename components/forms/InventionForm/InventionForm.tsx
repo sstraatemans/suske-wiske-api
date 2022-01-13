@@ -17,7 +17,7 @@ type Props = {
 
 const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
     useFormControls<Invention>();
   const { mutateData, mutateResult } = useUpdateInventionMutation(data?.id);
 
@@ -59,7 +59,7 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
           label='name'
           name='name'
           value={formValues?.name}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}

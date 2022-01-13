@@ -12,12 +12,13 @@ type Props = TextFieldProps & {
   handleInputEvent: (e: FormEvent<Element>) => void;
 };
 
-export const TextField: FC<Props> = ({ handleInputEvent, ...props }) => {
+export const NumberField: FC<Props> = ({ handleInputEvent, ...props }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
       <TextFieldMUI
+        type='number'
         variant='outlined'
         fullWidth
         {...props}

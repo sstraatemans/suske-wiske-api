@@ -15,7 +15,7 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
   const { query } = router;
   const id = (query.id ?? '') as string;
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
     useFormControls<Artist>();
 
   const { mutateData, mutateResult } = useUpdateArtistMutation(data?.id);
@@ -58,7 +58,7 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
           label='name'
           name='name'
           value={formValues?.name}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}

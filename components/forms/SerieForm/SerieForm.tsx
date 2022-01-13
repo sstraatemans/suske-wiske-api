@@ -1,5 +1,5 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { TextField } from '@components/Form';
+import { TextField, NumberField, SerieAlbum } from '@components/Form';
 import { Button } from '@components/.';
 import { useFormControls, useUpdateSerieMutation } from '@hooks/.';
 
@@ -9,7 +9,8 @@ type Props = {
 };
 
 const SerieForm: FC<Props> = ({ data, handleSubmit }) => {
-  const { formValues, setInitialFormValues, handleInputValue } = useFormControls<Serie>();
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue } =
+    useFormControls<Serie>();
   const { mutateData, mutateResult } = useUpdateSerieMutation(data?.id);
 
   useEffect(() => {
@@ -37,9 +38,25 @@ const SerieForm: FC<Props> = ({ data, handleSubmit }) => {
           label='name'
           name='name'
           value={formValues?.name}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
+        <NumberField
+          label='startYear'
+          name='startYear'
+          value={formValues?.startYear}
+          handleInputEvent={handleInputEvent}
+          required
+        />
+        <NumberField
+          label='endYear'
+          name='endYear'
+          value={formValues?.endYear}
+          handleInputEvent={handleInputEvent}
+          required
+        />
+
+        <SerieAlbum value={formValues?.albums} handleInputValue={handleInputValue} />
         <Button type='submit'>Submit</Button>
       </form>
 

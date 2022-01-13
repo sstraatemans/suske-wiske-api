@@ -13,7 +13,7 @@ type Props = {
 
 const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputValue, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
     useFormControls<Character>();
   const { mutateData, mutateResult } = useUpdateCharacterMutation(data?.id);
 
@@ -56,7 +56,7 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           label='name'
           name='name'
           value={formValues?.name}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}

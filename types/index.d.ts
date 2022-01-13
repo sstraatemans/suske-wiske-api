@@ -55,7 +55,12 @@ type Serie = {
   name: string;
   startYear: number;
   endYear?: number;
-  albums: EntityAlbumLink[];
+  albums: SerieAlbumLink[];
+};
+
+type SerieAlbumLink = {
+  albumId: string;
+  order: number;
 };
 
 type EntityAlbumLink = string;

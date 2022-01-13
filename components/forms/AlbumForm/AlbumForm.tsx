@@ -11,7 +11,7 @@ type Props = {
 
 const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputValue, handleAddImage, handleInputDate } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage, handleInputValue } =
     useFormControls<Album>();
   const { mutateData, mutateResult } = useUpdateAlbumMutation();
 
@@ -53,21 +53,21 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           label='id'
           name='id'
           value={formValues?.id}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
         <TextField
           label='name'
           name='name'
           value={formValues?.name}
-          handleInputValue={handleInputValue}
+          handleInputEvent={handleInputEvent}
           required
         />
         <DatePicker
           value={new Date(formValues?.firstPublicationDate ?? Date.now())}
           label='first publication date'
           handleInputValue={(date) => {
-            handleInputDate('firstPublicationDate', date?.getTime());
+            handleInputValue('firstPublicationDate', date?.getTime());
           }}
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
