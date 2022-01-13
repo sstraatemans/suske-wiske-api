@@ -8,7 +8,7 @@ import {
   previousOffset,
 } from '@server/limitResults';
 import { getAll } from '@server/data/getAll';
-import { updateById } from '@server/data/update';
+import { update } from '@server/data/update';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -38,7 +38,7 @@ const handler = baseHandler()
   .post(async (req, res) => {
     const { body } = req;
 
-    const data = await updateById<Invention>('inventions', body);
+    const data = await update<Invention>('inventions', body);
     return res.status(201).json(data);
   });
 

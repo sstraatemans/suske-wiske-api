@@ -33,6 +33,10 @@ export const getById = async <T extends { id: string }>(
   const ref = doc(store, label, id);
   const snapshot = await getDoc(ref);
 
+  if (!snapshot.exists) {
+    return;
+  }
+
   const data = {
     id,
     ...snapshot.data(),

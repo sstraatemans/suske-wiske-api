@@ -11,17 +11,23 @@ const addDefaultCreateData = <T>(data: T): T => {
 };
 
 export const updateById = async <T extends { id: string }>(label: string, input: T): Promise<T> => {
+  if (!input.id && label === 'albums') {
+    throw new Error('an album needs to have an ID (the number of the 4 colour album)');
+  }
+
   const store = getStore();
 
   const newInput = addDefaultCreateData<T>(input);
-  const data = await setDoc(doc(store, label, newInput.id), newInput);
-
+  await setDoc(doc(store, label, newInput.id), newInput);
   clearCache(label);
 
-  return data as unknown as T;
+  return newInput as unknown as T;
 };
 
 export const update = async <T extends { id: string }>(label: string, input: T): Promise<T> => {
+  if (!input.id && label === 'albums') {
+    throw new Error('an album needs to have an ID (the number of the 4 colour album)');
+  }
   if (!input.id) {
     const store = getStore();
 

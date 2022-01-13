@@ -19,7 +19,6 @@ const handler = baseHandler()
 
     try {
       await update<Serie>('series', body);
-      console.log(1);
       return res.status(204).send(null);
     } catch (e) {
       return res.status(500).json('error');

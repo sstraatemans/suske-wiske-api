@@ -22,7 +22,8 @@
       "@context/*": ["context/*"],
       "@client/*": ["client/*"],
       "@layouts/*": ["components/layouts/*"],
-      "@icons/*": ["components/icons/*"]
+      "@icons/*": ["components/icons/*"],
+      "@forms/*": ["components/forms/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

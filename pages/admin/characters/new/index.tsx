@@ -1,25 +1,20 @@
-import { useCallback } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useGetSerieQuery } from '@hooks/.';
-import { SerieForm } from '@forms/.';
 import { AdminLayout } from '@layouts/.';
+import { CharacterForm } from '@forms/.';
 
 const Admin: NextPage = () => {
   const router = useRouter();
-  const { query } = router;
-  const id = (query.id ?? '') as string;
-  const { data, reload } = useGetSerieQuery(id);
 
-  const handleSubmit = useCallback(() => {
-    reload(true);
-  }, [reload]);
+  const handleSubmit = (id?: string) => {
+    router.push(`/admin/characters/${id}`);
+  };
 
   return (
     <AdminLayout>
-      <h2>{data?.name}</h2>
+      <h2>New Character</h2>
 
-      <SerieForm data={data} handleSubmit={handleSubmit} />
+      <CharacterForm handleSubmit={handleSubmit} />
     </AdminLayout>
   );
 };

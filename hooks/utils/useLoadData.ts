@@ -9,6 +9,7 @@ export const useLoadData = <T>(url: string) => {
   const { setIsLoading, setError } = useDataContext();
 
   const loadData = async () => {
+    console.log('reload');
     const result = await axios.get(url).then((result: AxiosResponse): T => result.data);
     setData(result);
   };

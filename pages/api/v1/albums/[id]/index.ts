@@ -1,7 +1,7 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichAlbums } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { updateById } from '@server/data/update';
+import { update } from '@server/data/update';
 
 const handler = baseHandler()
   .get(async (req, res) => {
@@ -14,12 +14,9 @@ const handler = baseHandler()
     res.json(enrichedResult[0]);
   })
   .put(async (req, res) => {
-    const {
-      body,
-      query: { id },
-    } = req;
+    const { body } = req;
 
-    const data = await updateById<Character>('albums', body);
+    const data = await update<Character>('albums', body);
     return res.json(data);
   });
 

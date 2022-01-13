@@ -1,7 +1,7 @@
 import { baseHandler } from '@server/baseHandler';
 import { enrichCharacters } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
-import { updateById } from '@server/data/update';
+import { update } from '@server/data/update';
 import { deleteById } from '@server/data/deleteById';
 
 const handler = baseHandler()
@@ -16,12 +16,9 @@ const handler = baseHandler()
     res.json(enrichedResult[0]);
   })
   .put(async (req, res) => {
-    const {
-      body,
-      query: { id },
-    } = req;
+    const { body } = req;
 
-    const data = await updateById<Character>('characters', body);
+    const data = await update<Character>('characters', body);
     return res.json(data);
   })
   .delete(async (req, res) => {
