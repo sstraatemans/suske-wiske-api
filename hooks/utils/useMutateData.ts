@@ -17,7 +17,7 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
         setMutateResult({ ...res.data });
         return;
       }
-      res = await axios.put(`${url}/${id}`, { ...body });
+      res = await axios.put(`${url}/${body.id}`, { ...body });
       const data = res.data;
       setMutateResult({ ...data });
     }

@@ -5,8 +5,15 @@ export const useFormControls = <T>() => {
 
   const handleInputValue = (e: FormEvent) => {
     const { name, value } = (e.target ?? {}) as HTMLInputElement;
-
     setFormValues({ ...formValues, [name]: value } as T);
+  };
+
+  const handleInputDate = (name: string, value?: number) => {
+    if (!value) return;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    } as T);
   };
 
   const handleAddImage = (url?: string) => {
@@ -20,5 +27,6 @@ export const useFormControls = <T>() => {
     setInitialFormValues: setFormValues,
     handleInputValue,
     handleAddImage,
+    handleInputDate,
   };
 };

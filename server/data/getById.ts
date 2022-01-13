@@ -1,6 +1,7 @@
 import { getCache, setCacheById } from '@server/cache';
 import { getStore } from '.';
 import { getDoc, doc } from 'firebase/firestore';
+import { FirebaseDateToTimestamp } from '@server/date';
 
 // check if certain required props are there. if not, add default value
 const makeBackwardsCompatible = <
@@ -36,13 +37,12 @@ export const getById = async <T extends { id: string }>(
   if (!snapshot.exists) {
     return;
   }
-
   const data = {
     id,
     ...snapshot.data(),
   } as any as T;
 
-  setCacheById(label, makeBackwardsCompatible(data));
+  setCacheById(label, FirebaseDateToTimestamp<T>(makeBackwardsCompatible(data)));
 
   return getById<T>(label, id);
 };

@@ -9,7 +9,6 @@ const handler = baseHandler()
     const { id } = req.query as { id: string };
 
     const data = await getById<Character>('characters', id);
-    console.log(data);
     if (!data) return res.status(404).json({ detail: 'Not found' });
     const enrichedResult = await enrichCharacters([data]);
 

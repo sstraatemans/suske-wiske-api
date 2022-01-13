@@ -1,6 +1,7 @@
 import { getCache, setCache } from '@server/cache';
 import { getStore } from '.';
 import { collection, getDocs } from 'firebase/firestore';
+import { FirebaseDateToTimestamp } from '@server/date';
 
 export const getAll = async <T>(label: string): Promise<T[]> => {
   //const cachedData: T[] = getCache(label);
@@ -15,7 +16,7 @@ export const getAll = async <T>(label: string): Promise<T[]> => {
   const data = snapshot.docs.map((doc): T => {
     return {
       id: doc.id,
-      ...doc.data(),
+      ...FirebaseDateToTimestamp(doc.data()),
     } as any as T;
   });
 

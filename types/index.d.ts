@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 type Album = {
   id: string;
   name: string;
