@@ -1,10 +1,8 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { format } from 'date-fns';
 import { useFormControls, useImageupload } from '@hooks/.';
 import { TextField, UploadField, DatePicker } from '@components/Form';
 import { Button } from '@components/.';
 import { useUpdateAlbumMutation } from '@hooks/.';
-import { createTimestamp } from '@client/date';
 
 type Props = {
   data?: Album;
@@ -66,7 +64,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           required
         />
         <DatePicker
-          value={new Date(formValues?.firstPublicationDate)}
+          value={new Date(formValues?.firstPublicationDate ?? Date.now())}
           label='first publication date'
           handleInputValue={(date) => {
             handleInputDate('firstPublicationDate', date?.getTime());
