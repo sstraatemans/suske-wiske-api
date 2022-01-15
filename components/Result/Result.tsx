@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: `${theme.spacing(1)}px`,
     color: theme.palette.text.secondary,
+    overflow: 'hidden',
   },
 }));
 

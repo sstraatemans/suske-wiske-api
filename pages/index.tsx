@@ -49,26 +49,15 @@ const Home: NextPage = () => {
       <PageLayout>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Tabs value={selectedTab} onChange={handleTabChange}>
-              <Tab label='REST API' />
-              <Tab label='GraphQL' />
-            </Tabs>
-          </Grid>
-          <Grid item xs={12}>
-            <TabPanel value={selectedTab} index={0}>
-              <form onSubmit={onSearch}>
-                <RestInput inputRef={searchRef} />
-              </form>
-              <Paper>
-                <Result>
-                  {error && JSON.stringify(error, null, 2)}
-                  {result && JSON.stringify(result, null, 2)}
-                </Result>
-              </Paper>
-            </TabPanel>
-            <TabPanel value={selectedTab} index={1}>
-              Coming soon
-            </TabPanel>
+            <form onSubmit={onSearch}>
+              <RestInput inputRef={searchRef} />
+            </form>
+            <Paper>
+              <Result>
+                {error && JSON.stringify(error, null, 2)}
+                {result && JSON.stringify(result, null, 2)}
+              </Result>
+            </Paper>
           </Grid>
         </Grid>
       </PageLayout>

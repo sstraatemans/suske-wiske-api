@@ -1,5 +1,5 @@
 import { FC, FormEvent, useRef, useState } from 'react';
-import { NumberField } from '@components/Form/.';
+import { NumberField, AutoComplete } from '@components/Form/.';
 
 type Props = {
   handleInputValue: (name: string, value?: unknown) => void;
@@ -9,7 +9,7 @@ type Props = {
 export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
   const [startNew, setStartNew] = useState(true);
   const listRef = useRef<HTMLUListElement>(null);
-  const handleChange = (e: FormEvent) => {
+  const handleChange = () => {
     if (listRef.current) {
       const albumIds = listRef.current.querySelectorAll(
         'input[name="albumId"]'
@@ -17,7 +17,6 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
       const orders = listRef.current.querySelectorAll(
         'input[name="order"]'
       ) as NodeListOf<HTMLInputElement>;
-
       const albumIdArray = Array.from(albumIds);
       const orderArray = Array.from(orders);
 
@@ -27,51 +26,39 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
           order: orderArray[idx].value,
         };
       });
-
-      const newAlbumId = listRef.current.querySelector(
-        'input[name="NewAlbumId"]'
-      ) as HTMLInputElement;
-      const newOrder = listRef.current.querySelector('input[name="NewOrder"]') as HTMLInputElement;
-
-      if (newAlbumId || newOrder) {
-        valueArray.push({
-          albumId: newAlbumId.value,
-          order: newOrder.value,
-        });
-
-        setStartNew(false);
-      }
-
+      setStartNew(false);
       handleInputValue('albums', valueArray);
     }
   };
 
   return (
     <ul ref={listRef}>
-      {value?.map((link, idx) => {
-        if (!link || (!link.order && !link.albumId)) return null;
-        return (
-          <li key={idx}>
-            <NumberField
-              label='order'
-              name='order'
-              value={link.order}
-              handleInputEvent={handleChange}
-            />
-            <NumberField
-              label='album'
-              name='albumId'
-              value={link.albumId}
-              handleInputEvent={handleChange}
-            />
-          </li>
-        );
-      })}
+      {value
+        ?.sort((a, b) => a.order - b.order)
+        .map((link, idx) => {
+          if (!link || (!link.order && !link.albumId)) return null;
+          return (
+            <li key={idx}>
+              <NumberField
+                label='order'
+                name='order'
+                value={link.order}
+                handleInputEvent={handleChange}
+              />
+              <AutoComplete
+                value={link.albumId}
+                label='album'
+                name='albumId'
+                handleInputValue={handleChange}
+              />
+            </li>
+          );
+        })}
 
       {startNew ? (
         <li>
-          <NumberField label='new order' name='NewOrder' handleInputEvent={handleChange} />
-          <NumberField label='new album' name='NewAlbumId' handleInputEvent={handleChange} />
+          <NumberField label='order' value={0} name='order' handleInputEvent={handleChange} />
+          <AutoComplete label='album' name='albumId' handleInputValue={handleChange} />
         </li>
       ) : (
         <button onClick={() => setStartNew(true)}>new</button>
