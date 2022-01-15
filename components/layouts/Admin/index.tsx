@@ -21,6 +21,9 @@ type Props = {};
 
 const useStyles = makeStyles({
   spacer: { flexGrow: 1 },
+  main: {
+    backgroundColor: 'white',
+  },
 });
 
 const AdminLayout: FC<Props> = ({ children }) => {
@@ -45,71 +48,67 @@ const AdminLayout: FC<Props> = ({ children }) => {
 
   return (
     <>
-      <header>
-        <AppBar position='static'>
-          <Container>
-            <Toolbar>
-              <Link href='/admin' passHref={true}>
-                <Button color='inherit'>Series</Button>
-              </Link>
-              <Link href='/admin/albums' passHref={true}>
-                <Button color='inherit'>Albums</Button>
-              </Link>
-              <Link href='/admin/characters' passHref={true}>
-                <Button color='inherit'>Characters</Button>
-              </Link>
-              <Link href='/admin/inventions' passHref={true}>
-                <Button color='inherit'>Inventions</Button>
-              </Link>
-              <Link href='/admin/artists' passHref={true}>
-                <Button color='inherit'>Artists</Button>
-              </Link>
-              <div className={classes.spacer}></div>
+      <AppBar position='static'>
+        <Container>
+          <Toolbar>
+            <Link href='/admin' passHref={true}>
+              <Button color='inherit'>Series</Button>
+            </Link>
+            <Link href='/admin/albums' passHref={true}>
+              <Button color='inherit'>Albums</Button>
+            </Link>
+            <Link href='/admin/characters' passHref={true}>
+              <Button color='inherit'>Characters</Button>
+            </Link>
+            <Link href='/admin/inventions' passHref={true}>
+              <Button color='inherit'>Inventions</Button>
+            </Link>
+            <Link href='/admin/artists' passHref={true}>
+              <Button color='inherit'>Artists</Button>
+            </Link>
+            <div className={classes.spacer}></div>
 
-              {user && (
-                <div>
-                  <IconButton
-                    aria-label='account of current user'
-                    aria-controls='menu-appbar'
-                    aria-haspopup='true'
-                    onClick={() => setisMenuOpen(true)}
-                    color='inherit'
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id='menu-appbar'
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={isMenuOpen}
-                    onClose={() => setisMenuOpen(false)}
-                  >
-                    <MenuItem onClick={handleSignOff}>Signoff</MenuItem>
-                  </Menu>
-                </div>
-              )}
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </header>
-      <Container>
-        <main>
-          {isLoading && (
-            <Box p={2} display='flex' justifyContent='center'>
-              <Loader />
-            </Box>
-          )}
-          {children}
-        </main>
-      </Container>
-      <footer></footer>
+            {user && (
+              <div>
+                <IconButton
+                  aria-label='account of current user'
+                  aria-controls='menu-appbar'
+                  aria-haspopup='true'
+                  onClick={() => setisMenuOpen(true)}
+                  color='inherit'
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id='menu-appbar'
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={isMenuOpen}
+                  onClose={() => setisMenuOpen(false)}
+                >
+                  <MenuItem onClick={handleSignOff}>Signoff</MenuItem>
+                </Menu>
+              </div>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      <main className={classes.main}>
+        {isLoading && (
+          <Box p={2} display='flex' justifyContent='center'>
+            <Loader />
+          </Box>
+        )}
+        {children}
+      </main>
     </>
   );
 };

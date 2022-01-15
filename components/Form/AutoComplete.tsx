@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
   handleInputValue: (name: string, value?: string) => void;
-  options: { id: string; name: string }[];
   label: string;
   name: string;
-  value: string;
+  value?: string;
+  options: unknown[] | undefined;
 };
 
 type OptionProp = {
@@ -26,25 +26,9 @@ type SelectOptionProp = {
   handleSelectValue: (option: OptionProp) => void;
 };
 
-const options: OptionProp[] = [
-  {
-    id: '1',
-    name: 'test',
-  },
-  {
-    id: '2',
-    name: 'nog',
-  },
-  {
-    id: '3',
-    name: 'meer',
-  },
-];
-
-export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value }) => {
+export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, options }) => {
   const classes = useStyles();
   const [innerValue, setInnerValue] = useState(value);
-  const [innerEvent, setInnerEvent] = useState();
 
   const [foundItems, setFoundItems] = useState<OptionProp[]>([]);
 
@@ -54,13 +38,13 @@ export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.currentTarget.value;
-    if (!searchValue) {
+    if (!searchValue || !options) {
       setFoundItems([]);
       return;
     }
 
-    const foundArray = options.filter((obj) => {
-      return obj.name.includes(searchValue);
+    const foundArray = (options as OptionProp[]).filter((obj) => {
+      return obj.name.toLowerCase().includes(searchValue);
     });
     setFoundItems(foundArray);
   };

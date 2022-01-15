@@ -1,5 +1,6 @@
 import { FC, FormEvent, useRef, useState } from 'react';
 import { NumberField, AutoComplete } from '@components/Form/.';
+import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 
 type Props = {
   handleInputValue: (name: string, value?: unknown) => void;
@@ -7,6 +8,8 @@ type Props = {
 };
 
 export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
+  const { data } = useGetListAlbumsQuery();
+  const { results: albumListData } = data ?? {};
   const [startNew, setStartNew] = useState(true);
   const listRef = useRef<HTMLUListElement>(null);
   const handleChange = () => {
@@ -49,6 +52,7 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
                 value={link.albumId}
                 label='album'
                 name='albumId'
+                options={albumListData}
                 handleInputValue={handleChange}
               />
             </li>
@@ -58,7 +62,12 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
       {startNew ? (
         <li>
           <NumberField label='order' value={0} name='order' handleInputEvent={handleChange} />
-          <AutoComplete label='album' name='albumId' handleInputValue={handleChange} />
+          <AutoComplete
+            options={albumListData}
+            label='album'
+            name='albumId'
+            handleInputValue={handleChange}
+          />
         </li>
       ) : (
         <button onClick={() => setStartNew(true)}>new</button>
