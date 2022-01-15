@@ -27,9 +27,10 @@ type SelectOptionProp = {
 };
 
 export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, options }) => {
+  console.log(value);
   const classes = useStyles();
-  const [innerValue, setInnerValue] = useState(value);
-
+  const [innerValue, setInnerValue] = useState<string | undefined>(value);
+  const [innerLabel, setInnerLabel] = useState<string>();
   const [foundItems, setFoundItems] = useState<OptionProp[]>([]);
 
   useEffect(() => {
@@ -46,8 +47,21 @@ export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, 
     const foundArray = (options as OptionProp[]).filter((obj) => {
       return obj.name.toLowerCase().includes(searchValue);
     });
+
+    setInnerLabel(searchValue);
     setFoundItems(foundArray);
   };
+
+  useEffect(() => {
+    if (options) {
+      const val = (options as OptionProp[]).find((option) => {
+        if (option.id === innerValue) {
+          return option.name;
+        }
+      });
+      setInnerLabel(val?.name);
+    }
+  }, [options, innerValue]);
 
   const handleSelectValue = (option: OptionProp) => {
     setInnerValue(option.id);
@@ -57,8 +71,14 @@ export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, 
 
   return (
     <div className={classes.wrapper}>
-      <input name={name} value={innerValue} />
-      <TextField label={label} variant='outlined' fullWidth onChange={handleChange} />
+      <input type='hidden' name={name} value={innerValue} />
+      <TextField
+        label={label}
+        value={innerLabel}
+        variant='outlined'
+        fullWidth
+        onChange={handleChange}
+      />
 
       {foundItems.map((option) => (
         <SelectOption key={option.id} option={option} handleSelectValue={handleSelectValue} />

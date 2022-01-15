@@ -1,6 +1,16 @@
-import { FC, FormEvent, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { NumberField, AutoComplete } from '@components/Form/.';
+import { Grid } from '@components/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  list: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+  },
+}));
 
 type Props = {
   handleInputValue: (name: string, value?: unknown) => void;
@@ -8,9 +18,10 @@ type Props = {
 };
 
 export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
+  const classes = useStyles();
   const { data } = useGetListAlbumsQuery();
   const { results: albumListData } = data ?? {};
-  const [startNew, setStartNew] = useState(true);
+  const [startNew, setStartNew] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
   const handleChange = () => {
     if (listRef.current) {
@@ -35,26 +46,32 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
   };
 
   return (
-    <ul ref={listRef}>
+    <ul ref={listRef} className={classes.list}>
       {value
         ?.sort((a, b) => a.order - b.order)
         .map((link, idx) => {
           if (!link || (!link.order && !link.albumId)) return null;
           return (
             <li key={idx}>
-              <NumberField
-                label='order'
-                name='order'
-                value={link.order}
-                handleInputEvent={handleChange}
-              />
-              <AutoComplete
-                value={link.albumId}
-                label='album'
-                name='albumId'
-                options={albumListData}
-                handleInputValue={handleChange}
-              />
+              <Grid container>
+                <Grid sm={3} xs={12}>
+                  <NumberField
+                    label='order'
+                    name='order'
+                    value={link.order}
+                    handleInputEvent={handleChange}
+                  />
+                </Grid>
+                <Grid sm={9} xs={12}>
+                  <AutoComplete
+                    value={link.albumId}
+                    label='album'
+                    name='albumId'
+                    options={albumListData}
+                    handleInputValue={handleChange}
+                  />
+                </Grid>
+              </Grid>
             </li>
           );
         })}
