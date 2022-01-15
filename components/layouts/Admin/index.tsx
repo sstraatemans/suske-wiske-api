@@ -23,6 +23,7 @@ const useStyles = makeStyles({
   spacer: { flexGrow: 1 },
   main: {
     backgroundColor: 'white',
+    flex: 1,
   },
 });
 
@@ -47,7 +48,7 @@ const AdminLayout: FC<Props> = ({ children }) => {
   if (isUserLoading || !isLoggedIn) return <FullpageLoader />;
 
   return (
-    <>
+    <div>
       <AppBar position='static'>
         <Container>
           <Toolbar>
@@ -109,7 +110,7 @@ const AdminLayout: FC<Props> = ({ children }) => {
         )}
         {children}
       </main>
-    </>
+    </div>
   );
 };
 

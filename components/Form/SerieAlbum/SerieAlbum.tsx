@@ -1,8 +1,7 @@
 import { FC, useRef, useState } from 'react';
-import { NumberField, AutoComplete } from '@components/Form/.';
-import { Grid } from '@components/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 import { makeStyles } from '@material-ui/core/styles';
+import { Option } from './Option';
 
 const useStyles = makeStyles(() => ({
   list: {
@@ -23,6 +22,7 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
   const { results: albumListData } = data ?? {};
   const [startNew, setStartNew] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
+
   const handleChange = () => {
     if (listRef.current) {
       const albumIds = listRef.current.querySelectorAll(
@@ -52,40 +52,21 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
         .map((link, idx) => {
           if (!link || (!link.order && !link.albumId)) return null;
           return (
-            <li key={idx}>
-              <Grid container>
-                <Grid sm={3} xs={12}>
-                  <NumberField
-                    label='order'
-                    name='order'
-                    value={link.order}
-                    handleInputEvent={handleChange}
-                  />
-                </Grid>
-                <Grid sm={9} xs={12}>
-                  <AutoComplete
-                    value={link.albumId}
-                    label='album'
-                    name='albumId'
-                    options={albumListData}
-                    handleInputValue={handleChange}
-                  />
-                </Grid>
-              </Grid>
-            </li>
+            <Option
+              key={link.order + link.albumId}
+              link={link}
+              handleChange={handleChange}
+              listData={albumListData}
+            />
           );
         })}
 
       {startNew ? (
-        <li>
-          <NumberField label='order' value={0} name='order' handleInputEvent={handleChange} />
-          <AutoComplete
-            options={albumListData}
-            label='album'
-            name='albumId'
-            handleInputValue={handleChange}
-          />
-        </li>
+        <Option
+          link={{ order: 99999999, albumId: '' }}
+          handleChange={handleChange}
+          listData={albumListData}
+        />
       ) : (
         <button onClick={() => setStartNew(true)}>new</button>
       )}
