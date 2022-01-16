@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Button, Modal, Typography } from '@components/.';
 import { TextField, Checkbox } from '@components/Form';
-import { useFormControls } from '@hooks/useFormControls';
+import { useFormControls, useUpdateUserMutation } from '@hooks/.';
 
 export const CreateUser = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { formValues, handleInputEvent, handleInputValue } =
-    useFormControls<AuthenticateCodeUser>();
+  const { formValues, handleInputEvent, handleInputValue } = useFormControls<User>();
+  const { mutateData, mutateResult } = useUpdateUserMutation();
+
   console.log(formValues);
   const handleOpen = () => {
     setIsOpen(true);
   };
   const handleClose = () => {
     setIsOpen(false);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!formValues) return;
+
+    await mutateData({ ...formValues });
   };
 
   return (
@@ -40,7 +48,7 @@ export const CreateUser = () => {
             >
               I agree with the terms
             </Checkbox>
-            <Button>Geef me de code</Button>
+            <Button onClick={handleSubmit}>Geef me de code</Button>
           </>
         </Modal>
       )}

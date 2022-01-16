@@ -116,7 +116,8 @@ type SelectOptionProp = {
   handleSelectValue: (option: OptionProp) => void;
 };
 
-type AuthenticateCodeUser = {
+type User = {
+  id: string;
   email: string;
   termsAgreed: boolean;
 };

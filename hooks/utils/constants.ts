@@ -4,6 +4,7 @@ export const DATAURLS = {
   INVENTIONS: '/inventions',
   CHARACTERS: '/characters',
   ALBUMS: '/albums',
+  USERS: '/users',
   ADMIN: {
     ALBUMS: '/admin/albums',
   },

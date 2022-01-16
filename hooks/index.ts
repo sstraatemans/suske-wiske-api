@@ -19,3 +19,5 @@ export { useUpdateArtistMutation } from './useUpdateArtistMutation';
 export { useGetSeriesQuery } from './useGetSeriesQuery';
 export { useGetSerieQuery } from './useGetSerieQuery';
 export { useUpdateSerieMutation } from './useUpdateSerieMutation';
+
+export { useUpdateUserMutation } from './useUpdateUserMutation';
