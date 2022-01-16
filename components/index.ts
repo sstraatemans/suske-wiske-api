@@ -19,3 +19,4 @@ export { Loader } from './Loader/Loader';
 export { FullpageLoader } from './Loader/FullpageLoader';
 export { Fab } from './Fab/Fab';
 export { ImageContainer } from './ImageContainer/ImageContainer';
+export { Modal } from './Modal/Modal';

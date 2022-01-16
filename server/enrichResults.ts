@@ -10,7 +10,7 @@ export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
 };
 
 export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
-  const series = await getAll<Serie>('series');
+  //const series = await getAll<Serie>('series');
 
   return results.map((result) => {
     // const inSeries: string[] = series

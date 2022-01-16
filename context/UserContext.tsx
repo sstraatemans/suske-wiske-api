@@ -17,6 +17,7 @@ type UserContextProps = {
   user: User | null;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
+  getAuthenticationToken: () => string | undefined;
 };
 
 const userContext = createContext<UserContextProps>({
@@ -25,6 +26,7 @@ const userContext = createContext<UserContextProps>({
   user: null,
   signIn: async () => {},
   signOut: async () => {},
+  getAuthenticationToken: () => '',
 });
 
 // custom hook to use the authUserContext and access authUser and loading
@@ -38,6 +40,7 @@ export const UserProvider: FC = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if (user) {
         setUser(user);
         setIsLoggedIn(true);
@@ -62,11 +65,14 @@ export const UserProvider: FC = ({ children }) => {
     await auth.signOut();
   };
 
-  // listen for Firebase state change
-  useEffect(() => {}, []);
+  const getAuthenticationToken = () => {
+    return user?.uid;
+  };
 
   return (
-    <userContext.Provider value={{ signIn, signOut, isLoggedIn, isLoading, user }}>
+    <userContext.Provider
+      value={{ signIn, signOut, isLoggedIn, isLoading, user, getAuthenticationToken }}
+    >
       {children}
     </userContext.Provider>
   );

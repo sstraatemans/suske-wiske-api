@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef, useState, useCallback } from 'react';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import { Option } from './Option';
@@ -23,7 +23,7 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
   const [startNew, setStartNew] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
 
-  const handleChange = () => {
+  const createValueArray = (): SerieAlbumLink[] | undefined => {
     if (listRef.current) {
       const albumIds = listRef.current.querySelectorAll(
         'input[name="albumId"]'
@@ -37,13 +37,31 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
       const valueArray = albumIdArray.map((el, idx) => {
         return {
           albumId: el.value,
-          order: orderArray[idx].value,
+          order: parseInt(orderArray[idx].value, 10),
         };
       });
-      setStartNew(false);
-      handleInputValue('albums', valueArray);
+
+      return valueArray as SerieAlbumLink[];
     }
   };
+
+  const handleChange = useCallback(() => {
+    const valueArray = createValueArray();
+
+    setStartNew(false);
+    handleInputValue('albums', valueArray);
+  }, []);
+
+  const handleDelete = useCallback((link: SerieAlbumLink | undefined) => {
+    if (!link) return;
+    const valueArray = createValueArray();
+    console.log(valueArray, link);
+    const filteredArray = valueArray?.filter(
+      (val) => !(val.albumId === link.albumId && val.order === link.order)
+    );
+
+    handleInputValue('albums', filteredArray);
+  }, []);
 
   return (
     <ul ref={listRef} className={classes.list}>
@@ -56,6 +74,7 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
               key={link.order + link.albumId}
               link={link}
               handleChange={handleChange}
+              handleDelete={handleDelete}
               listData={albumListData}
             />
           );
@@ -65,6 +84,7 @@ export const SerieAlbum: FC<Props> = ({ value, handleInputValue }) => {
         <Option
           link={{ order: 99999999, albumId: '' }}
           handleChange={handleChange}
+          handleDelete={handleDelete}
           listData={albumListData}
         />
       ) : (

@@ -1,8 +1,9 @@
-import { useRef, useState, FormEvent, ChangeEvent } from 'react';
+import { useRef, useState, FormEvent } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Grid, RestInput, Paper, Result, Tabs, Tab, TabPanel } from '@components/.';
+import { Grid, RestInput, Paper, Result, Typography } from '@components/.';
 import { PageLayout } from '@components/layouts';
+import { CreateUser } from '@features/.';
 
 type errorProps = {
   error: string;
@@ -12,7 +13,6 @@ type errorProps = {
 const Home: NextPage = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
   const [result, setResult] = useState(null);
-  const [selectedTab, setSelectedTab] = useState(0);
   const [error, setError] = useState<errorProps | null>(null);
 
   const onSearch = async (e: FormEvent) => {
@@ -32,10 +32,6 @@ const Home: NextPage = () => {
       setError(null);
       setResult(data);
     }
-  };
-
-  const handleTabChange = (event: ChangeEvent<{}>, newValue: number) => {
-    setSelectedTab(newValue);
   };
 
   return (
@@ -58,6 +54,20 @@ const Home: NextPage = () => {
                 {result && JSON.stringify(result, null, 2)}
               </Result>
             </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant='h4'>Aanpassen data</Typography>
+            <Typography>
+              Het is ook mogelijk om data te editten.
+              <br />
+              je kunt een authorisatie code krijgen waarmee je ook de POST, PUT en DELETE endpoints
+              kunt gebruiken.
+              <br />
+              Er wordt dan een aparte dataset voor je aangemaakt, waarmee je kunt werken en
+              experimenteren. Hierdoor wordt Anderen zullen deze veranderingen niet zien. Je kunt
+              dus met een gerust hart er op los expermenteren.
+              <CreateUser />
+            </Typography>
           </Grid>
         </Grid>
       </PageLayout>

@@ -26,7 +26,7 @@ export const UploadField: FC<Props> = ({ onChange, progress }) => {
       <label>
         <LinearProgress variant='determinate' value={progress} />
         <input className={classes.input} type='file' onChange={handleSelect} />
-        <Button className='btn-choose' variant='outlined' component='span'>
+        <Button className='btn-choose' variant='outlined'>
           Choose Files
         </Button>
       </label>

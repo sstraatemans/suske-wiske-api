@@ -2,36 +2,37 @@ import { getCache, setCacheById } from '@server/cache';
 import { getStore } from '.';
 import { getDoc, doc } from 'firebase/firestore';
 import { FirebaseDateToTimestamp } from '@server/date';
+import { getCollection } from './utils';
 
 // check if certain required props are there. if not, add default value
-const makeBackwardsCompatible = <
-  T extends { id: string; albums?: Album[]; characters?: Character[] }
->(
-  data: T
-): T => {
-  // for backwards compatibility
-  if (!isOfType<T>(data, 'albums')) data.albums = [];
-  if (!isOfType<T>(data, 'characters')) data.characters = [];
+// const makeBackwardsCompatible = <
+//   T extends { id: string; albums?: Album[]; characters?: Character[] }
+// >(
+//   data: T
+// ): T => {
+//   // for backwards compatibility
+//   if (!isOfType<T>(data, 'albums')) data.albums = [];
+//   if (!isOfType<T>(data, 'characters')) data.characters = [];
 
-  return data;
-};
+//   return data;
+// };
 
 export const getById = async <T extends { id: string }>(
   label: string,
   id: string
 ): Promise<T | undefined> => {
-  const cachedData: T[] = getCache(label);
-  if (cachedData) {
-    console.log(`use Cache ${label}`, id);
+  // const cachedData: T[] = getCache(label);
+  // if (cachedData) {
+  //   console.log(`use Cache ${label}`, id);
 
-    const data = cachedData.find((item) => item?.id === id) as T;
+  //   const data = cachedData.find((item) => item?.id === id) as T;
 
-    return makeBackwardsCompatible(data);
-  }
+  //   return makeBackwardsCompatible(data);
+  // }
 
   const store = getStore();
 
-  const ref = doc(store, label, id);
+  const ref = doc(store, getCollection(label), id);
   const snapshot = await getDoc(ref);
 
   if (!snapshot.exists) {
@@ -42,9 +43,11 @@ export const getById = async <T extends { id: string }>(
     ...snapshot.data(),
   } as any as T;
 
-  setCacheById(label, FirebaseDateToTimestamp<T>(makeBackwardsCompatible(data)));
+  return data;
 
-  return getById<T>(label, id);
+  // setCacheById(label, FirebaseDateToTimestamp<T>(makeBackwardsCompatible(data)));
+
+  // return getById<T>(label, id);
 };
 
 export const isOfType = <T>(

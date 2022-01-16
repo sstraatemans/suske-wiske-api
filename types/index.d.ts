@@ -105,3 +105,18 @@ type ArrayResults<T> = {
   previous: string;
   results: T[];
 };
+
+type OptionProp = {
+  id: string;
+  name: string;
+};
+
+type SelectOptionProp = {
+  option: OptionProp;
+  handleSelectValue: (option: OptionProp) => void;
+};
+
+type AuthenticateCodeUser = {
+  email: string;
+  termsAgreed: boolean;
+};

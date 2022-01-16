@@ -14,6 +14,7 @@ const handler = baseHandler()
     res.json(enrichedResult[0]);
   })
   .put(async (req, res) => {
+    console.log(req);
     const { id } = req.query as { id: string };
     const body = req.body as Serie;
 

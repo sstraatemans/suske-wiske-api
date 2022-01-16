@@ -1,5 +1,4 @@
 import { useEffect, useState, ChangeEvent } from 'react';
-import { OptionProp } from './SelectOption';
 
 type Props = {
   handleInputValue: (name: string, value?: string) => void;
@@ -15,7 +14,7 @@ export const useAutocomplete = ({ value, handleInputValue, options, name }: Prop
 
   useEffect(() => {
     handleInputValue(name, innerValue);
-  }, [innerValue]);
+  }, [innerValue, handleInputValue, name]);
 
   useEffect(() => {
     if (options) {
