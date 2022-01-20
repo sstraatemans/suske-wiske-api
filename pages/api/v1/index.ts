@@ -1,12 +1,28 @@
 import { baseHandler } from '@server/baseHandler';
+import Cors from 'cors';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ['GET', 'HEAD'],
+});
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: any) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 const handler = baseHandler().get(async (req, res) => {
-  const { method } = req;
-
-  // This will allow OPTIONS request
-  if (method === 'OPTIONS') {
-    return res.status(200).send('ok');
-  }
+  await runMiddleware(req, res, cors);
 
   res.json({
     series: `${process.env.APIURL}/v1/series`,
