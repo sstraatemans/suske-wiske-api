@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   User,
 } from 'firebase/auth';
+import { TokenKind } from 'graphql';
 
 type UserContextProps = {
   isLoggedIn: boolean;
@@ -18,6 +19,7 @@ type UserContextProps = {
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
   getAuthenticationToken: () => string | undefined;
+  getTokenId: () => Promise<string | undefined>;
 };
 
 const userContext = createContext<UserContextProps>({
@@ -27,6 +29,7 @@ const userContext = createContext<UserContextProps>({
   signIn: async () => {},
   signOut: async () => {},
   getAuthenticationToken: () => '',
+  getTokenId: async () => '',
 });
 
 // custom hook to use the authUserContext and access authUser and loading
@@ -36,6 +39,7 @@ export const UserProvider: FC = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const [tokenId, setTokenId] = useState<string>();
 
   useEffect(() => {
     const auth = getAuth();
@@ -69,9 +73,18 @@ export const UserProvider: FC = ({ children }) => {
     return user?.uid;
   };
 
+  const getTokenId = async () => {
+    if (!user) return undefined;
+    if (tokenId) return tokenId;
+
+    const innerToken = await user?.getIdToken();
+    setTokenId(innerToken);
+    return innerToken;
+  };
+
   return (
     <userContext.Provider
-      value={{ signIn, signOut, isLoggedIn, isLoading, user, getAuthenticationToken }}
+      value={{ signIn, signOut, isLoggedIn, isLoading, user, getAuthenticationToken, getTokenId }}
     >
       {children}
     </userContext.Provider>

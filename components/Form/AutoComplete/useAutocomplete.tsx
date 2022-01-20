@@ -14,7 +14,7 @@ export const useAutocomplete = ({ value, handleInputValue, options, name }: Prop
 
   useEffect(() => {
     handleInputValue(name, innerValue);
-  }, [innerValue, handleInputValue, name]);
+  }, [innerValue, name]);
 
   useEffect(() => {
     if (options) {

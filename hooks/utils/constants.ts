@@ -7,5 +7,6 @@ export const DATAURLS = {
   USERS: '/users',
   ADMIN: {
     ALBUMS: '/admin/albums',
+    ARTISTS: '/admin/artists',
   },
 };

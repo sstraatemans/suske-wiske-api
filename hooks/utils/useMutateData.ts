@@ -7,10 +7,11 @@ import { useAuthUser } from '@context/UserContext';
 export const useMutateData = <T extends { id: string }>(url: string, id?: string) => {
   const [mutateResult, setMutateResult] = useState<T>();
   const { setIsLoading } = useDataContext();
-  const { getAuthenticationToken } = useAuthUser();
+  const { getTokenId, user } = useAuthUser();
 
   const mutateData = async (body: T | undefined) => {
     if (body) {
+      const token = await getTokenId();
       setIsLoading(true);
       let res: AxiosResponse;
       if (!body.id) {
@@ -20,7 +21,7 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
           { ...newBody },
           {
             headers: {
-              Authorization: `Bearer ${getAuthenticationToken()}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -32,7 +33,7 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
         { ...body },
         {
           headers: {
-            Authorization: `Bearer ${getAuthenticationToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

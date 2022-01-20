@@ -8,6 +8,8 @@ export const CreateUser = () => {
   const { formValues, handleInputEvent, handleInputValue } = useFormControls<User>();
   const { mutateData, mutateResult } = useUpdateUserMutation();
 
+  console.log(mutateResult);
+
   console.log(formValues);
   const handleOpen = () => {
     setIsOpen(true);
@@ -28,27 +30,36 @@ export const CreateUser = () => {
       {isOpen && (
         <Modal open handleClose={handleClose}>
           <>
-            <Typography variant='h4'>Ik wil data aanpassen</Typography>
-            <Typography>
-              Vul je email adres in om een authenticatie code te creeeren.
-              <br />
-            </Typography>
-            <TextField
-              label='E-mail'
-              name='email'
-              value={formValues?.email}
-              handleInputEvent={handleInputEvent}
-              required
-            />
-            <Checkbox
-              name='termsAgreed'
-              value={formValues?.termsAgreed}
-              handleInputValue={handleInputValue}
-              required
-            >
-              I agree with the terms
-            </Checkbox>
-            <Button onClick={handleSubmit}>Geef me de code</Button>
+            {mutateResult ? (
+              <>
+                <Typography variant='h4'>Succes!</Typography>
+                <Typography>Je code is: {mutateResult.id}</Typography>
+              </>
+            ) : (
+              <>
+                <Typography variant='h4'>Ik wil data aanpassen</Typography>
+                <Typography>
+                  Vul je email adres in om een authenticatie code te creeeren.
+                  <br />
+                </Typography>
+                <TextField
+                  label='E-mail'
+                  name='email'
+                  value={formValues?.email}
+                  handleInputEvent={handleInputEvent}
+                  required
+                />
+                <Checkbox
+                  name='termsAgreed'
+                  value={formValues?.termsAgreed}
+                  handleInputValue={handleInputValue}
+                  required
+                >
+                  I agree with the terms
+                </Checkbox>
+                <Button onClick={handleSubmit}>Geef me de code</Button>
+              </>
+            )}
           </>
         </Modal>
       )}

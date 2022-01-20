@@ -2,16 +2,16 @@ import { baseHandler } from '@server/baseHandler';
 import { getAll } from '@server/data/getAll';
 
 const handler = baseHandler().get(async (req, res) => {
-  const albums = await getAll<Album>('albums');
-  const albumCount = albums.length;
+  const artists = await getAll<Artist>('artists');
+  const count = artists.length;
 
-  const miniArray = albums.map((album) => ({
-    id: album.id,
-    name: album.name,
+  const miniArray = artists.map((artist) => ({
+    id: artist.id,
+    name: artist.name,
   }));
 
   res.json({
-    count: albumCount,
+    count,
     results: miniArray,
   });
 });

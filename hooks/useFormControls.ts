@@ -1,11 +1,10 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useCallback } from 'react';
 
 export const useFormControls = <T>() => {
   const [formValues, setFormValues] = useState<T>();
 
   const handleInputEvent = (e: FormEvent) => {
     const { name, value } = (e.target ?? {}) as HTMLInputElement;
-    console.log({ name, value });
     setFormValues({ ...formValues, [name]: value } as T);
   };
 

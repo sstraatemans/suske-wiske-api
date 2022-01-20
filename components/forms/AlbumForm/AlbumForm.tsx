@@ -1,8 +1,9 @@
 import { FC, FormEvent, useEffect } from 'react';
 import { useFormControls, useImageupload } from '@hooks/.';
-import { TextField, UploadField, DatePicker } from '@components/Form';
+import { TextField, UploadField, DatePicker, AutoComplete } from '@components/Form';
 import { Button } from '@components/.';
 import { useUpdateAlbumMutation } from '@hooks/.';
+import { useGetListArtistsQuery } from '@hooks/admin/useGetListArtistsQuery';
 
 type Props = {
   data?: Album;
@@ -14,6 +15,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
   const { formValues, setInitialFormValues, handleInputEvent, handleAddImage, handleInputValue } =
     useFormControls<Album>();
   const { mutateData, mutateResult } = useUpdateAlbumMutation();
+  const { data: artistListData } = useGetListArtistsQuery();
 
   useEffect(() => {
     setInitialFormValues(data);
@@ -62,6 +64,20 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           value={formValues?.name}
           handleInputEvent={handleInputEvent}
           required
+        />
+        <AutoComplete
+          value={formValues?.scenarioArtist}
+          label='scenario artist'
+          name='scenarioArtist'
+          options={artistListData?.results}
+          handleInputValue={handleInputValue}
+        />
+        <AutoComplete
+          value={formValues?.drawArtist}
+          label='draw artist'
+          name='drawArtist'
+          options={artistListData?.results}
+          handleInputValue={handleInputValue}
         />
         <DatePicker
           value={new Date(formValues?.firstPublicationDate ?? Date.now())}

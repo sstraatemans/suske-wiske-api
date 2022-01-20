@@ -2,6 +2,8 @@ type Album = {
   id: string;
   name: string;
   firstPublicationDate: number;
+  scenarioArtist: string;
+  drawArtist: string;
   images: string[];
 };
 
