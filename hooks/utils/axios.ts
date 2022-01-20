@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosConfig = {
-  baseURL: '/api/v1',
+  baseURL: 'https://suskeenwiske.dev/api/v1',
   timeout: 30000,
 };
 
