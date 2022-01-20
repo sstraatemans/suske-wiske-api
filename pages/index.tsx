@@ -21,6 +21,7 @@ const Home: NextPage = () => {
     const call = searchRef?.current?.value;
 
     const response = await fetch(`https://suskeenwiske.dev/api/v1/${call}`);
+    console.log(response);
     if (response.status > 300) {
       setError({
         error: `${response.status}`,
