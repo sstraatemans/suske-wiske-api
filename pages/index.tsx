@@ -20,8 +20,11 @@ const Home: NextPage = () => {
 
     const call = searchRef?.current?.value;
 
-    const response = await fetch(`http://localhost:3000/api/v1/${call}`);
-    console.log(response);
+    const response = await fetch(`https://suske-wiske-api.vercel.app/api/v1/${call}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     if (response.status > 300) {
       setError({
         error: `${response.status}`,
