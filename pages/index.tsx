@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     const call = searchRef?.current?.value;
 
     const response = await fetch(
-      `https://suske-wiske-api-949tmnr4x-sstraatemans.vercel.app/api/v1`,
+      `https://suske-wiske-api-9e4h55hfr-sstraatemans.vercel.app/api/v1`,
       {
         headers: {
           'Content-Type': 'application/json',
