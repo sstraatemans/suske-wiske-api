@@ -20,11 +20,14 @@ const Home: NextPage = () => {
 
     const call = searchRef?.current?.value;
 
-    const response = await fetch(`https://suskeenwiske.dev/api/v1`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `https://suske-wiske-api-949tmnr4x-sstraatemans.vercel.app/api/v1`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     if (response.status > 300) {
       setError({
         error: `${response.status}`,
