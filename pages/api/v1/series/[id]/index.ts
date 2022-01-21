@@ -4,6 +4,9 @@ import { getById } from '@server/data/getById';
 import { update } from '@server/data/update';
 
 const handler = baseHandler()
+  .options(async (req, res) => {
+    return res.status(200).send('ok');
+  })
   .get(async (req, res) => {
     const { id } = req.query as { id: string };
 

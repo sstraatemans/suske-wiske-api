@@ -2,6 +2,9 @@ import { baseHandler } from '@server/baseHandler';
 import { update } from '@server/data/update';
 
 const handler = baseHandler()
+  .options(async (req, res) => {
+    return res.status(200).send('ok');
+  })
   .get(async (req, res) => {})
   .post(async (req, res) => {
     const { body } = req;

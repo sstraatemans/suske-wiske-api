@@ -11,6 +11,9 @@ import { getAll } from '@server/data/getAll';
 import { update } from '@server/data/update';
 
 const handler = baseHandler()
+  .options(async (req, res) => {
+    return res.status(200).send('ok');
+  })
   .get(async (req, res) => {
     const { limit, offset, q } = req.query as { limit: string; offset: string; q: string };
 
