@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
     const call = searchRef?.current?.value;
 
-    const response = await fetch(`https://suskeenwiske.dev/api/v1/${call}`);
+    const response = await fetch(`http://localhost:3000/api/v1/${call}`);
     console.log(response);
     if (response.status > 300) {
       setError({
