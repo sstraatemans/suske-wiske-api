@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
     const call = searchRef?.current?.value;
 
-    const response = await fetch(`https://suske-wiske-api.vercel.app/api/v1/${call}`, {
+    const response = await fetch(`https://suskeenwiske.dev/api/v1`, {
       headers: {
         'Content-Type': 'application/json',
       },
