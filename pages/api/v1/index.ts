@@ -2,11 +2,15 @@ import { baseHandler } from '@server/baseHandler';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { RequestHandler } from 'next-connect';
+import NextCors from 'nextjs-cors';
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'OPTIONS') {
-    return res.status(200).send('ok');
-  }
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
 
   return res.json({
     series: `${process.env.APIURL}/v1/series`,
