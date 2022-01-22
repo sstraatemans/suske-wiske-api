@@ -4,5 +4,8 @@ export { NumberField } from './NumberField';
 export { UploadField } from './UploadField';
 export { DatePicker } from './DatePicker';
 export { SerieAlbum } from './SerieAlbum/SerieAlbum';
+export { CharacterAlbum } from './CharacterAlbum/CharacterAlbum';
+export { InventionAlbum } from './InventionAlbum/InventionAlbum';
 export { AutoComplete } from './AutoComplete/AutoComplete';
+export { LookUp } from './AutoComplete/LookUp';
 export { Editor } from './Editor/Editor';

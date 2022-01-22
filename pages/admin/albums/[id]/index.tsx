@@ -26,28 +26,14 @@ const Admin: NextPage = () => {
     <AdminLayout>
       <h2>{data?.name}</h2>
 
-      <Tabs value={tabValue} onChange={handleTabChange}>
-        <Tab label='Main' />
-        <Tab label='Characters' />
-        <Tab label='Inventions' />
-      </Tabs>
+      <AlbumForm handleSubmit={handleSubmit} data={data} />
 
-      <TabPanel value={tabValue} index={0}>
-        <AlbumForm handleSubmit={handleSubmit} data={data} />
-
-        <h3>Image</h3>
-        {data?.images?.length && (
-          <ImageContainer width={300} height={300}>
-            <Image src={data.images[0]} layout='fill' alt='album portrait' />
-          </ImageContainer>
-        )}
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        sdf
-      </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        sddd
-      </TabPanel>
+      <h3>Image</h3>
+      {data?.images?.length && (
+        <ImageContainer width={300} height={300}>
+          <Image src={data.images[0]} layout='fill' alt='album portrait' />
+        </ImageContainer>
+      )}
     </AdminLayout>
   );
 };

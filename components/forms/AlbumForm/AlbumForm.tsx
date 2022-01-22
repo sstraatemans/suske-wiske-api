@@ -1,10 +1,17 @@
 import { FC, FormEvent, useEffect } from 'react';
 import { useFormControls, useImageupload } from '@hooks/.';
-import { TextField, UploadField, DatePicker, AutoComplete } from '@components/Form';
+import {
+  TextField,
+  UploadField,
+  DatePicker,
+  AutoComplete,
+  CharacterAlbum,
+  Editor,
+  InventionAlbum,
+} from '@components/Form';
 import { Button, Grid } from '@components/.';
 import { useUpdateAlbumMutation } from '@hooks/.';
 import { useGetListArtistsQuery } from '@hooks/admin/useGetListArtistsQuery';
-import { useGetListCharactersQuery } from '@hooks/admin/useGetListCharactersQuery';
 import { useGetListInventionsQuery } from '@hooks/admin/useGetListInventionsQuery';
 import { Typography } from '@material-ui/core';
 
@@ -19,7 +26,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
     useFormControls<Album>();
   const { mutateData, mutateResult } = useUpdateAlbumMutation();
   const { data: artistListData } = useGetListArtistsQuery();
-  const { data: characterListData } = useGetListCharactersQuery();
+
   const { data: inventionListData } = useGetListInventionsQuery();
 
   useEffect(() => {
@@ -51,12 +58,6 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
 
     await mutateData({ ...formValues, images: [] });
   };
-
-  const characterfindCharacterById = (id: string): Character | undefined =>
-    characterListData?.results?.find((character) => character.id === id);
-
-  const characterfindInventionById = (id: string): Invention | undefined =>
-    inventionListData?.results?.find((invention) => invention.id === id);
 
   if (!formValues && data) return null;
   return (
@@ -97,30 +98,27 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
             handleInputValue('firstPublicationDate', date?.getTime());
           }}
         />
+        <TextField
+          label='wikiLink'
+          name='wikiLink'
+          value={formValues?.wikiLink}
+          handleInputEvent={handleInputEvent}
+        />
+        <Editor
+          name='description'
+          value={formValues?.description}
+          handleInputValue={handleInputValue}
+        />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
 
         <Grid container>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Typography variant='h6'>Characters</Typography>
-            {formValues?.characters?.map((id: string) => {
-              const character = characterfindCharacterById(id);
-              return (
-                <Grid key={id} container>
-                  <Grid item>{character?.name}</Grid>
-                </Grid>
-              );
-            })}
+            <CharacterAlbum value={formValues?.characters} handleInputValue={handleInputValue} />
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Typography variant='h6'>Inventions</Typography>
-            {formValues?.inventions?.map((id: string) => {
-              const invention = characterfindInventionById(id);
-              return (
-                <Grid key={id} container>
-                  <Grid item>{invention?.name}</Grid>
-                </Grid>
-              );
-            })}
+            <InventionAlbum value={formValues?.inventions} handleInputValue={handleInputValue} />
           </Grid>
         </Grid>
 

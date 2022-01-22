@@ -4,6 +4,8 @@ type Album = {
   firstPublicationDate: number;
   scenarioArtist: string;
   cartoonArtist: string;
+  wikiLink?: string;
+  description: string;
   images: string[];
   createDate?: Date;
   createdBy?: string;
