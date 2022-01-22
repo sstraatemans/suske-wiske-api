@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { TextField, UploadField } from '@components/Form';
+import { AutoComplete, Editor, TextField, UploadField } from '@components/Form';
 import { FormEvent, useEffect } from 'react';
 import { useFormControls, useImageupload } from '@hooks/.';
 
 import { Button } from '@components/.';
 import { useUpdateCharacterMutation } from '@hooks/.';
+import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 
 type Props = {
   handleSubmit: (id?: string) => void;
@@ -13,9 +14,10 @@ type Props = {
 
 const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Character>();
   const { mutateData, mutateResult } = useUpdateCharacterMutation(data?.id);
+  const { data: albumListData } = useGetListAlbumsQuery();
 
   useEffect(() => {
     setInitialFormValues(data);
@@ -59,6 +61,25 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           handleInputEvent={handleInputEvent}
           required
         />
+        <AutoComplete
+          value={formValues?.debuteAlbum}
+          label='debute album'
+          name='debuteAlbum'
+          options={albumListData?.results}
+          handleInputValue={handleInputValue}
+        />
+        <TextField
+          label='wikiLink'
+          name='wikiLink'
+          value={formValues?.wikiLink}
+          handleInputEvent={handleInputEvent}
+        />
+        <Editor
+          name='description'
+          value={formValues?.description}
+          handleInputValue={handleInputValue}
+        />
+
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>

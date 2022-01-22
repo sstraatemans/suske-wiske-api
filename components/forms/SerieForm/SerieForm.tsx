@@ -55,6 +55,13 @@ const SerieForm: FC<Props> = ({ data, handleSubmit }) => {
           handleInputEvent={handleInputEvent}
           required
         />
+        <TextField
+          label='wikiLink'
+          name='wikiLink'
+          value={formValues?.wikiLink}
+          handleInputEvent={handleInputEvent}
+          required
+        />
 
         <SerieAlbum value={formValues?.albums} handleInputValue={handleInputValue} />
         <Button type='submit'>Submit</Button>

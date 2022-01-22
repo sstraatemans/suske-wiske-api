@@ -16,29 +16,43 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
       let res: AxiosResponse;
       if (!body.id) {
         const { id, ...newBody } = body as any;
-        res = await axios.post(
-          url,
-          { ...newBody },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setMutateResult({ ...res.data });
+
+        const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}`, {
+          method: 'POST',
+          body: { ...newBody },
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        }).then((res) => res.json());
+
+        // res = await axios.post(
+        //   url,
+        //   { ...newBody },
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //     },
+        //   }
+        // );
+        setMutateResult({ ...result });
         return;
       }
-      res = await axios.put(
-        `${url}/${body.id}`,
-        { ...body },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = res.data;
-      setMutateResult({ ...data });
+
+      const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}/${body.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      }).then((res) => res.json());
+
+      // res = await axios.put(
+      //   `${url}/${body.id}`,
+      //   { ...body },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+      // const data = res.data;
+      //setMutateResult({ ...data });
     }
   };
 

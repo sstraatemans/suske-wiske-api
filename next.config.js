@@ -1,3 +1,5 @@
+const removeImports = require('next-remove-imports')();
+
 module.exports = {
   images: {
     domains: ['firebasestorage.googleapis.com'],
@@ -20,4 +22,10 @@ module.exports = {
       },
     ];
   },
+};
+
+module.exports = (phase, { defaultConfig }) => {
+  return removeImports({
+    ...defaultConfig,
+  });
 };

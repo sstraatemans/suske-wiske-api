@@ -12,19 +12,19 @@ export const useLoadData = <T>(url: string) => {
 
   const getHeaders = async () => {
     const token = await getTokenId();
-    console.log(token);
     if (!token) return;
     return {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      Authorization: `Bearer ${token}`,
     };
   };
 
   const loadData = async () => {
     const headers = await getHeaders();
 
-    const result = await axios.get(url, headers).then((result: AxiosResponse): T => result.data);
+    const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}`, {
+      headers: { ...headers, 'Content-Type': 'application/json' },
+    }).then((res) => res.json());
+
     setData(result);
   };
 

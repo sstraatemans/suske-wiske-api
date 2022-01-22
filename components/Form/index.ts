@@ -5,3 +5,4 @@ export { UploadField } from './UploadField';
 export { DatePicker } from './DatePicker';
 export { SerieAlbum } from './SerieAlbum/SerieAlbum';
 export { AutoComplete } from './AutoComplete/AutoComplete';
+export { Editor } from './Editor/Editor';

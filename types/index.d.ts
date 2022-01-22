@@ -29,6 +29,9 @@ type NewArtist = {
 type Character = {
   id: string;
   name: string;
+  debuteAlbum: string;
+  wikiLink?: string;
+  description: string;
   albums: EntityAlbumLink[];
   images: string[];
   createDate?: Date;
@@ -58,6 +61,11 @@ type Serie = {
   startYear: number;
   endYear?: number;
   albums: SerieAlbumLink[];
+  wikiLink?: string;
+  createDate?: Date;
+  createdBy?: string;
+  lastUpdateDate?: Date;
+  lastUpdateBy?: string;
 };
 
 type SerieAlbumLink = {
