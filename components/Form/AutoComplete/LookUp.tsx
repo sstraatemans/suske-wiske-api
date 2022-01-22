@@ -15,19 +15,27 @@ type Props = {
   value: string[];
   options: unknown[] | undefined;
   disabled?: boolean;
+  mutateData: (body: any) => Promise<any>;
 };
 
-export const LookUp: FC<Props> = ({ disabled, handleInputValue, value, options }) => {
+export const LookUp: FC<Props> = ({ disabled, handleInputValue, value, options, mutateData }) => {
   const classes = useStyles();
-  const { handleChange, handleSelectValue, foundItems } = useLookUp({
+  const { handleChange, handleSelectValue, foundItems, innerSearchValue } = useLookUp({
     value,
     handleInputValue,
     options,
+    mutateData,
   });
 
   return (
     <div className={classes.wrapper}>
-      <TextField disabled={disabled} variant='outlined' fullWidth onChange={handleChange} />
+      <TextField
+        disabled={disabled}
+        value={innerSearchValue}
+        variant='outlined'
+        fullWidth
+        onChange={handleChange}
+      />
 
       {foundItems.map((option) => (
         <SelectOption key={option.id} option={option} handleSelectValue={handleSelectValue} />

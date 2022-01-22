@@ -19,21 +19,12 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
 
         const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}`, {
           method: 'POST',
-          body: { ...newBody },
+          body: JSON.stringify(body),
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         }).then((res) => res.json());
 
-        // res = await axios.post(
-        //   url,
-        //   { ...newBody },
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //     },
-        //   }
-        // );
         setMutateResult({ ...result });
-        return;
+        return result;
       }
 
       const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}/${body.id}`, {
@@ -42,17 +33,8 @@ export const useMutateData = <T extends { id: string }>(url: string, id?: string
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       }).then((res) => res.json());
 
-      // res = await axios.put(
-      //   `${url}/${body.id}`,
-      //   { ...body },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-      // const data = res.data;
-      //setMutateResult({ ...data });
+      setMutateResult({ ...result });
+      return result;
     }
   };
 
