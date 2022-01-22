@@ -67,6 +67,7 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           name='debuteAlbum'
           options={albumListData?.results}
           handleInputValue={handleInputValue}
+          disabled
         />
         <TextField
           label='wikiLink'

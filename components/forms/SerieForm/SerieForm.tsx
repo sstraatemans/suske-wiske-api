@@ -1,5 +1,5 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { TextField, NumberField, SerieAlbum } from '@components/Form';
+import { TextField, NumberField, SerieAlbum, Editor } from '@components/Form';
 import { Button } from '@components/.';
 import { useFormControls, useUpdateSerieMutation } from '@hooks/.';
 
@@ -61,6 +61,11 @@ const SerieForm: FC<Props> = ({ data, handleSubmit }) => {
           value={formValues?.wikiLink}
           handleInputEvent={handleInputEvent}
           required
+        />
+        <Editor
+          name='description'
+          value={formValues?.description}
+          handleInputValue={handleInputValue}
         />
 
         <SerieAlbum value={formValues?.albums} handleInputValue={handleInputValue} />

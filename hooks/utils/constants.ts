@@ -8,5 +8,7 @@ export const DATAURLS = {
   ADMIN: {
     ALBUMS: '/admin/albums',
     ARTISTS: '/admin/artists',
+    CHARACTERS: '/admin/characters',
+    INVENTIONS: '/admin/inventions',
   },
 };

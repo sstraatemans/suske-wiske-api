@@ -1,9 +1,10 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { TextField, UploadField } from '@components/Form';
+import { AutoComplete, DatePicker, Editor, TextField, UploadField } from '@components/Form';
 import { Button } from '@components/.';
 import { useUpdateArtistMutation } from '@hooks/.';
 import { useFormControls, useImageupload } from '@hooks/.';
 import { useRouter } from 'next/router';
+import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 
 type Props = {
   handleSubmit: (id?: string) => void;
@@ -15,9 +16,9 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
   const { query } = router;
   const id = (query.id ?? '') as string;
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Artist>();
-
+  const { data: albumListData } = useGetListAlbumsQuery();
   const { mutateData, mutateResult } = useUpdateArtistMutation(data?.id);
 
   useEffect(() => {
@@ -60,6 +61,39 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
           value={formValues?.name}
           handleInputEvent={handleInputEvent}
           required
+        />
+
+        <DatePicker
+          value={new Date(formValues?.birthDate ?? Date.now())}
+          label='birth date'
+          handleInputValue={(date) => {
+            handleInputValue('birthDate', date?.getTime());
+          }}
+        />
+        <TextField
+          label='birthPlace'
+          name='birthPlace'
+          value={formValues?.birthPlace}
+          handleInputEvent={handleInputEvent}
+        />
+        <AutoComplete
+          value={formValues?.debuteAlbum}
+          label='debute album'
+          name='debuteAlbum'
+          options={albumListData?.results}
+          handleInputValue={handleInputValue}
+          disabled
+        />
+        <TextField
+          label='wikiLink'
+          name='wikiLink'
+          value={formValues?.wikiLink}
+          handleInputEvent={handleInputEvent}
+        />
+        <Editor
+          name='description'
+          value={formValues?.description}
+          handleInputValue={handleInputValue}
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>

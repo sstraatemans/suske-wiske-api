@@ -3,8 +3,14 @@ type Album = {
   name: string;
   firstPublicationDate: number;
   scenarioArtist: string;
-  drawArtist: string;
+  cartoonArtist: string;
   images: string[];
+  createDate?: Date;
+  createdBy?: string;
+  lastUpdateDate?: Date;
+  lastUpdateBy?: string;
+  inventions: string[];
+  characters: string[];
 };
 
 type NewAlbum = {
@@ -14,7 +20,14 @@ type NewAlbum = {
 type Artist = {
   id: string;
   name: string;
-  albums: EntityAlbumLink[];
+  birthDate?: number;
+  birthPlace?: string;
+  debuteAlbum: string;
+  debuteDate: number;
+  wikiLink?: string;
+  description: string;
+  albumsAsCartoonist: EntityAlbumLink[];
+  albumsAsScenarist: EntityAlbumLink[];
   images: string[];
   createDate?: Date;
   createdBy?: string;
@@ -30,6 +43,7 @@ type Character = {
   id: string;
   name: string;
   debuteAlbum: string;
+  debuteDate: number;
   wikiLink?: string;
   description: string;
   albums: EntityAlbumLink[];
@@ -47,6 +61,10 @@ type NewCharacter = {
 type Invention = {
   id: string;
   name: string;
+  debuteAlbum: string;
+  debuteDate: number;
+  wikiLink?: string;
+  description: string;
   albums: EntityAlbumLink[];
   images: string[];
   createDate?: Date;
@@ -60,8 +78,9 @@ type Serie = {
   name: string;
   startYear: number;
   endYear?: number;
-  albums: SerieAlbumLink[];
   wikiLink?: string;
+  description: string;
+  albums: SerieAlbumLink[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;

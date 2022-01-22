@@ -16,9 +16,17 @@ type Props = {
   name: string;
   value?: string;
   options: unknown[] | undefined;
+  disabled?: boolean;
 };
 
-export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, options }) => {
+export const AutoComplete: FC<Props> = ({
+  label,
+  disabled,
+  name,
+  handleInputValue,
+  value,
+  options,
+}) => {
   const classes = useStyles();
   const { handleChange, handleSelectValue, innerLabel, foundItems, innerValue } = useAutocomplete({
     value,
@@ -31,6 +39,7 @@ export const AutoComplete: FC<Props> = ({ label, name, handleInputValue, value, 
     <div className={classes.wrapper}>
       <TextField type='hidden' name={name} value={innerValue} />
       <TextField
+        disabled={disabled}
         label={label}
         value={innerLabel}
         variant='outlined'

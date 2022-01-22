@@ -7,8 +7,9 @@ import {
   useImageupload,
   useUpdateInventionMutation,
 } from '@hooks/.';
-import { TextField, UploadField } from '@components/Form';
+import { AutoComplete, Editor, TextField, UploadField } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';
+import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 
 type Props = {
   handleSubmit: (id: string) => void;
@@ -17,8 +18,9 @@ type Props = {
 
 const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
   const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
-  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Invention>();
+  const { data: albumListData } = useGetListAlbumsQuery();
   const { mutateData, mutateResult } = useUpdateInventionMutation(data?.id);
 
   useEffect(() => {
@@ -61,6 +63,25 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
           value={formValues?.name}
           handleInputEvent={handleInputEvent}
           required
+        />
+        <AutoComplete
+          value={formValues?.debuteAlbum}
+          label='debute album'
+          name='debuteAlbum'
+          options={albumListData?.results}
+          handleInputValue={handleInputValue}
+          disabled
+        />
+        <TextField
+          label='wikiLink'
+          name='wikiLink'
+          value={formValues?.wikiLink}
+          handleInputEvent={handleInputEvent}
+        />
+        <Editor
+          name='description'
+          value={formValues?.description}
+          handleInputValue={handleInputValue}
         />
         {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
