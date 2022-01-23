@@ -7,22 +7,23 @@ export const authenticate = async (req: NextApiRequest, res: NextApiResponse, ne
     headers: { authorization },
   } = req;
 
-  const [, token] = authorization?.split(' ') as string[];
+  const authArray = authorization?.split(' ') as string[];
+
+  if (!authorization || !authorization.startsWith('Bearer') || authArray.length !== 2)
+    return res.status(401).send({ message: 'Unauthorized' });
 
   if (method === 'POST' || method === 'PUT' || method === 'DELETE' || method === 'PATCH') {
     firebaseAdmin
       .auth()
-      .verifyIdToken(token)
+      .verifyIdToken(authArray[1])
       .then((result) => {
-        if (!result.uid) {
-          res.statusCode = 401;
-          return res.send({});
+        if (!result.uid || !result.admin) {
+          return res.status(401).send({ message: 'Unauthorized' });
         }
         next();
       })
-      .catch((error) => {
-        res.statusCode = 401;
-        return res.send({ error });
+      .catch(() => {
+        return res.status(401).send({ message: 'Unauthorized' });
       });
   } else {
     next();

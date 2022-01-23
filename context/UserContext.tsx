@@ -44,7 +44,6 @@ export const UserProvider: FC = ({ children }) => {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         setUser(user);
         setIsLoggedIn(true);
