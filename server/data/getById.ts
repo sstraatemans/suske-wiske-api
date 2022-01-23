@@ -1,4 +1,4 @@
-import { getStore } from '.';
+import { getStore } from './store';
 import { getDoc, doc } from 'firebase/firestore';
 import { FirebaseDateToTimestamp } from '@server/date';
 import { getCollection } from './utils';

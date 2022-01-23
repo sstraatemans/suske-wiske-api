@@ -1,5 +1,5 @@
 import { clearCache } from '@server/cache';
-import { getStore } from '.';
+import { getStore } from './store';
 import { doc, setDoc, addDoc, collection, Timestamp } from 'firebase/firestore';
 import { timeStampToFirebaseDate } from '@server/date';
 import { getCollection } from './utils';

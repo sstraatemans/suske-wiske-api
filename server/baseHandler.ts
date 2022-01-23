@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
+import { authenticate } from './middleware/authenticate';
+import '@server/data';
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({
@@ -15,4 +17,4 @@ export const baseHandler = () =>
         message: `Unexpected error.`,
         error: err.toString(),
       }),
-  });
+  }).use(authenticate);
