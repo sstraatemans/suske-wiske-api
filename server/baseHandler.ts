@@ -15,7 +15,7 @@ const innerCors = async (req: NextApiRequest, res: NextApiResponse, next: Functi
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  req.headers['access-control-allow-origin'] = '*';
+  console.log(res);
   next();
 };
 
