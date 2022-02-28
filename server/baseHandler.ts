@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 import { authenticate } from './middleware/authenticate';
+import { normalizeUpdateData } from './middleware/normalizeUpdateData';
 import '@server/data';
+import { validateData } from './middleware/validateData';
+import { post, put } from './middleware/post';
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({
@@ -17,4 +20,9 @@ export const baseHandler = () =>
         message: `Unexpected error.`,
         error: err.toString(),
       }),
-  }).use(authenticate);
+  })
+    .use(authenticate)
+    .use(post(normalizeUpdateData))
+    .use(put(normalizeUpdateData))
+    .use(post(validateData))
+    .use(put(validateData));

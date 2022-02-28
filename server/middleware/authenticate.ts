@@ -9,10 +9,10 @@ export const authenticate = async (req: NextApiRequest, res: NextApiResponse, ne
 
   const authArray = authorization?.split(' ') as string[];
 
-  if (!authorization || !authorization.startsWith('Bearer') || authArray.length !== 2)
-    return res.status(401).send({ message: 'Unauthorized' });
-
   if (method === 'POST' || method === 'PUT' || method === 'DELETE' || method === 'PATCH') {
+    if (!authorization || !authorization.startsWith('Bearer') || authArray.length !== 2)
+      return res.status(401).send({ message: 'Unauthorized' });
+
     firebaseAdmin
       .auth()
       .verifyIdToken(authArray[1])
@@ -20,6 +20,7 @@ export const authenticate = async (req: NextApiRequest, res: NextApiResponse, ne
         if (!result.uid || !result.admin) {
           return res.status(401).send({ message: 'Unauthorized' });
         }
+        req.body = { ...req.body, uid: result.uid };
         next();
       })
       .catch(() => {

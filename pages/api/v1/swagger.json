@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This api gives you all the info about the famous Suske en Wiske.",
+    "version": "1.0.0",
+    "title": "Suske en Wiske API",
+    "termsOfService": "http://suskeenwiske.dev/terms/",
+    "contact": {
+      "email": "info@suskeenwiske.dev"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "suskeenwiske.dev",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Artists",
+      "description": "All info about the artists",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://suskeenwiske.dev/docs/artists"
+      }
+    },
+    {
+      "name": "Albums",
+      "description": "All info about Albums"
+    },
+    {
+      "name": "Characters",
+      "description": "All info about Characters"
+    },
+    {
+      "name": "Inventions",
+      "description": "All info about Inventions"
+    }
+  ],
+  "schemes": ["https"],
+  "paths": {
+    "/artists": {
+      "post": {
+        "tags": ["Artists"],
+        "summary": "Add a new artist to the store",
+        "description": "",
+        "operationId": "addArtist",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Artist object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Artist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "UnAuthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Artist": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "the api endpoint for this artist"
+        },
+        "id": {
+          "type": "string"
+        },
+        "lastUpdateDate": {
+          "type": "integer",
+          "format": "int32",
+          "description": "timestamp of the date when the object was last updated"
+        },
+        "createDate": {
+          "type": "integer",
+          "format": "int32",
+          "description": "timestamp of the date when the object was first created"
+        },
+        "name": {
+          "type": "string"
+        },
+        "albums": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of urls of albums"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "An array of urls of images"
+        },
+        "birthDate": {
+          "type": "integer",
+          "format": "int32",
+          "description": "timestamp of the birthdate of artist"
+        },
+        "birthPlace": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

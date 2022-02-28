@@ -18,11 +18,13 @@
     "@material-ui/pickers": "^3.3.10",
     "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.12",
+    "@types/express-validator": "^3.0.0",
     "@types/micro-cors": "^0.1.2",
     "@uiw/react-md-editor": "^3.9.3",
     "apollo-server-micro": "^3.3.0",
     "axios": "^0.24.0",
     "date-fns": "^2.28.0",
+    "express-validator": "^6.14.0",
     "firebase": "^9.0.0",
     "firebase-admin": "^9.11.1",
     "graphql": "^15.5.1",
@@ -31,9 +33,11 @@
     "next": "12",
     "next-connect": "^0.10.2",
     "next-remove-imports": "^1.0.6",
+    "next-swagger-doc": "^0.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-spring": "^9.4.2"
+    "react-spring": "^9.4.2",
+    "swagger-ui-react": "^4.5.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.1.1",

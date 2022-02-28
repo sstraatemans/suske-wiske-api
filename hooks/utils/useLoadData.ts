@@ -33,6 +33,7 @@ export const useLoadData = <T>(url: string) => {
   }, [data, setIsLoading]);
 
   useEffect(() => {
+    console.log('start reload', url);
     if (startReload && user) {
       setIsLoading(true);
       setError(undefined);

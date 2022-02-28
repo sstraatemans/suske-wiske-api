@@ -1,16 +1,8 @@
 import { clearCache } from '@server/cache';
 import { getStore } from './store';
 import { doc, setDoc, addDoc, collection, Timestamp } from 'firebase/firestore';
-import { timeStampToFirebaseDate } from '@server/date';
+
 import { getCollection } from './utils';
-
-const addDefaultUpdateData = <T>(data: T): T => {
-  return { ...data, lastUpdateDate: new Date() };
-};
-
-const addDefaultCreateData = <T>(data: T): T => {
-  return { ...addDefaultUpdateData(data), createDate: new Date() };
-};
 
 export const updateById = async <T extends { id: string }>(label: string, input: T): Promise<T> => {
   if (!input.id && label === 'albums') {
@@ -19,13 +11,10 @@ export const updateById = async <T extends { id: string }>(label: string, input:
 
   const store = getStore();
 
-  const newInput = {
-    ...timeStampToFirebaseDate(addDefaultCreateData<T>(input)),
-  };
-  await setDoc(doc(store, getCollection(label), newInput.id), newInput);
+  await setDoc(doc(store, getCollection(label), input.id), input);
   // clearCache(label);
 
-  return newInput as unknown as T;
+  return input as unknown as T;
 };
 
 export const update = async <T extends { id: string }>(label: string, input: T): Promise<T> => {
@@ -35,12 +24,11 @@ export const update = async <T extends { id: string }>(label: string, input: T):
   if (!input.id) {
     const store = getStore();
 
-    const newInput = { ...timeStampToFirebaseDate(addDefaultCreateData<T>(input)) };
-    const docRef = await addDoc(collection(store, getCollection(label)), newInput);
+    const docRef = await addDoc(collection(store, getCollection(label)), input);
     // clearCache(label);
 
     return {
-      ...newInput,
+      ...input,
       id: docRef.id,
     } as unknown as T;
   }

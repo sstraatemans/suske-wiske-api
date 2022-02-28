@@ -1,16 +1,20 @@
-type Album = {
+type BasicType = {
   id: string;
   name: string;
-  firstPublicationDate: number;
-  scenarioArtist: string;
-  cartoonArtist: string;
   wikiLink?: string;
   description: string;
-  images: string[];
   createDate?: Date;
   createdBy?: string;
   lastUpdateDate?: Date;
   lastUpdateBy?: string;
+  images: string[];
+  uid?: String;
+};
+
+type Album = BasicType & {
+  firstPublicationDate: number;
+  scenarioArtist: string;
+  cartoonArtist: string;
   inventions: string[];
   characters: string[];
 };
@@ -19,74 +23,39 @@ type NewAlbum = {
   name: string;
 };
 
-type Artist = {
-  id: string;
-  name: string;
+type Artist = BasicType & {
   birthDate?: number;
   birthPlace?: string;
   debuteAlbum: string;
   debuteDate: number;
-  wikiLink?: string;
-  description: string;
   albumsAsCartoonist: EntityAlbumLink[];
   albumsAsScenarist: EntityAlbumLink[];
-  images: string[];
-  createDate?: Date;
-  createdBy?: string;
-  lastUpdateDate?: Date;
-  lastUpdateBy?: string;
 };
 
 type NewArtist = {
   name: string;
 };
 
-type Character = {
-  id: string;
-  name: string;
+type Character = BasicType & {
   debuteAlbum: string;
   debuteDate: number;
-  wikiLink?: string;
-  description: string;
   albums: EntityAlbumLink[];
-  images: string[];
-  createDate?: Date;
-  createdBy?: string;
-  lastUpdateDate?: Date;
-  lastUpdateBy?: string;
 };
 
 type NewCharacter = {
   name: string;
 };
 
-type Invention = {
-  id: string;
-  name: string;
+type Invention = BasicType & {
   debuteAlbum: string;
   debuteDate: number;
-  wikiLink?: string;
-  description: string;
   albums: EntityAlbumLink[];
-  images: string[];
-  createDate?: Date;
-  createdBy?: string;
-  lastUpdateDate?: Date;
-  lastUpdateBy?: string;
 };
 
-type Serie = {
-  id: string;
-  name: string;
+type Serie = BasicType & {
   startYear: number;
   endYear?: number;
-  wikiLink?: string;
-  description: string;
   albums: SerieAlbumLink[];
-  createDate?: Date;
-  createdBy?: string;
-  lastUpdateDate?: Date;
-  lastUpdateBy?: string;
 };
 
 type SerieAlbumLink = {

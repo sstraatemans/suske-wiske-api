@@ -23,7 +23,7 @@ const SerieForm: FC<Props> = ({ data, handleSubmit }) => {
     }
   }, [mutateResult, handleSubmit]);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     mutateData(formValues);

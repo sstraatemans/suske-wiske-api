@@ -17,13 +17,14 @@ const handler = baseHandler()
     res.json(enrichedResult[0]);
   })
   .put(async (req, res) => {
-    console.log(req);
     const { id } = req.query as { id: string };
     const body = req.body as Serie;
 
     try {
-      await update<Serie>('series', body);
-      return res.status(204).send(null);
+      const newData = await update<Serie>('series', body);
+      console.log({ newData });
+      const enrichedResult = await enrichSeries([newData]);
+      return res.json(enrichedResult);
     } catch (e) {
       return res.status(500).json('error');
     }
