@@ -8,7 +8,7 @@ export const app = initializeApp(
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
   },
-  'DEFAULT'
+  '1'
 );
 
 firebaseAdmin.initializeApp({
