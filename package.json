@@ -20,6 +20,7 @@
     "@types/cors": "^2.8.12",
     "@types/express-validator": "^3.0.0",
     "@types/micro-cors": "^0.1.2",
+    "@types/swagger-ui-react": "^4.1.1",
     "@uiw/react-md-editor": "^3.9.3",
     "apollo-server-micro": "^3.3.0",
     "axios": "^0.24.0",
