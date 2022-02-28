@@ -34,7 +34,6 @@ export const baseHandler = () =>
         error: err.toString(),
       }),
   })
-    .use(innerCors)
     .use(authenticate)
     .use(post(normalizeUpdateData))
     .use(put(normalizeUpdateData))
