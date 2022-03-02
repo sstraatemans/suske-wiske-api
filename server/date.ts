@@ -5,7 +5,8 @@ export const timeStampToFirebaseDate = <T>(data: T): T => {
   Object.entries(data).map(([key, value]) => {
     const newKey = key as keyof typeof data;
     if (key.endsWith('Date') && Number.isInteger(value)) {
-      data[newKey] = new Timestamp(value / 1000, 0) as unknown as any;
+      console.log(value, newKey);
+      data[newKey] = new Timestamp(Math.round(value / 1000), 0) as unknown as any;
     }
   });
   return data;

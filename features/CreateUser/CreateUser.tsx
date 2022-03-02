@@ -3,14 +3,16 @@ import { Button, Modal, Typography } from '@components/.';
 import { TextField, Checkbox } from '@components/Form';
 import { useFormControls, useUpdateUserMutation } from '@hooks/.';
 
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('nl-NL', { dateStyle: 'full', timeStyle: 'short' }).format(
+    new Date(date)
+  );
+};
+
 export const CreateUser = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { formValues, handleInputEvent, handleInputValue } = useFormControls<User>();
   const { mutateData, mutateResult } = useUpdateUserMutation();
-
-  console.log(mutateResult);
-
-  console.log(formValues);
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -32,8 +34,20 @@ export const CreateUser = () => {
           <>
             {mutateResult ? (
               <>
-                <Typography variant='h4'>Succes!</Typography>
-                <Typography>Je code is: {mutateResult.id}</Typography>
+                {mutateResult.alreadyExists ? (
+                  <>
+                    <Typography variant='h4'>Email bestaat al</Typography>
+                    <Typography>Je code is: {mutateResult.id}</Typography>
+                    <Typography>geldig tot: {formatDate(mutateResult.expireDate)}</Typography>
+                    <Button>Start opnieuw</Button>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant='h4'>Succes!</Typography>
+                    <Typography>Je code is: {mutateResult.id}</Typography>
+                    <Typography>geldig tot: {formatDate(mutateResult.expireDate)}</Typography>
+                  </>
+                )}
               </>
             ) : (
               <>

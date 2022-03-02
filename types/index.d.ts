@@ -128,4 +128,6 @@ type User = {
   id: string;
   email: string;
   termsAgreed: boolean;
+  alreadyExists: boolean;
+  expireDate: Date;
 };
