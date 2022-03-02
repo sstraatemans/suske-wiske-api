@@ -37,7 +37,10 @@ type NewArtist = {
 };
 
 type Character = BasicType & {
-  debuteAlbum: string;
+  debuteAlbum: {
+    id: string;
+    name: string;
+  };
   debuteDate: number;
   albums: EntityAlbumLink[];
 };
@@ -63,7 +66,12 @@ type SerieAlbumLink = {
   order: number;
 };
 
-type EntityAlbumLink = string;
+type EntityAlbumLink =
+  | string
+  | {
+      id: string;
+      name: string;
+    };
 
 type UpdateAlbumInput = {
   id: string;

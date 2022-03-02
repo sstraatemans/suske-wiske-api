@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import * as firebaseAdmin from 'firebase-admin';
+import { firebaseAdmin } from '@server/data';
 
 export const authenticate = async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
   const {

@@ -5,19 +5,6 @@ import { normalizeUpdateData } from './middleware/normalizeUpdateData';
 import '@server/data';
 import { validateData } from './middleware/validateData';
 import { post, put } from './middleware/post';
-import NextCors from 'nextjs-cors';
-
-const innerCors = async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
-  await NextCors(req, res, {
-    // Options
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-    origin: '*',
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  });
-
-  console.log(res);
-  next();
-};
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({

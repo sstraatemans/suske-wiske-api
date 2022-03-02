@@ -1,7 +1,5 @@
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-const storage = getStorage();
-
 type Props = (
   id: string,
   file: File,
@@ -16,6 +14,8 @@ const getFileExtension = (name: string) => {
 };
 
 const uploadFile: Props = (id, file, onProgress, onSuccess, onError) => {
+  const storage = getStorage();
+
   const storageRef = ref(storage, `albums/${id}.${getFileExtension(file.name)}`);
   const task = uploadBytesResumable(storageRef, file);
 
@@ -39,10 +39,11 @@ const uploadFile: Props = (id, file, onProgress, onSuccess, onError) => {
 };
 
 const deleteFile = (url: string) => {
+  const storage = getStorage();
   const storageRef = ref(storage, url);
 
   //TODO: implement delete image
   console.log(storageRef);
 };
 
-export { storage, uploadFile, deleteFile };
+export { uploadFile, deleteFile };

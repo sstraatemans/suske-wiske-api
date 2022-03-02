@@ -61,12 +61,12 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           handleInputEvent={handleInputEvent}
           required
         />
-        <AutoComplete
-          value={formValues?.debuteAlbum}
+
+        <TextField
           label='debute album'
           name='debuteAlbum'
-          options={albumListData?.results}
-          handleInputValue={handleInputValue}
+          value={`(${data?.debuteAlbum.id}) ${data?.debuteAlbum.name}`}
+          handleInputEvent={handleInputEvent}
           disabled
         />
         <TextField

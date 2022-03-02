@@ -5,9 +5,12 @@ const handler = baseHandler()
   .options(async (req, res) => {
     return res.status(200).send('ok');
   })
-  .get(async (req, res) => {})
+  .get(async (req, res) => {
+    return res.status(200).json({});
+  })
   .post(async (req, res) => {
     const { body } = req;
+    console.log(body);
 
     // TODO: check if that user already has an active account.
     // if so, sent this data back. ask question if they want to create a new one or use this / these

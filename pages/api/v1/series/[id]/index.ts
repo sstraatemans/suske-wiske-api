@@ -20,14 +20,15 @@ const handler = baseHandler()
     const { id } = req.query as { id: string };
     const body = req.body as Serie;
 
-    try {
-      const newData = await update<Serie>('series', body);
-      console.log({ newData });
-      const enrichedResult = await enrichSeries([newData]);
-      return res.json(enrichedResult);
-    } catch (e) {
-      return res.status(500).json('error');
-    }
+    //try {
+    console.log(body);
+    const newData = await update<Serie>('series', body);
+    console.log({ newData });
+    const enrichedResult = await enrichSeries([newData]);
+    return res.json(enrichedResult);
+    // } catch (e) {
+    //   return res.status(500).json('error');
+    // }
   });
 
 export default handler;

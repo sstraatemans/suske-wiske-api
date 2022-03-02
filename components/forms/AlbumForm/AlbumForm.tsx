@@ -94,6 +94,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
         <DatePicker
           value={new Date(formValues?.firstPublicationDate ?? Date.now())}
           label='first publication date'
+          required
           handleInputValue={(date) => {
             handleInputValue('firstPublicationDate', date?.getTime());
           }}

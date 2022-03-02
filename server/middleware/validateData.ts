@@ -19,6 +19,8 @@ export const validateData = async (req: NextApiRequest, res: NextApiResponse, ne
 
     case 'albums':
       break;
+    case 'users':
+      break;
     default:
       return res.status(404).send({ message: 'not found' });
   }

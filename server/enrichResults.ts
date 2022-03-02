@@ -1,4 +1,6 @@
 import { getAll } from './data/getAll';
+import { getAlbumsForEntity } from './data/utils/getAlbumsForEntity';
+import { getDebuteAlbum } from './data/utils/getDebuteAlbum';
 
 export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
   return results.map((result) => {
@@ -21,12 +23,18 @@ export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
 export const enrichCharacters = async (results: Character[]): Promise<Character[]> => {
   const series = await getAll<Character>('characters');
 
-  return results.map((result) => {
+  const promises = results.map(async (result) => {
+    const debutealbum = await getDebuteAlbum(result.id, 'characters');
+    const albums = await getAlbumsForEntity(result.id, 'characters');
     return {
       url: `${process.env.APIURL}/v1/characters/${result.id}`,
       ...result,
+      debuteAlbum: { id: debutealbum.id, name: debutealbum.name },
+      albums,
     };
   });
+
+  return Promise.all(promises).then((res) => res);
 };
 
 export const enrichArtist = async (results: Artist[]): Promise<Artist[]> => {

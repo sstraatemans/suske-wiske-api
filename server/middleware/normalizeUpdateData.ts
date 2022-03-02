@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { timeStampToFirebaseDate } from '@server/date';
 import { addDefaultCreateData, findLabel } from '@server/data/utils';
+import { getDebuteAlbum } from '@server/data/utils/getDebuteAlbum';
 
 export const normalizeUpdateData = async (
   req: NextApiRequest,
@@ -24,12 +25,14 @@ export const normalizeUpdateData = async (
 
   //this removes all the fields that should not be in the specified entity
   //thereby removing malicious fields added by the user
-  switch (findLabel(url)) {
+  const label = findLabel(url);
+  switch (label) {
     case 'series':
       body = {
         ...body,
         startYear: req.body.startYear,
         endYear: req.body.endYear,
+        albums: req.body.albums ?? [],
       } as Serie;
       break;
 
@@ -64,6 +67,9 @@ export const normalizeUpdateData = async (
         characters: req.body.characters ?? [],
       } as Album;
 
+      break;
+    case 'users':
+      body = { ...req.body };
       break;
     default:
       return res.status(404).send({ message: 'not found' });

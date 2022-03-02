@@ -14,9 +14,10 @@ type Props = {
   handleInputValue: (date: MaterialUiPickersDate) => void;
   value: Date;
   label: string;
+  required?: boolean;
 };
 
-export const DatePicker: FC<Props> = ({ handleInputValue, value, label }) => {
+export const DatePicker: FC<Props> = ({ handleInputValue, value, label, required }) => {
   const classes = useStyles();
 
   return (
@@ -28,6 +29,7 @@ export const DatePicker: FC<Props> = ({ handleInputValue, value, label }) => {
           value={value}
           label={label}
           onChange={handleInputValue}
+          required={required}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
