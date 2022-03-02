@@ -22,7 +22,6 @@ const handler = baseHandler()
 
     // TODO: check if that user already has an active account.
     const q = query(collection(store, 'users'), where('email', '==', body.email));
-
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {

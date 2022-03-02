@@ -4,6 +4,7 @@ import { TextField, Checkbox } from '@components/Form';
 import { useFormControls, useUpdateUserMutation } from '@hooks/.';
 
 const formatDate = (date: Date) => {
+  console.log(11, date);
   return new Intl.DateTimeFormat('nl-NL', { dateStyle: 'full', timeStyle: 'short' }).format(
     new Date(date)
   );
