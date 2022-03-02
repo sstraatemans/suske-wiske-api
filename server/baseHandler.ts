@@ -21,7 +21,6 @@ export const baseHandler = () =>
         error: err.toString(),
       }),
   })
-    .use(authenticate)
     .use(post(normalizeUpdateData))
     .use(put(normalizeUpdateData))
     .use(post(validateData))

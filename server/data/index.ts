@@ -8,14 +8,11 @@ let app: firebase.FirebaseApp;
 const interval = setInterval(async () => {
   if (!firebaseAppDefined) {
     if (!app) {
-      app = await firebase.initializeApp(
-        {
-          apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-          authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
-        },
-        'DEFAULT'
-      );
+      app = await firebase.initializeApp({
+        apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+        authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+      });
 
       await firebaseAdmin.initializeApp({
         databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DBURL,

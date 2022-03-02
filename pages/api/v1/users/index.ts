@@ -24,12 +24,13 @@ const handler = baseHandler()
     const q = query(collection(store, 'users'), where('email', '==', body.email));
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(async (doc) => {
+      const data = await doc.data();
       return res.status(409).json(
         FirebaseDateToTimestamp({
           alreadyExists: true,
           id: doc.id,
-          expireDate: doc.data().expireDate,
+          expireDate: data.expireDate,
         })
       );
     });

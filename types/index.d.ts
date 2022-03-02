@@ -129,5 +129,5 @@ type User = {
   email: string;
   termsAgreed: boolean;
   alreadyExists: boolean;
-  expireDate: Date;
+  expireDate: string;
 };

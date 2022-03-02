@@ -3,10 +3,10 @@ import { Button, Modal, Typography } from '@components/.';
 import { TextField, Checkbox } from '@components/Form';
 import { useFormControls, useUpdateUserMutation } from '@hooks/.';
 
-const formatDate = (date: Date) => {
-  console.log(11, date);
+const formatDate = (date: string) => {
+  if (!date) return;
   return new Intl.DateTimeFormat('nl-NL', { dateStyle: 'full', timeStyle: 'short' }).format(
-    new Date(date)
+    new Date(parseInt(date))
   );
 };
 
