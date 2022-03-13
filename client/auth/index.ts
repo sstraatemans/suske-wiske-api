@@ -8,15 +8,4 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
 };
 
-let firebaseAppDefined = false;
-const interval = setInterval(async () => {
-  if (!firebaseAppDefined) {
-    if (!getApps().length) {
-      await initializeApp(firebaseConfig);
-
-      firebaseAppDefined = true;
-    }
-  } else {
-    clearInterval(interval);
-  }
-}, 100);
+initializeApp(firebaseConfig);
