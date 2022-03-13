@@ -3,7 +3,7 @@ import { update } from '@server/data/update';
 import { getDoc, doc } from 'firebase/firestore';
 
 import { FirebaseDateToTimestamp, timeStampToFirebaseDate } from '@server/date';
-import { getCollection } from '@server/data/utils';
+
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { getStore } from '@server/data';
 import { addDays } from 'date-fns';
