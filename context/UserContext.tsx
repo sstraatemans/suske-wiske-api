@@ -10,7 +10,6 @@ import {
   signInWithPopup,
   User,
 } from 'firebase/auth';
-import { TokenKind } from 'graphql';
 
 type UserContextProps = {
   isLoggedIn: boolean;
@@ -42,25 +41,25 @@ export const UserProvider: FC = ({ children }) => {
   const [tokenId, setTokenId] = useState<string>();
 
   useEffect(() => {
-    // const auth = getAuth();
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     setUser(user);
-    //     setIsLoggedIn(true);
-    //   } else {
-    //     setUser(null);
-    //     setIsLoggedIn(false);
-    //   }
-    //   setIsLoading(false);
-    // });
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setIsLoggedIn(true);
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+      setIsLoading(false);
+    });
   }, []);
 
   const signIn = async (): Promise<void> => {
     var provider = new GoogleAuthProvider();
-    // const auth = getAuth();
+    const auth = getAuth();
 
-    // await setPersistence(auth, browserLocalPersistence);
-    // await signInWithPopup(auth, provider);
+    await setPersistence(auth, browserLocalPersistence);
+    await signInWithPopup(auth, provider);
   };
 
   const signOut = async (): Promise<void> => {

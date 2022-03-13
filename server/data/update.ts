@@ -1,5 +1,5 @@
 import { clearCache } from '@server/cache';
-import { getStore } from './store';
+import { getApp, getStore } from '.';
 import { doc, setDoc, addDoc, collection, Timestamp } from 'firebase/firestore';
 
 import { getCollection } from './utils';
@@ -8,6 +8,8 @@ export const updateById = async <T extends { id: string }>(label: string, input:
   if (!input.id && label === 'albums') {
     throw new Error('an album needs to have an ID (the number of the 4 colour album)');
   }
+
+  const app = await getApp();
 
   const store = getStore();
 

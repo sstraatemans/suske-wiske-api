@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { firebaseAdmin } from '@server/data';
+import { getFireBaseAdmin } from '@server/data';
 
 export const authenticate = async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
   const {
@@ -13,7 +13,10 @@ export const authenticate = async (req: NextApiRequest, res: NextApiResponse, ne
     if (!authorization || !authorization.startsWith('Bearer') || authArray.length !== 2)
       return res.status(401).send({ message: 'Unauthorized' });
 
-    firebaseAdmin
+    console.log(1);
+    const admin = getFireBaseAdmin();
+    console.log(2);
+    admin
       .auth()
       .verifyIdToken(authArray[1])
       .then((result) => {

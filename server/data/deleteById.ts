@@ -1,6 +1,6 @@
 import { clearCache } from '@server/cache';
 import { doc, deleteDoc } from 'firebase/firestore';
-import { getStore } from './store';
+import { getStore } from '.';
 import { getCollection } from './utils';
 
 export const deleteById = async (label: string, id: string | string[]) => {

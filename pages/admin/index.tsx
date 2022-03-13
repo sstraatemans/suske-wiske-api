@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Admin: NextPage = () => {
   const { data } = useGetSeriesQuery();
-  console.log(data);
   const classes = useStyles();
 
   return (

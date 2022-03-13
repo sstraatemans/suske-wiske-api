@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDataContext } from '@context/DataContext';
-import axios from './axios';
-import { AxiosResponse } from 'axios';
 import { useAuthUser } from '@context/UserContext';
 
 export const useLoadData = <T>(url: string) => {
@@ -24,7 +22,6 @@ export const useLoadData = <T>(url: string) => {
     const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/v1${url}`, {
       headers: { ...headers, 'Content-Type': 'application/json' },
     }).then((res) => res.json());
-
     setData(result);
   };
 

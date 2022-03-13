@@ -19,7 +19,7 @@ export const normalizeUpdateData = async (
     createDate: req.body.createDate,
     createdBy: req.body.createdBy ?? '',
     lastUpdateDate: req.body.lastUpdateDate,
-    lastUpdateBy: req.body.lastUpdateBy,
+    lastUpdateBy: req.body.lastUpdateBy ?? '',
   };
   body = addDefaultCreateData(body as any, req.body.uid);
 
@@ -75,7 +75,8 @@ export const normalizeUpdateData = async (
       return res.status(404).send({ message: 'not found' });
   }
   body = timeStampToFirebaseDate(body);
-  req.body = body;
+
+  console.log(body);
 
   next();
 };
