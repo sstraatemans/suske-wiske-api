@@ -11,13 +11,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  handleInputValue: (date: MaterialUiPickersDate) => void;
-  value: Date;
+  handleInputValue?: (date: MaterialUiPickersDate) => void;
+  value: Date | null;
   label: string;
   required?: boolean;
+  disabled?: boolean;
 };
 
-export const DatePicker: FC<Props> = ({ handleInputValue, value, label, required }) => {
+export const DatePicker: FC<Props> = ({
+  handleInputValue = () => {},
+  value,
+  label,
+  required,
+  disabled,
+}) => {
   const classes = useStyles();
 
   return (
@@ -28,6 +35,7 @@ export const DatePicker: FC<Props> = ({ handleInputValue, value, label, required
           format='MM/dd/yyyy'
           value={value}
           label={label}
+          disabled={disabled}
           onChange={handleInputValue}
           required={required}
           KeyboardButtonProps={{

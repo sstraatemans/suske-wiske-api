@@ -12,3 +12,9 @@ export const put = (
 ) => {
   return nextConnect().put(middleware);
 };
+
+export const get = (
+  middleware: (req: NextApiRequest, res: NextApiResponse, next: Function) => {}
+) => {
+  return nextConnect().get(middleware);
+};

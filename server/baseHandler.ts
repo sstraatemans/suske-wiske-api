@@ -4,7 +4,7 @@ import { authenticate } from './middleware/authenticate';
 import { normalizeUpdateData } from './middleware/normalizeUpdateData';
 import '@server/data';
 import { validateData } from './middleware/validateData';
-import { post, put } from './middleware/post';
+import { post, put, get } from './middleware/post';
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({

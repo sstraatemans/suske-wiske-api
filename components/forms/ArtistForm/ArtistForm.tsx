@@ -76,14 +76,15 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
           value={formValues?.birthPlace}
           handleInputEvent={handleInputEvent}
         />
-        <AutoComplete
-          value={formValues?.debuteAlbum}
-          label='debute album'
-          name='debuteAlbum'
-          options={albumListData?.results}
-          handleInputValue={handleInputValue}
-          disabled
-        />
+        {data?.debuteAlbum?.id && (
+          <TextField
+            label='debute album'
+            name='debuteAlbum'
+            value={`(${data?.debuteAlbum.id}) ${data?.debuteAlbum.name}`}
+            handleInputEvent={handleInputEvent}
+            disabled
+          />
+        )}
         <TextField
           label='wikiLink'
           name='wikiLink'

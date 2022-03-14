@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichArtist } from '@server/enrichResults';
+import { enrichData } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
 import { updateById } from '@server/data/update';
 import { deleteById } from '@server/data/deleteById';
@@ -13,7 +13,7 @@ const handler = baseHandler()
 
     const data = await getById<Artist>('artists', id);
     if (!data) return res.status(404).json({ detail: 'Not found' });
-    const enrichedResult = await enrichArtist([data]);
+    const enrichedResult = await enrichData<Artist>([data], 'artists');
 
     res.json(enrichedResult[0]);
   })

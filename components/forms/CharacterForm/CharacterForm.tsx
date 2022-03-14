@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { AutoComplete, Editor, TextField, UploadField } from '@components/Form';
+import { Editor, TextField, UploadField, DatePicker } from '@components/Form';
 import { FormEvent, useEffect } from 'react';
 import { useFormControls, useImageupload } from '@hooks/.';
 
@@ -62,13 +62,23 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           required
         />
 
-        <TextField
-          label='debute album'
-          name='debuteAlbum'
-          value={`(${data?.debuteAlbum.id}) ${data?.debuteAlbum.name}`}
-          handleInputEvent={handleInputEvent}
-          disabled
-        />
+        {data?.debuteAlbum?.id && (
+          <>
+            <TextField
+              label='debute album'
+              name='debuteAlbum'
+              value={`(${data?.debuteAlbum.id}) ${data?.debuteAlbum.name}`}
+              handleInputEvent={handleInputEvent}
+              disabled
+            />
+            <DatePicker
+              value={data?.debuteDate ? new Date(data?.debuteDate) : null}
+              label='debute date'
+              required
+              disabled
+            />
+          </>
+        )}
         <TextField
           label='wikiLink'
           name='wikiLink'

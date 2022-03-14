@@ -8,6 +8,7 @@ type BasicType = {
   lastUpdateDate?: Date;
   lastUpdateBy?: string;
   images: string[];
+  url?: string;
   uid?: String;
 };
 
@@ -15,6 +16,7 @@ type Album = BasicType & {
   firstPublicationDate: number;
   scenarioArtist: string;
   cartoonArtist: string;
+  artists?: string[];
   inventions: string[];
   characters: string[];
 };
@@ -26,7 +28,10 @@ type NewAlbum = {
 type Artist = BasicType & {
   birthDate?: number;
   birthPlace?: string;
-  debuteAlbum: string;
+  debuteAlbum: {
+    id: string;
+    name: string;
+  };
   debuteDate: number;
   albumsAsCartoonist: EntityAlbumLink[];
   albumsAsScenarist: EntityAlbumLink[];
@@ -50,7 +55,10 @@ type NewCharacter = {
 };
 
 type Invention = BasicType & {
-  debuteAlbum: string;
+  debuteAlbum: {
+    id: string;
+    name: string;
+  };
   debuteDate: number;
   albums: EntityAlbumLink[];
 };
@@ -131,3 +139,5 @@ type User = {
   alreadyExists: boolean;
   expireDate: string;
 };
+
+type LabelTypes = 'characters' | 'artists' | 'inventions' | 'scenarioArtist' | 'cartoonArtist';

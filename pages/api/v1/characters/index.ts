@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichCharacters } from '@server/enrichResults';
+import { enrichData } from '@server/enrichResults';
 import {
   limitResults,
   cleanLimit,
@@ -19,7 +19,7 @@ const handler = baseHandler()
 
     const characters = await getAll<Character>('characters');
     const limitedResults = limitResults<Character>(characters, limit, offset, q);
-    const enrichedResults = await enrichCharacters(limitedResults);
+    const enrichedResults = await enrichData<Character>(limitedResults, 'characters');
 
     const cleanedLimit = cleanLimit(limit);
     const cleanedOffset = cleanOffset(offset);

@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichCharacters } from '@server/enrichResults';
+import { enrichData } from '@server/enrichResults';
 import { getById } from '@server/data/getById';
 import { update } from '@server/data/update';
 import { deleteById } from '@server/data/deleteById';
@@ -13,7 +13,7 @@ const handler = baseHandler()
 
     const data = await getById<Character>('characters', id);
     if (!data) return res.status(404).json({ detail: 'Not found' });
-    const enrichedResult = await enrichCharacters([data]);
+    const enrichedResult = await enrichData<Character>([data], 'characters');
 
     res.json(enrichedResult[0]);
   })

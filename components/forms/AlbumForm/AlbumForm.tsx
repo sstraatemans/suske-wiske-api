@@ -77,6 +77,16 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           handleInputEvent={handleInputEvent}
           required
         />
+        <DatePicker
+          value={
+            formValues?.firstPublicationDate ? new Date(formValues?.firstPublicationDate) : null
+          }
+          label='first publication date'
+          required
+          handleInputValue={(date) => {
+            handleInputValue('firstPublicationDate', date?.getTime());
+          }}
+        />
         <AutoComplete
           value={formValues?.scenarioArtist}
           label='scenario artist'
@@ -91,14 +101,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           options={artistListData?.results}
           handleInputValue={handleInputValue}
         />
-        <DatePicker
-          value={new Date(formValues?.firstPublicationDate ?? Date.now())}
-          label='first publication date'
-          required
-          handleInputValue={(date) => {
-            handleInputValue('firstPublicationDate', date?.getTime());
-          }}
-        />
+
         <TextField
           label='wikiLink'
           name='wikiLink'

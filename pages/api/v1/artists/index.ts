@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichArtist } from '@server/enrichResults';
+import { enrichData } from '@server/enrichResults';
 import {
   limitResults,
   cleanLimit,
@@ -19,7 +19,7 @@ const handler = baseHandler()
 
     const artists = await getAll<Artist>('artists');
     const limitedResults = limitResults<Artist>(artists, limit, offset, q);
-    const enrichedResults = await enrichArtist(limitedResults);
+    const enrichedResults = await enrichData<Artist>(limitedResults, 'artists');
 
     const cleanedLimit = cleanLimit(limit);
     const cleanedOffset = cleanOffset(offset);

@@ -7,7 +7,7 @@ import {
   useImageupload,
   useUpdateInventionMutation,
 } from '@hooks/.';
-import { AutoComplete, Editor, TextField, UploadField } from '@components/Form';
+import { AutoComplete, Editor, TextField, UploadField, DatePicker } from '@components/Form';
 import { Button, ImageContainer } from '@components/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
 
@@ -64,14 +64,24 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
           handleInputEvent={handleInputEvent}
           required
         />
-        <AutoComplete
-          value={formValues?.debuteAlbum}
-          label='debute album'
-          name='debuteAlbum'
-          options={albumListData?.results}
-          handleInputValue={handleInputValue}
-          disabled
-        />
+        {data?.debuteAlbum?.id && (
+          <>
+            {' '}
+            <TextField
+              label='debute album'
+              name='debuteAlbum'
+              value={`(${data?.debuteAlbum.id}) ${data?.debuteAlbum.name}`}
+              handleInputEvent={handleInputEvent}
+              disabled
+            />
+            <DatePicker
+              value={data?.debuteDate ? new Date(data?.debuteDate) : null}
+              label='debute date'
+              required
+              disabled
+            />
+          </>
+        )}
         <TextField
           label='wikiLink'
           name='wikiLink'

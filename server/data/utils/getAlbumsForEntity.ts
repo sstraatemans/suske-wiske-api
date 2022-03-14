@@ -1,15 +1,13 @@
 import { getAll } from '../getAll';
 
-export const getAlbumsForEntity = async (
-  id: string,
-  label: 'characters'
-): Promise<{ id: string; name: string }[]> => {
+export const getAlbumsForEntity = async (id: string, label: LabelTypes): Promise<Album[]> => {
   const albums = await getAll<Album>('albums');
 
-  return albums
-    .filter((album) => album[label]?.includes(id))
-    .map((album) => ({
-      id: album.id,
-      name: album.name,
-    }));
+  return albums.filter((album) => {
+    const prop = album[label];
+    if (typeof prop === 'string') {
+      return prop === id;
+    }
+    return prop?.includes(id);
+  });
 };

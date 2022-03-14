@@ -1,5 +1,5 @@
 import { baseHandler } from '@server/baseHandler';
-import { enrichInvention } from '@server/enrichResults';
+import { enrichData } from '@server/enrichResults';
 import {
   limitResults,
   cleanLimit,
@@ -19,7 +19,7 @@ const handler = baseHandler()
 
     const inventions = await getAll<Invention>('inventions');
     const limitedResults = limitResults<Invention>(inventions, limit, offset, q);
-    const enrichedResults = await enrichInvention(limitedResults);
+    const enrichedResults = await enrichData<Invention>(limitedResults, 'inventions');
 
     const cleanedLimit = cleanLimit(limit);
     const cleanedOffset = cleanOffset(offset);

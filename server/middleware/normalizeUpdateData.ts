@@ -76,7 +76,7 @@ export const normalizeUpdateData = async (
   }
   body = timeStampToFirebaseDate(body);
 
-  console.log(body);
+  req.body = body;
 
   next();
 };
