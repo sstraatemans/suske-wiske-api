@@ -6,12 +6,12 @@ import {
   AutoComplete,
   CharacterAlbum,
   Editor,
-  InventionAlbum,
+  DeviceAlbum,
 } from '@components/Form';
 import { Button, Grid } from '@components/.';
 import { useUpdateAlbumMutation } from '@hooks/.';
 import { useGetListArtistsQuery } from '@hooks/admin/useGetListArtistsQuery';
-import { useGetListInventionsQuery } from '@hooks/admin/useGetListInventionsQuery';
+import { useGetListDevicesQuery } from '@hooks/admin/useGetListDevicesQuery';
 import { Typography } from '@material-ui/core';
 import UploadForm from '../UploadForm';
 
@@ -21,12 +21,12 @@ type Props = {
 };
 
 const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
-  const { formValues, setInitialFormValues, handleInputEvent, handleAddImage, handleInputValue } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue } =
     useFormControls<Album>();
   const { mutateData, mutateResult } = useUpdateAlbumMutation();
   const { data: artistListData } = useGetListArtistsQuery();
 
-  const { data: inventionListData } = useGetListInventionsQuery();
+  const { data: deviceListData } = useGetListDevicesQuery();
 
   useEffect(() => {
     setInitialFormValues(data);
@@ -47,7 +47,7 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
       return;
     }
 
-    await mutateData({ ...formValues, images: [] });
+    await mutateData({ ...formValues });
   };
 
   if (!formValues && data) return null;
@@ -111,8 +111,8 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
             <CharacterAlbum value={formValues?.characters} handleInputValue={handleInputValue} />
           </Grid>
           <Grid item xs={6}>
-            <Typography variant='h6'>Inventions</Typography>
-            <InventionAlbum value={formValues?.inventions} handleInputValue={handleInputValue} />
+            <Typography variant='h6'>Devices</Typography>
+            <DeviceAlbum value={formValues?.devices} handleInputValue={handleInputValue} />
           </Grid>
         </Grid>
 

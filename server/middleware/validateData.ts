@@ -11,7 +11,7 @@ export const validateData = async (req: NextApiRequest, res: NextApiResponse, ne
     case 'artists':
       break;
 
-    case 'inventions':
+    case 'devices':
       break;
 
     case 'characters':

@@ -1,7 +1,7 @@
 export const DATAURLS = {
   SERIES: '/series',
   ARTISTS: '/artists',
-  INVENTIONS: '/inventions',
+  DEVICES: '/devices',
   CHARACTERS: '/characters',
   ALBUMS: '/albums',
   USERS: '/users',
@@ -9,6 +9,6 @@ export const DATAURLS = {
     ALBUMS: '/admin/albums',
     ARTISTS: '/admin/artists',
     CHARACTERS: '/admin/characters',
-    INVENTIONS: '/admin/inventions',
+    DEVICES: '/admin/devices',
   },
 };

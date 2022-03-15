@@ -11,11 +11,11 @@ export const normalizeUpdateData = async (
   const { method, url } = req;
 
   let body: BasicType = {
-    id: req.body.id,
+    id: req.body.id ?? '',
     name: req.body.name,
     wikiLink: req.body.wikiLink ?? '',
     description: req.body.description ?? '',
-    images: req.body.images ?? [],
+    image: req.body.image ?? '',
     createDate: req.body.createDate,
     createdBy: req.body.createdBy ?? '',
     lastUpdateDate: req.body.lastUpdateDate,
@@ -44,10 +44,10 @@ export const normalizeUpdateData = async (
       } as Artist;
       break;
 
-    case 'inventions':
+    case 'devices':
       body = {
         ...body,
-      } as Invention;
+      } as Device;
       break;
 
     case 'characters':
@@ -63,7 +63,7 @@ export const normalizeUpdateData = async (
         firstPublicationDate: req.body.firstPublicationDate,
         scenarioArtist: req.body.scenarioArtist ?? '',
         cartoonArtist: req.body.cartoonArtist ?? '',
-        inventions: req.body.inventions ?? [],
+        devices: req.body.devices ?? [],
         characters: req.body.characters ?? [],
       } as Album;
 

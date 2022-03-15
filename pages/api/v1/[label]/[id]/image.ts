@@ -60,7 +60,7 @@ apiRoute.post(async (req, res) => {
   // Step 3. Grab the public url
   const downloadurl = await getDownloadURL(snapshot.ref);
 
-  data.images = [downloadurl];
+  data.image = downloadurl;
 
   const newData = await update<AllTypes>(label, data);
 
@@ -83,14 +83,12 @@ apiRoute.delete(async (req, res) => {
   const data = await getById<AllTypes>(label, id);
   if (!data) return res.status(404).json({ detail: 'Not found' });
 
-  const image = data.images[0];
-
-  if (image) {
-    const storageRef = ref(storage, `${getFileName(image)}`);
+  if (data.image) {
+    const storageRef = ref(storage, `${getFileName(data.image)}`);
     deleteObject(storageRef);
   }
 
-  data.images = [];
+  data.image = null;
 
   const newData = await update<AllTypes>(label, data);
 

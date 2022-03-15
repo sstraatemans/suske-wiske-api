@@ -23,13 +23,6 @@ const Admin: NextPage = () => {
       <h2>{data?.name}</h2>
 
       <CharacterForm data={data} handleSubmit={handleSubmit} />
-
-      <h3>Image</h3>
-      {data?.images?.length && (
-        <ImageContainer width={300} height={300}>
-          <Image src={data.images[0]} layout='fill' alt='character portrait' />
-        </ImageContainer>
-      )}
     </AdminLayout>
   );
 };

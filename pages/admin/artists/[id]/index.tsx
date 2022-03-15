@@ -22,13 +22,6 @@ const Admin: NextPage = () => {
       <h2>{data?.name ? data?.name : 'New Artist'}</h2>
 
       <ArtistForm handleSubmit={handleSubmit} data={data} />
-
-      <h3>Image</h3>
-      {data?.images?.length && (
-        <ImageContainer width={300} height={300}>
-          <Image src={data.images[0]} layout='fill' alt='artist portrait' />
-        </ImageContainer>
-      )}
     </AdminLayout>
   );
 };

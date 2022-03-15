@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { useGetListInventionsQuery } from '@hooks/admin/useGetListInventionsQuery';
+import { useGetListDevicesQuery } from '@hooks/admin/useGetListDevicesQuery';
 import { Grid, IconButton } from '@components/.';
 import { LookUp } from '../AutoComplete/LookUp';
-import { useUpdateInventionMutation } from '@hooks/useUpdateInventionMutation';
+import { useUpdateDeviceMutation } from '@hooks/useUpdateDeviceMutation';
 import { DeleteIcon } from '@components/icons';
 
 type Props = {
@@ -10,23 +10,23 @@ type Props = {
   value?: string[];
 };
 
-export const InventionAlbum: FC<Props> = ({ value = [], handleInputValue }) => {
-  const { data: inventionListData, reload } = useGetListInventionsQuery();
-  const { mutateData } = useUpdateInventionMutation();
+export const DeviceAlbum: FC<Props> = ({ value = [], handleInputValue }) => {
+  const { data: deviceListData, reload } = useGetListDevicesQuery();
+  const { mutateData } = useUpdateDeviceMutation();
 
-  const findInventionById = (id: string): Invention | undefined =>
-    inventionListData?.results?.find((invention) => invention.id === id);
+  const findDeviceById = (id: string): Device | undefined =>
+    deviceListData?.results?.find((device) => device.id === id);
 
   const handleChange = (id: string) => {
     if (!value || !id) return;
     reload(true);
-    handleInputValue('inventions', [...value, id]);
+    handleInputValue('devices', [...value, id]);
   };
 
   const handleDelete = (id: string) => {
     if (!value || !id) return;
     handleInputValue(
-      'inventions',
+      'devices',
       value.filter((v) => v !== id)
     );
   };
@@ -35,18 +35,18 @@ export const InventionAlbum: FC<Props> = ({ value = [], handleInputValue }) => {
     <div>
       <LookUp
         value={value}
-        options={inventionListData?.results}
+        options={deviceListData?.results}
         handleInputValue={handleChange}
         mutateData={mutateData}
       />
       {value.map((id: string) => {
-        const invention = findInventionById(id);
-        if (!invention) return null;
+        const device = findDeviceById(id);
+        if (!device) return null;
         return (
           <Grid key={id} container>
-            <Grid item>{invention?.name}</Grid>
+            <Grid item>{device?.name}</Grid>
             <Grid item>
-              <IconButton onClick={() => handleDelete(invention.id)}>
+              <IconButton onClick={() => handleDelete(device.id)}>
                 <DeleteIcon />
               </IconButton>
             </Grid>

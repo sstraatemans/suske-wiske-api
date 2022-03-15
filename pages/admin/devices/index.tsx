@@ -1,4 +1,4 @@
-import { useGetInventionsQuery } from '@hooks/.';
+import { useGetDevicesQuery } from '@hooks/.';
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/core/styles';
 import { AdminLayout } from '@layouts/.';
@@ -15,25 +15,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Admin: NextPage = () => {
-  const { data } = useGetInventionsQuery();
+  const { data } = useGetDevicesQuery();
   const classes = useStyles();
 
   return (
     <AdminLayout>
-      <h2>Inventions</h2>
+      <h2>Devices</h2>
 
       <ul>
-        {data?.results?.map((invention) => (
-          <li key={invention?.id}>
-            <Link href={`/admin/inventions/${invention?.id}`}>
-              <a>{invention?.name}</a>
+        {data?.results?.map((device) => (
+          <li key={device?.id}>
+            <Link href={`/admin/devices/${device?.id}`}>
+              <a>{device?.name}</a>
             </Link>
           </li>
         ))}
       </ul>
 
-      <Link href='/admin/inventions/new' passHref={true}>
-        <Fab aria-label='Add Invention' className={classes.fab} color='primary'>
+      <Link href='/admin/devices/new' passHref={true}>
+        <Fab aria-label='Add Device' className={classes.fab} color='primary'>
           <AddIcon />
         </Fab>
       </Link>

@@ -10,24 +10,16 @@ const handler = baseHandler()
   })
   .get(async (req, res) => {
     const { id, label } = req.query as { id: string; label: LabelTypes };
-    const data = await getById<AllTypes>(label, id);
-    if (!data) return res.status(404).json({ detail: 'Not found' });
-    const enrichedResult = await enrichData<AllTypes>([data], label);
-
-    res.json(enrichedResult[0]);
+    // get all albums
   })
-  .put(async (req, res) => {
-    const { body } = req;
-    const { label } = req.query as { label: LabelTypes };
-
-    const data = await update<AllTypes>(label, body);
-    return res.json(data);
+  .patch(async (req, res) => {
+    const { id, label } = req.query as { id: string; label: LabelTypes };
+    // add label to an album
   })
   .delete(async (req, res) => {
     const { id, label } = req.query as { id: string; label: LabelTypes };
 
-    await deleteById(label, id);
-
+    // delete label from album
     return res.status(204).send({});
   });
 

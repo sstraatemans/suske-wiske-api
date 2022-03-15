@@ -7,19 +7,19 @@ type BasicType = {
   createdBy?: string;
   lastUpdateDate?: Date;
   lastUpdateBy?: string;
-  images: string[];
+  image?: string;
   url?: string;
   uid?: String;
 };
 
-type AllTypes = Character | Artist | Invention | Albums;
+type AllTypes = Character | Artist | Device | Albums;
 
 type Album = BasicType & {
   firstPublicationDate: number;
   scenarioArtist: string;
   cartoonArtist: string;
   artists?: string[];
-  inventions: string[];
+  devices: string[];
   characters: string[];
 };
 
@@ -56,7 +56,7 @@ type NewCharacter = {
   name: string;
 };
 
-type Invention = BasicType & {
+type Device = BasicType & {
   debuteAlbum: {
     id: string;
     name: string;
@@ -82,38 +82,6 @@ type EntityAlbumLink =
       id: string;
       name: string;
     };
-
-type UpdateAlbumInput = {
-  id: string;
-  name: string;
-  images: string[];
-};
-
-type UpdateSerieInput = {
-  id: string;
-  name: string;
-  albums: EntityAlbumLink[];
-};
-
-type UpdateArtistInput = {
-  id: string;
-  name: string;
-  images: string[];
-  albums: EntityAlbumLink[];
-};
-
-type UpdateInventionInput = {
-  id: string;
-  name: string;
-  images: string[];
-  albums: EntityAlbumLink[];
-};
-
-type UpdateCharacterInput = {
-  id: string;
-  name: string;
-  images: string[];
-};
 
 type ValueOf<T> = T[keyof T];
 
@@ -145,7 +113,7 @@ type User = {
 type LabelTypes =
   | 'characters'
   | 'artists'
-  | 'inventions'
+  | 'devices'
   | 'scenarioArtist'
   | 'cartoonArtist'
   | 'albums'

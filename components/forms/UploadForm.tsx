@@ -56,9 +56,9 @@ const UploadForm: FC<Props> = ({ data, label, handleSubmit }) => {
         <button type='submit'>upload</button>
       </form>
       <h3>Image</h3>
-      {data?.images?.length && (
+      {data?.image && (
         <ImageContainer width={300} height={300}>
-          <Image src={data.images[0]} layout='fill' alt='invention portrait' />
+          <Image src={data.image} layout='fill' alt='image' />
           <IconButton onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>

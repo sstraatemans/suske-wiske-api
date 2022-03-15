@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getFireBaseAdmin } from '@server/data';
 
-const labels = ['series', 'albums', 'characters', 'inventions', 'artists', 'test'];
+const labels = ['series', 'albums', 'characters', 'devices', 'artists', 'test'];
 
 export const checkLabel = async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
   const {

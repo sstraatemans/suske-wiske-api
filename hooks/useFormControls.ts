@@ -1,4 +1,4 @@
-import { useState, FormEvent, useCallback } from 'react';
+import { useState, FormEvent } from 'react';
 
 export const useFormControls = <T>() => {
   const [formValues, setFormValues] = useState<T>();
@@ -16,17 +16,10 @@ export const useFormControls = <T>() => {
     } as T);
   };
 
-  const handleAddImage = (url?: string) => {
-    if (url && formValues) {
-      setFormValues({ ...formValues, images: [url] });
-    }
-  };
-
   return {
     formValues,
     setInitialFormValues: setFormValues,
     handleInputEvent,
-    handleAddImage,
     handleInputValue,
   };
 };

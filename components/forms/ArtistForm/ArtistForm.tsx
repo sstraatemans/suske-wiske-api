@@ -16,7 +16,7 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
   const router = useRouter();
   const { query } = router;
   const id = (query.id ?? '') as string;
-  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue } =
     useFormControls<Artist>();
   const { data: albumListData } = useGetListAlbumsQuery();
   const { mutateData, mutateResult } = useUpdateArtistMutation(data?.id);
@@ -40,7 +40,7 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
       return;
     }
 
-    await mutateData({ ...formValues, images: [] });
+    await mutateData({ ...formValues });
   };
 
   if (!formValues && data) return null;

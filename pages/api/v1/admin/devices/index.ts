@@ -2,12 +2,12 @@ import { baseHandler } from '@server/baseHandler';
 import { getAll } from '@server/data/getAll';
 
 const handler = baseHandler().get(async (req, res) => {
-  const inventions = await getAll<Invention>('inventions');
-  const count = inventions.length;
+  const devices = await getAll<Device>('devices');
+  const count = devices.length;
 
-  const miniArray = inventions.map((invention) => ({
-    id: invention.id,
-    name: invention.name,
+  const miniArray = devices.map((device) => ({
+    id: device.id,
+    name: device.name,
   }));
 
   res.json({

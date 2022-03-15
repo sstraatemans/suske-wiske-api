@@ -61,8 +61,8 @@ const AdminLayout: FC<Props> = ({ children }) => {
             <Link href='/admin/characters' passHref={true}>
               <Button color='inherit'>Characters</Button>
             </Link>
-            <Link href='/admin/inventions' passHref={true}>
-              <Button color='inherit'>Inventions</Button>
+            <Link href='/admin/devices' passHref={true}>
+              <Button color='inherit'>Devices</Button>
             </Link>
             <Link href='/admin/artists' passHref={true}>
               <Button color='inherit'>Artists</Button>

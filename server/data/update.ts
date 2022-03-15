@@ -26,12 +26,13 @@ export const update = async <T extends { id: string }>(label: string, input: T):
   if (!input.id) {
     const store = getStore();
 
-    const docRef = await addDoc(collection(store, getCollection(label)), input);
-    // clearCache(label);
+    const newDocRef = await doc(collection(store, label));
+    const tempInput = { ...input, id: newDocRef.id };
+
+    const updatedInput = await updateById(label, tempInput);
 
     return {
-      ...input,
-      id: docRef.id,
+      ...updatedInput,
     } as unknown as T;
   }
 

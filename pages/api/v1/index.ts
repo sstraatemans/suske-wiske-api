@@ -9,7 +9,7 @@ const handler = baseHandler()
       series: `${process.env.APIURL}/v1/series`,
       albums: `${process.env.APIURL}/v1/albums`,
       characters: `${process.env.APIURL}/v1/characters`,
-      inventions: `${process.env.APIURL}/v1/inventions`,
+      devices: `${process.env.APIURL}/v1/devices`,
       artists: `${process.env.APIURL}/v1/artists`,
     });
   });

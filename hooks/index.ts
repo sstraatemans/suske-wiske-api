@@ -7,9 +7,9 @@ export { useGetCharactersQuery } from './useGetCharactersQuery';
 export { useGetCharacterQuery } from './useGetCharacterQuery';
 export { useUpdateCharacterMutation } from './useUpdateCharacterMutation';
 
-export { useGetInventionsQuery } from './useGetInventionsQuery';
-export { useGetInventionQuery } from './useGetInventionQuery';
-export { useUpdateInventionMutation } from './useUpdateInventionMutation';
+export { useGetDevicesQuery } from './useGetDevicesQuery';
+export { useGetDeviceQuery } from './useGetDeviceQuery';
+export { useUpdateDeviceMutation } from './useUpdateDeviceMutation';
 
 export { useGetArtistsQuery } from './useGetArtistsQuery';
 export { useGetArtistQuery } from './useGetArtistQuery';

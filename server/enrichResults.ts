@@ -33,7 +33,7 @@ export const enrichArtist = async (result: any): Promise<any> => {
   };
 };
 
-export const enrichInvention = async (result: any): Promise<any> => {
+export const enrichDevice = async (result: any): Promise<any> => {
   return {
     ...result,
   };
@@ -61,8 +61,8 @@ export const enrichData = async <T>(data: any[], label: LabelTypes): Promise<T[]
       case 'artists':
         newResult = await enrichArtist(newResult);
         break;
-      case 'inventions':
-        newResult = await enrichInvention(newResult);
+      case 'devices':
+        newResult = await enrichDevice(newResult);
         break;
     }
 

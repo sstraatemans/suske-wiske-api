@@ -1,5 +1,5 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { useFormControls, useUpdateInventionMutation } from '@hooks/.';
+import { useFormControls, useUpdateDeviceMutation } from '@hooks/.';
 import { Editor, TextField, DatePicker } from '@components/Form';
 import { Button } from '@components/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
@@ -7,14 +7,14 @@ import UploadForm from '../UploadForm';
 
 type Props = {
   handleSubmit: (id: string) => void;
-  data?: Invention;
+  data?: Device;
 };
 
-const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
-  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
-    useFormControls<Invention>();
+const DeviceForm: FC<Props> = ({ data, handleSubmit }) => {
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue } =
+    useFormControls<Device>();
   const { data: albumListData } = useGetListAlbumsQuery();
-  const { mutateData, mutateResult } = useUpdateInventionMutation(data?.id);
+  const { mutateData, mutateResult } = useUpdateDeviceMutation(data?.id);
 
   useEffect(() => {
     setInitialFormValues(data);
@@ -30,12 +30,7 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
     e.preventDefault();
     if (!formValues) return;
 
-    if (formValues?.id) {
-      await mutateData({ ...formValues });
-      return;
-    }
-
-    await mutateData({ ...formValues, images: [] });
+    await mutateData({ ...formValues });
   };
 
   if (!formValues && data) return null;
@@ -81,11 +76,11 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
         <Button type='submit'>Submit</Button>
       </form>
 
-      {formValues?.id && <UploadForm data={data} label='inventions' handleSubmit={handleSubmit} />}
+      {formValues?.id && <UploadForm data={data} label='devices' handleSubmit={handleSubmit} />}
 
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </>
   );
 };
 
-export default InventionForm;
+export default DeviceForm;

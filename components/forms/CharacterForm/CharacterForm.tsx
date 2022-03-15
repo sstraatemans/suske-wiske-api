@@ -13,7 +13,7 @@ type Props = {
 };
 
 const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
-  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
+  const { formValues, setInitialFormValues, handleInputEvent, handleInputValue } =
     useFormControls<Character>();
   const { mutateData, mutateResult } = useUpdateCharacterMutation(data?.id);
   const { data: albumListData } = useGetListAlbumsQuery();
@@ -38,7 +38,7 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
       return;
     }
 
-    await mutateData({ ...formValues, images: [] });
+    await mutateData({ ...formValues });
   };
 
   if (!formValues && data) return null;
