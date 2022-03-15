@@ -1,6 +1,6 @@
-import { getAll } from './data/getAll';
 import { getAlbumsForEntity } from './data/utils/getAlbumsForEntity';
 import { getDebuteAlbum } from './data/utils/getDebuteAlbum';
+import { minimizeEntity, minimizeEntities } from './data/utils/minimizeEntity';
 
 export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
   return results.map((result) => {
@@ -69,15 +69,11 @@ export const enrichData = async <T>(data: any[], label: LabelTypes): Promise<T[]
     if (label !== 'albums' && label !== 'series') {
       const debutealbum = await getDebuteAlbum(newResult.albums);
       if (debutealbum) {
-        newResult.debuteAlbum = { id: debutealbum?.id, name: debutealbum?.name };
+        newResult.debuteAlbum = minimizeEntity<Album>(debutealbum, label);
         newResult.debuteDate = debutealbum.firstPublicationDate;
       }
 
-      newResult.albums = newResult.albums.map((a: Album) => ({
-        id: a.id,
-        name: a.name,
-        url: a.url,
-      }));
+      newResult.albums = minimizeEntities<Album>(newResult.albums, label);
     }
 
     return newResult as T;
