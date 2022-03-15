@@ -11,13 +11,10 @@ export const enrichSeries = async (results: Serie[]): Promise<Serie[]> => {
   });
 };
 
-export const enrichAlbums = async (results: Album[]): Promise<Album[]> => {
-  return results.map((result) => {
-    return {
-      url: `${process.env.APIURL}/v1/albums/${result.id}`,
-      ...result,
-    };
-  });
+export const enrichAlbums = async (result: any): Promise<any> => {
+  return {
+    ...result,
+  };
 };
 
 export const enrichCharacters = async (result: any): Promise<any> => {
@@ -44,14 +41,20 @@ export const enrichInvention = async (result: any): Promise<any> => {
 
 export const enrichData = async <T>(data: any[], label: LabelTypes): Promise<T[] | void[]> => {
   const promises = data.map(async (result) => {
-    const albums = await getAlbumsForEntity(result.id, label);
     let newResult: any = {
       ...result,
-      albums,
       url: `${process.env.APIURL}/v1/${label}/${result.id}`,
     };
 
+    if (label !== 'albums' && label !== 'series') {
+      const albums = await getAlbumsForEntity(newResult.id, label);
+      newResult.albums = albums;
+    }
+
     switch (label) {
+      case 'albums':
+        newResult = await enrichCharacters(newResult);
+        break;
       case 'characters':
         newResult = await enrichCharacters(newResult);
         break;
@@ -63,17 +66,19 @@ export const enrichData = async <T>(data: any[], label: LabelTypes): Promise<T[]
         break;
     }
 
-    const debutealbum = await getDebuteAlbum(newResult.albums);
-    if (debutealbum) {
-      newResult.debuteAlbum = { id: debutealbum?.id, name: debutealbum?.name };
-      newResult.debuteDate = debutealbum.firstPublicationDate;
-    }
+    if (label !== 'albums' && label !== 'series') {
+      const debutealbum = await getDebuteAlbum(newResult.albums);
+      if (debutealbum) {
+        newResult.debuteAlbum = { id: debutealbum?.id, name: debutealbum?.name };
+        newResult.debuteDate = debutealbum.firstPublicationDate;
+      }
 
-    newResult.albums = newResult.albums.map((a: Album) => ({
-      id: a.id,
-      name: a.name,
-      url: a.url,
-    }));
+      newResult.albums = newResult.albums.map((a: Album) => ({
+        id: a.id,
+        name: a.name,
+        url: a.url,
+      }));
+    }
 
     return newResult as T;
   });

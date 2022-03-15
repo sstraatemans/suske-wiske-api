@@ -12,6 +12,8 @@ type BasicType = {
   uid?: String;
 };
 
+type AllTypes = Character | Artist | Invention | Albums;
+
 type Album = BasicType & {
   firstPublicationDate: number;
   scenarioArtist: string;
@@ -140,4 +142,11 @@ type User = {
   expireDate: string;
 };
 
-type LabelTypes = 'characters' | 'artists' | 'inventions' | 'scenarioArtist' | 'cartoonArtist';
+type LabelTypes =
+  | 'characters'
+  | 'artists'
+  | 'inventions'
+  | 'scenarioArtist'
+  | 'cartoonArtist'
+  | 'albums'
+  | 'series';

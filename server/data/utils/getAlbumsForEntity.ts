@@ -4,7 +4,7 @@ export const getAlbumsForEntity = async (id: string, label: LabelTypes): Promise
   const albums = await getAll<Album>('albums');
 
   return albums.filter((album) => {
-    const prop = album[label];
+    const prop = (album as any)[label];
     if (typeof prop === 'string') {
       return prop === id;
     }

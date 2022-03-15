@@ -68,6 +68,7 @@ export const UserProvider: FC = ({ children }) => {
   };
 
   const getAuthenticationToken = () => {
+    console.log(user?.uid);
     return user?.uid;
   };
 

@@ -5,6 +5,7 @@ import { normalizeUpdateData } from './middleware/normalizeUpdateData';
 import '@server/data';
 import { validateData } from './middleware/validateData';
 import { post, put, get } from './middleware/post';
+import { checkLabel } from './middleware/checkLabel';
 
 export const baseHandler = () =>
   nc<NextApiRequest, NextApiResponse>({
@@ -21,6 +22,7 @@ export const baseHandler = () =>
         error: err.toString(),
       }),
   })
+    .use(checkLabel)
     .use(authenticate)
     .use(post(normalizeUpdateData))
     .use(put(normalizeUpdateData))

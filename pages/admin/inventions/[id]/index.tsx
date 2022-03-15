@@ -21,13 +21,6 @@ const Admin: NextPage = () => {
     <AdminLayout>
       <h2>{data?.name}</h2>
       <InventionForm handleSubmit={handleSubmit} data={data} />
-
-      <h3>Image</h3>
-      {data?.images?.length && (
-        <ImageContainer width={300} height={300}>
-          <Image src={data.images[0]} layout='fill' alt='invention portrait' />
-        </ImageContainer>
-      )}
     </AdminLayout>
   );
 };

@@ -1,10 +1,11 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { AutoComplete, DatePicker, Editor, TextField, UploadField } from '@components/Form';
+import { DatePicker, Editor, TextField } from '@components/Form';
 import { Button } from '@components/.';
 import { useUpdateArtistMutation } from '@hooks/.';
-import { useFormControls, useImageupload } from '@hooks/.';
+import { useFormControls } from '@hooks/.';
 import { useRouter } from 'next/router';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
+import UploadForm from '../UploadForm';
 
 type Props = {
   handleSubmit: (id?: string) => void;
@@ -15,7 +16,6 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
   const router = useRouter();
   const { query } = router;
   const id = (query.id ?? '') as string;
-  const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Artist>();
   const { data: albumListData } = useGetListAlbumsQuery();
@@ -31,19 +31,11 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
     }
   }, [mutateResult, handleSubmit]);
 
-  useEffect(() => {
-    if (imageUrl) {
-      handleAddImage(imageUrl);
-      setImageUrl(null);
-    }
-  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
-
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formValues) return;
 
     if (formValues?.id) {
-      await uploadImage(formValues?.id);
       await mutateData({ ...formValues });
       return;
     }
@@ -96,9 +88,10 @@ const ArtistForm: FC<Props> = ({ handleSubmit, data }) => {
           value={formValues?.description}
           handleInputValue={handleInputValue}
         />
-        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
+
+      {formValues?.id && <UploadForm data={data} label='artists' handleSubmit={handleSubmit} />}
 
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </>

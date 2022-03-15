@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { Editor, TextField, UploadField, DatePicker } from '@components/Form';
+import { Editor, TextField, DatePicker } from '@components/Form';
 import { FormEvent, useEffect } from 'react';
-import { useFormControls, useImageupload } from '@hooks/.';
-
+import { useFormControls } from '@hooks/.';
 import { Button } from '@components/.';
 import { useUpdateCharacterMutation } from '@hooks/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
+import UploadForm from '../UploadForm';
 
 type Props = {
   handleSubmit: (id?: string) => void;
@@ -13,7 +13,6 @@ type Props = {
 };
 
 const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
-  const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Character>();
   const { mutateData, mutateResult } = useUpdateCharacterMutation(data?.id);
@@ -22,13 +21,6 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
   useEffect(() => {
     setInitialFormValues(data);
   }, [setInitialFormValues, data]);
-
-  useEffect(() => {
-    if (imageUrl) {
-      handleAddImage(imageUrl);
-      setImageUrl(null);
-    }
-  }, [imageUrl, handleAddImage, setImageUrl, formValues]);
 
   useEffect(() => {
     if (mutateResult) {
@@ -42,7 +34,6 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
     if (!formValues) return;
 
     if (formValues?.id) {
-      await uploadImage(formValues?.id);
       await mutateData({ ...formValues });
       return;
     }
@@ -91,9 +82,10 @@ const CharacterForm: FC<Props> = ({ handleSubmit, data }) => {
           handleInputValue={handleInputValue}
         />
 
-        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
+
+      {formValues?.id && <UploadForm data={data} label='characters' handleSubmit={handleSubmit} />}
 
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </>

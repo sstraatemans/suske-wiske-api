@@ -1,15 +1,9 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/router';
-
-import {
-  useFormControls,
-  useGetInventionQuery,
-  useImageupload,
-  useUpdateInventionMutation,
-} from '@hooks/.';
-import { AutoComplete, Editor, TextField, UploadField, DatePicker } from '@components/Form';
-import { Button, ImageContainer } from '@components/.';
+import { useFormControls, useUpdateInventionMutation } from '@hooks/.';
+import { Editor, TextField, DatePicker } from '@components/Form';
+import { Button } from '@components/.';
 import { useGetListAlbumsQuery } from '@hooks/admin/useGetListAlbumsQuery';
+import UploadForm from '../UploadForm';
 
 type Props = {
   handleSubmit: (id: string) => void;
@@ -17,7 +11,6 @@ type Props = {
 };
 
 const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
-  const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputEvent, handleInputValue, handleAddImage } =
     useFormControls<Invention>();
   const { data: albumListData } = useGetListAlbumsQuery();
@@ -33,19 +26,11 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
     }
   }, [mutateResult, handleSubmit]);
 
-  useEffect(() => {
-    if (imageUrl) {
-      handleAddImage(imageUrl);
-      setImageUrl(null);
-    }
-  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
-
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formValues) return;
 
     if (formValues?.id) {
-      await uploadImage(formValues?.id);
       await mutateData({ ...formValues });
       return;
     }
@@ -93,9 +78,11 @@ const InventionForm: FC<Props> = ({ data, handleSubmit }) => {
           value={formValues?.description}
           handleInputValue={handleInputValue}
         />
-        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
         <Button type='submit'>Submit</Button>
       </form>
+
+      {formValues?.id && <UploadForm data={data} label='inventions' handleSubmit={handleSubmit} />}
+
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </>
   );

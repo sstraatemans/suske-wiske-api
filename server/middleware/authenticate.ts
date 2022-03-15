@@ -12,9 +12,7 @@ export const authenticate = async (req: NextApiRequest, res: NextApiResponse, ne
   if (method === 'POST' || method === 'PUT' || method === 'DELETE' || method === 'PATCH') {
     if (!authorization || !authorization.startsWith('Bearer') || authArray.length !== 2)
       return res.status(401).send({ message: 'Unauthorized' });
-    console.log(0);
     const admin = getFireBaseAdmin();
-    console.log(6);
     admin
       .auth()
       .verifyIdToken(authArray[1])

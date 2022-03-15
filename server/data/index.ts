@@ -2,6 +2,7 @@
 import * as firebase from 'firebase/app';
 import * as firebaseAdmin from 'firebase-admin';
 import { Firestore, getFirestore } from 'firebase/firestore';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 let firebaseAdminAppDefined = false;
 
@@ -11,6 +12,7 @@ const getApp = () => {
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
       authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
       projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
     });
   }
 
@@ -20,6 +22,11 @@ const getApp = () => {
 const getStore = (): Firestore => {
   getApp();
   return getFirestore();
+};
+
+const getFireStore = (): FirebaseStorage => {
+  getFireBaseAdmin();
+  return getStorage();
 };
 
 const getFireBaseAdmin = () => {
@@ -35,4 +42,4 @@ const getFireBaseAdmin = () => {
   return firebaseAdmin.app();
 };
 
-export { getFireBaseAdmin, getApp, getStore };
+export { getFireBaseAdmin, getApp, getStore, getFireStore };

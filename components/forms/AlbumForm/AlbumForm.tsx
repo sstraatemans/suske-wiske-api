@@ -1,8 +1,7 @@
 import { FC, FormEvent, useEffect } from 'react';
-import { useFormControls, useImageupload } from '@hooks/.';
+import { useFormControls } from '@hooks/.';
 import {
   TextField,
-  UploadField,
   DatePicker,
   AutoComplete,
   CharacterAlbum,
@@ -14,6 +13,7 @@ import { useUpdateAlbumMutation } from '@hooks/.';
 import { useGetListArtistsQuery } from '@hooks/admin/useGetListArtistsQuery';
 import { useGetListInventionsQuery } from '@hooks/admin/useGetListInventionsQuery';
 import { Typography } from '@material-ui/core';
+import UploadForm from '../UploadForm';
 
 type Props = {
   data?: Album;
@@ -21,7 +21,6 @@ type Props = {
 };
 
 const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
-  const { uploadImage, progress, selectImage, imageUrl, setImageUrl } = useImageupload();
   const { formValues, setInitialFormValues, handleInputEvent, handleAddImage, handleInputValue } =
     useFormControls<Album>();
   const { mutateData, mutateResult } = useUpdateAlbumMutation();
@@ -39,19 +38,11 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
     }
   }, [mutateResult, handleSubmit]);
 
-  useEffect(() => {
-    if (imageUrl) {
-      handleAddImage(imageUrl);
-      setImageUrl(null);
-    }
-  }, [imageUrl, handleAddImage, setImageUrl, formValues, mutateData]);
-
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formValues) return;
 
     if (formValues?.id) {
-      await uploadImage(formValues?.id);
       await mutateData({ ...formValues });
       return;
     }
@@ -113,7 +104,6 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
           value={formValues?.description}
           handleInputValue={handleInputValue}
         />
-        {formValues?.id && <UploadField onChange={selectImage} progress={progress} />}
 
         <Grid container>
           <Grid item xs={6}>
@@ -128,6 +118,8 @@ const AlbumForm: FC<Props> = ({ data, handleSubmit }) => {
 
         <Button type='submit'>Submit</Button>
       </form>
+
+      {formValues?.id && <UploadForm data={data} label='albums' handleSubmit={handleSubmit} />}
 
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
     </>
